@@ -1,0 +1,63 @@
+﻿<%@ Page Title="部门管理" Language="C#" MasterPageFile="~/Themes/Blank.master" AutoEventWireup="true" Inherits="Admin_DEPT_DeptManageNew" CodeFile="DeptManageNew.aspx.cs" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<script type="text/javascript" src="../../Lib/JQuery/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var roots = $("#tree1").children();
+        roots.each(function (i) {
+            $(this).find("div:first").addClass("root");
+        });
+    
+    });
+</script>
+<style type="text/css">
+.mytree ul li.leaf div em{margin-left:0px;}
+</style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" Runat="Server">
+<div class="lrlayout">
+    <div class="left" style="width:180px;height:auto;">
+        <div>
+           <ul class="tree1" id="tree1">
+              <li><div><b><em></em></b><a>根节点1</a></div>
+                 <ul>
+                   <li><div><b><em></em></b><a>节点1</a></div></li>
+                   <li><div><b><em></em></b><a>节点2</a></div></li>
+                   <li><div><b><em></em></b><a>节点3</a></div></li>
+                   <li><div><b><em></em></b><a>节点4</a></div>
+                       <ul>
+                          <li><div><b><em></em></b><a>节点1</a></div></li>
+                          <li><div><b><em></em></b><a>节点1</a></div></li>
+                          <li><div class='leaf'><b><em></em></b><a>节点1</a></div></li>
+                       </ul>
+                   </li>
+                   <li><div><b><em></em></b><a>节点5</a></div></li>
+                   <li style="border:none;"><div class='leaf'><b><em></em></b><a>节点6</a></div></li>
+                 </ul>
+              </li>
+              <li><div><b><em></em></b><a>根节点1</a></div></li>
+           </ul>
+        </div>
+        
+        <div class="tree1" id="treemag" style=" overflow:auto;">
+             <ul><asp:Literal ID="litChnl" runat="server"></asp:Literal>
+             </ul>
+        </div>
+     </div>
+     <div class="right" style="margin-left:182px;height:auto;">
+     <iframe src="" id="ifrMain" frameborder="0"></iframe>
+     </div>
+</div>
+ <div id="ulMenu" class="popUpMenu">
+    <a href="#" id="btnAdd" power="newDept">添加</a>
+    <a href="#" id="btnEdit" power="editDept">修改</a>
+   <%-- <a href="#" id="btnUp">上移一行</a>
+    <a href="#" id="btnDown">下移一行</a>--%>
+    <%--<a href="#" id="btnManager" power="ManagerSet">领导配置</a>
+    <a href="#" id="btnStation" power="StationMag">岗位配置</a>--%>
+    <a href="#" id="btnDel" power="delDept">删除</a>
+    <a href="#" id="btnSort">排序</a>
+ </div>
+</asp:Content>
+

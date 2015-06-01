@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link href="../../Lib/tl-grid/dhtmlxcombo.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/tl-grid/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <script src="../../Lib/tl-grid/trainquerycommon.js" type="text/javascript"></script>
+    <script src="../../Lib/tl-grid/dhtmlxgrid_fast.js" type="text/javascript"></script>
+    <script src="../../Lib/tl-grid/dhtmlxgrid_splt.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+body {
+margin-left: 0px;
+margin-top: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+
+}
+
+.even {
+background-color: #E6E6FA;
+}
+
+.uneven {
+background-color: #F0F8FF;
+}
+-->
+</style>
+<script type="text/javascript">
+window.dhx_globalImgPath="codebase/imgs/";
+function refreshImg(){
+	document.getElementById("img_rrand_code").src="passCodeActi0n.do?rand=rrand"+'?'+Math.random();
+}
+</script>
+</head>
+<body>
+<table width="930" border="0" align="center" cellpadding="0"
+cellspacing="0">
+<tr>
+<tr>
+<td>
+<table width="930" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td rowspan="2" align="center" valign="top">
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td height="12"></td>
+</tr>
+</table>
+<table width="930" border="0" align="right" cellpadding="0"
+cellspacing="0">
+<tr>
+<td>
+<table width="744" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="11" background="img/in_07.gif" height="30">
+</td>
+<td class="b3">
+<span class="font_14">车次查询</span>
+</td>
+<td width="27" background="img/in_06.gif" height="30">
+</td>
+<td valign="top" class="b4">
+<table width="300" border="0" cellspacing="0"
+cellpadding="0">
+<tr>
+<td valign="top" class="b4">
+	<marquee id="scrollArea" height="20" width="500" loop="-1" scrollamount="3" scrolldelay="50" direction="left" onMouseOver=scrollArea.stop() onMouseOut=scrollArea.start()><font color="yellow">查询结果仅供参考，具体以车站提供信息为准。（www.12306.cn）</font></marquee>
+</td>
+</tr>
+</table>
+</td>
+<td width="18" background="img/in_11.gif" height="30">
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr align="left">
+<td class="bj" style="">
+<form action="iframeTrainPassStationByTrainCode.jsp"
+method="post" name="checichaxunform" target="iframeName1">
+<table>
+<tr>
+<td>
+&nbsp;&nbsp;日期：
+</td>
+<td>
+
+<table>
+	<tr>
+		<td id="nyear1" name="nyear1">
+		 <script type="text/javascript">
+var dd1;
+var mm1;
+</script>
+2012</td>
+		<td>
+			年
+		</td>
+		<td id="nmonth1" name="nmonth1">
+		<script type="text/javascript">
+var dd1;
+var mm1;
+</script>
+<script type="text/javascript">
+		
+		var mm1 = new dhtmlXCombo("nmonth1","nmonth1",40);
+		mm1.setOptionHeight(230);
+		mm1.setComboValue(fMonth());
+		mm1.addOption([["01","01"],["02","02"],["03","03"],["04","04"],["05","05"],["06","06"],["07","07"],["08","08"],["09","09"],["10","10"],["11","11"],["12","12"]]);
+		//month.loadXML("xml/m.xml");
+		
+		mm1.readonly(true);
+		//mm1.selectOption(mm1.getIndexByValue(fMonth()),"true","true");
+				
+				mm1.setComboValue(09);	
+			
+		mm1.attachEvent("onChange",getOptionDay1);	
+		</script>
+	</td>
+		<td>
+			月
+		</td>
+		<td id="nday1" name="nday1">
+		<script type="text/javascript">
+var dd1;
+var mm1;
+</script>
+<script type="text/javascript">
+		if(1!=6){
+		var dd1 = new dhtmlXCombo("nday1","nday1",40);
+		dd1.setOptionHeight(230);
+		dd1.setComboValue(fDay());
+		dd1.readonly(true);
+		getOptionDay1();
+		dd1.selectOption(dd1.getIndexByValue(fDay()),"true","true");
+					
+				dd1.setComboValue(06);	
+				//dd1.selectOption(dd1.getIndexByValue(06),"true","true");
+			
+
+		}
+		
+		if(1==6){
+		var dd1 = new dhtmlXCombo("nday1","nday1",40);
+		dd1.setOptionHeight(230);
+		dd1.setComboValue(fDay6());
+		dd1.readonly(true);
+		
+		dd1.selectOption(dd1.getIndexByValue(fDay6()),"true","true");
+		
+				dd1.setComboValue(7);	
+				//getOptionDay1();
+				dd1.selectOption(dd1.getIndexByValue(7),"true","true");
+			
+		getOptionDay1();
+		}
+		</script>
+	</td>
+		<td>
+			日
+		</td>
+	</tr>
+</table>
+
+</td>
+<td>
+&nbsp;&nbsp;车次：
+</td>
+<td id="trainCode1" name="trainCode1" colspan="5" >
+<script type="text/javascript">
+				var cc = new dhtmlXCombo("trainCode1","trainCode1",195);
+				cc.attachEvent("onOpen",selectCC);
+				cc.attachEvent("onKeyPressed",ccSGtest);
+				cc.setComboValue('D3208');
+</script>
+</td>
+<td>
+&nbsp;&nbsp;
+</td>
+<td>验证码：</td>
+<td>
+<input type="text" style="width:50px;height:18px; " maxlength="4" id="randCode" name="randCode" onfocus="this.select()" title="如2+?=8,请输入6"/>
+</td>
+<td>
+<img height="22" src="passCodeActi0n.do?rand=rrand" onclick="refreshImg();"	title="单击刷新验证码" id="img_rrand_code"></img>
+</td>
+<td>
+<input type="button" id="cxpstc" value="查询" onclick="cccxsubmit('trainCodeDIV','trainCode')" style="height: 25px"/>
+</td>
+</tr>
+</table>
+</form>
+<table width="100%">
+<tr>
+<td>
+<div id="trainCodeDIV">
+<Strong>D3208</Strong>次列车，
+</div>
+</td>
+<td align="right">																
+<span  id="study_source" onmouseover="ShowHelp(this,'study',false)" onmouseout="ShowHelp(this,'study',true)" width="25">
+<u><font color="blue">帮助</font></u>
+</span>
+<div id="study_help" style="width:340px;display:none;position:absolute;z-index:99;">
+<table border="0" style="width:340px; font-size:11px;" cellpadding="0" cellspacing="0">
+<tr>
+<td><img src="img/help/hlp_toplft.gif" width="4" height="5"></td>
+<td style="width:331px;background-image:url('img/help/hlp_top.gif');background-repeat:repeat-x;"><img src="img/help/spc_trans.gif" width="1" height="5"></td>
+<td><img src="img/help/hlp_toprt.gif" width="5" height="5"></td>
+</tr>
+<tr>
+<td style="background-image:url('img/help/hlp_sidelft.gif');background-repeat:repeat-y;"><img src="img/help/spc_trans.gif" width="4" height="1"></td>
+<td style="width:331px;padding:4px 8px 6px 8px;background-color:#FAFAFA;" align="left"><b>车次查询使用帮助</b><br/>选择出发日期；输入或通过下拉框选择列车车次并点击查询；可查询车次停靠站、到站时间、发车时间、票价等列车信息；点击列表表头可进行排序。（www.12306.cn）</td>
+<td style="background-image:url('img/help/hlp_sidert.gif');background-repeat:repeat-y;"><img src="img/help/spc_trans.gif" width="5" height="1"></td>
+</tr>
+<tr>
+<td><img src="img/help/hlp_botlft.gif" width="4" height="5"></td>
+<td style="width:331px;background-image:url('img/help/hlp_bot.gif');background-repeat:repeat-x;"><img src="img/help/spc_trans.gif" width="1" height="5"></td>
+<td><img src="img/help/hlp_botrt.gif" width="5" height="5"></td>
+</tr>
+</table></div>																
+</td>
+</tr>
+
+<tr>
+<td colspan="3">
+<div id="gridbox" width="100%" height="480px"
+align="left"
+style="background-color: white; overflow: hidden"></div>
+<script>
+window.onload = function(){
+createGrid1();
+var img1 = new Image();img1.src="img/help/hlp_toplft.gif";
+var img2 = new Image();img2.src="img/help/hlp_top.gif";
+var img3 = new Image();img3.src="img/help/hlp_toprt.gif";
+var img4 = new Image();img4.src="img/help/hlp_sidelft.gif";
+var img6 = new Image();img6.src="img/help/hlp_sidert.gif";
+var img7 = new Image();img7.src="img/help/hlp_botlft.gif";
+var img8 = new Image();img8.src="img/help/hlp_bot.gif";
+var img9 = new Image();img9.src="img/help/hlp_botrt.gif";
+}
+
+function createGrid1(){
+mygrid = new dhtmlXGridObject('gridbox');
+mygrid.setImagePath("codebase/grid_imgs/");
+mygrid.setHeader("站序,车站,列车信息,#cspan,#cspan,#cspan,票价（元）,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan");
+mygrid.attachHeader("#rspan,#rspan,车次,到时,发时,历时,商务座,特等座,一等座,二等座,高级软卧上/下,软卧上/下,硬卧上/中/下,软座,硬座");
+mygrid.setInitWidths("30,80,60,50,50,50,60,50,50,50,90,70,90,40,45");
+mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+mygrid.setColTypes("ro,link,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+mygrid.setColSorting("int,str,str,str,str,str,int,int,int,int,int,int,int,int,int");
+mygrid.init();
+mygrid.enableAlterCss("even","uneven");
+mygrid.setSkin("light");
+//mygrid.splitAt(2);
+
+document.getElementById("trainCodeDIV").innerHTML+="始发站：<Strong>厦门北</Strong>；终到站：<Strong>上海虹桥</Strong>；全程共有<Strong>23</Strong>个停靠站：";
+
+//var string = cc.getComboText();
+//if(string.charAt(0) == 'C' || string.charAt(0) == 'D' || string.charAt(0) == 'G'){
+//mygrid.setColumnHidden(6,"true");
+//mygrid.setColumnHidden(8,"true");
+//mygrid.setColumnHidden(9,"true");
+//}else{
+//mygrid.setColumnHidden(6,"false");
+//mygrid.setColumnHidden(8,"false");
+//mygrid.setColumnHidden(9,"false");
+//}
+
+mygrid.enableSmartRendering(true, 50);
+
+mygrid.loadXML("wdsback.aspx");
+mygrid.addRow(2, "3,莆田^skbcx.jsp?cxlx=czjgcc&zm=&date=20120906&stationName_passTrain=%E8%8E%86%E7%94%B0 ,D3208   , 09:54 , 09:55 , 00:52,--,--,--,41,337/380,171/190,--,--,--", 2);
+
+mygrid.addRow(3, "4,福清^skbcx.jsp?cxlx=czjgcc&zm=&date=20120906&stationName_passTrain=%E7%A6%8F%E6%B8%85 ,D3208   , 10:14 , 10:15 , 01:12,--,--,--,56,337/380,171/190,--,--,--", 3);
+
+}
+</script>
+</td>
+</tr>
+</table>
+<td width="5" valign="bottom" class="b6">
+<img src="img/in_10.gif" width="18" height="55" />
+</td>
+</tr>
+</table>
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="11" background="img/in_08.gif" height="18">
+</td>
+<td class="b7">
+<table width="11" border="0" cellspacing="0"
+cellpadding="0">
+<tr>
+<td height="18"></td>
+</tr>
+</table>
+</td>
+<td width="18" background="img/in_09.gif" height="18">
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<iframe name="iframeName1" id="iframeID1"
+src="" width="0" height="0"
+frameborder="0" />
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

@@ -1,0 +1,70 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.AppInOne.Common;
+using AgileFrame.Core.WebSystem;
+public partial class DEPT_DeptInfoSort : AgileFrame.AppInOne.Common.BasePage
+{
+    TJ_PART_STRU condObj = new TJ_PART_STRU();
+    TJ_PART_STRU valObj = new TJ_PART_STRU();
+    List<TJ_PART_STRU> listObj = new List<TJ_PART_STRU>();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            if (Request["ntype"] == "org")
+            {
+                condObj.ORG_ID = Request["id"];
+                condObj.P_PART_ID = "0";
+            }
+            else
+            {
+                condObj.P_PART_ID = Request["id"];
+            }
+
+
+            BindList(condObj);
+
+        }
+    }
+
+    private void BindList(TJ_PART_STRU condObj)
+    {
+        condObj.OrderBy(TJ_PART_STRU.Attribute.SORT_NO,Order.Asc);
+        listObj = BLLTable<TJ_PART_STRU>.Factory(conn).Select(valObj, condObj);        
+        repList.DataSource = listObj;
+        repList.DataBind();
+    }
+
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        string[] arr =StringHelper.GetStringArray(Request["hidSortInfo"],'|');
+        if (arr != null&&arr.Length>0)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                string[] aaa = arr[i].Split(',');
+                BLLTable<TJ_PART_STRU>.Factory(conn).Update(TJ_PART_STRU.Attribute.PART_ID, aaa[0], TJ_PART_STRU.Attribute.SORT_NO, aaa[1]);
+
+                //BLLTable.UpdateCol(TJ_PART_STRU.Attribute.SortNum, aaa[1], sys_ModuleInfo.Attribute.ModuleID, aaa[0], 1);
+            }
+        }
+        AgileFrame.Core.ScriptHelper.ResponseScript(Page, "parent.reShowSubNodes();location.href='../../OK.aspx';", false);
+    }
+}
+

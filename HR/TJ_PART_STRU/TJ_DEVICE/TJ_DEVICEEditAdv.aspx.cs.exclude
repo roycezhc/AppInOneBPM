@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+public partial class TJ_DEVICEEditAdv : AgileFrame.AppInOne.Common.BasePage
+{
+    protected TJ_DEVICE valObj = new TJ_DEVICE();
+    protected string title = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        title = valObj._ZhName + "¸ß¼¶Î¬»¤";
+        Page.Title = title;
+        if (!IsPostBack)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Request["D_NAME"]))
+                {
+
+                    valObj = BLLTable<TJ_DEVICE>.Factory(conn).GetRowData(TJ_DEVICE.Attribute.D_NAME, Request["D_NAME"]);
+                    if(valObj==null) return ;
+                    
+                    
+                    txtD_NAME.Text = Convert.ToString(valObj.D_NAME);//Convert.ToString                
+                    
+                    txtD_NO.Text = Convert.ToString(valObj.D_NO);//Convert.ToString                
+                    
+                    txtD_ID.Text = Convert.ToString(valObj.D_ID);//Convert.ToString                
+                    
+                    txtMETERID.Text = Convert.ToString(valObj.METERID);//Convert.ToDecimal                
+                    
+                    txtSUB_ID.Text = Convert.ToString(valObj.SUB_ID);//Convert.ToString                
+                    
+                    txtPART_ID.Text = Convert.ToString(valObj.PART_ID);//Convert.ToString
+
+                }
+            }
+            catch (Exception ex)
+            {
+                litWarn.Text = ex.Message;
+            }
+        }
+    }
+
+}

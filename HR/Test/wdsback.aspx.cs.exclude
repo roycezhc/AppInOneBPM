@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class HR_CheckWork_wdsBack : AgileFrame.AppInOne.Common.BasePage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Response.Clear();
+        Response.Buffer = true;
+        Response.Charset = "utf-8";
+        Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");//设置输出流为简体中文
+        Response.ContentType = "text/xml";
+
+        this.EnableViewState = false;
+        System.Globalization.CultureInfo myCItrad = new System.Globalization.CultureInfo("ZH-CN", true);
+        System.IO.StringWriter oStringWriter = new System.IO.StringWriter(myCItrad);
+        System.Web.UI.HtmlTextWriter oHtmlTextWriter = new System.Web.UI.HtmlTextWriter(oStringWriter);
+        divC.RenderControl(oHtmlTextWriter);
+
+        string str = oStringWriter.ToString();
+       
+        Regex reg = new Regex("<div id=\"divC\">([\\w|\\W]*?)</div>");//&quot;
+
+        Match mc=  reg.Match(oStringWriter.ToString());
+        str = "<?xml version='1.0' encoding='iso-8859-1'?>\n" + mc.Groups[1].Value;
+
+        Response.Write(str);
+        Response.End();
+    }
+}

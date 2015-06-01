@@ -1,0 +1,248 @@
+﻿#index{ background:#378;height:100%;}
+
+#head{height:30px; background:#378;}
+#head h1{color:#fff;padding:5px 0 0 50px;float:left;font-size:16px;font-family:宋体;}
+#head h1 label{font-size:12px;color:#ddd;margin-left:10px;font-weight:normal;}
+#head #h-right{ position:absolute;top:5px;right:20px;}
+#head #h-right div{line-height:25px;float:right;}
+#head #h-right div a{color:#fff;margin-left:20px;}
+
+#head #h-right #menu{line-height:25px;float:right;margin:0 10px;}
+
+/*左边-右边布局*/
+#layout{width:auto;height:100%;margin:0;padding:0;font-size:12px;}
+#layout #leftnav{min-height:400px;float:left;text-align:left;border:solid 1px #aaa;}
+#layout #rightcont{width:auto;margin-left:122px;min-height:400px;background:#fff;border:solid 1px #aaa;}
+
+
+#layout #leftree{width:200px;min-height:400px;overflow:auto;float:left;text-align:left;border:solid 1px #aaa;}
+#layout #treeright{width:auto;margin-left:202px;min-height:400px;background:#fff;border:solid 1px #aaa;position:relative;}
+
+
+#leftnav{width:120px;background:#378;height:400px;}
+#leftnav h1{height:25px;line-height:25px;color:#fff; text-align:center; background:#366;padding:0;margin:0 0 0 0;font-size:12px;border-bottom:1px solid #990;}
+#leftnav h2{height:25px;line-height:25px;color:#111; background:#ddd;padding:0;margin:0 0 0 0;font-size:12px;border-bottom:1px solid #367;}
+#leftnav h2 span{float:left; text-indent:20px;color:#333;font-weight:bold;}
+#leftnav h2 b{float:right; display:inline-block;width:20px;height:20px; background:url(img/down2.gif) 0 center no-repeat;cursor:pointer;}
+#leftnav h2 b.hide{background:url(img/up2.gif) 0 center no-repeat;}
+#leftnav h2 a{ cursor:pointer;}
+/*
+#leftnav div{ background:#eff;color:#111;display:none;margin:0 10px 0 10px;}
+#leftnav div p{background:url(img/arrow2.gif) 10px center no-repeat;height:25px;line-height:25px;}
+#leftnav div p a{margin-left:25px;float:left;color:#111;}
+#leftnav div p b{float:left;margin:0 0 0 5px;}
+#leftnav div p a.gl{margin-left:5px;}*/
+
+#nav{background:#378;}
+#nav ul{padding:0;margin:0;}
+#nav ul li{line-height:25px;height:25px;padding:0;margin:0; text-indent:15px; position:relative; z-index:100;border-bottom:solid 1px #ddd; }
+#nav ul li a{color:#fff; display:inline;z-index:111; cursor:pointer;}
+
+#nav ul li div{background:#eee;display:none;line-height:25px;top:0;width:100px; position:absolute; left:120px;border:solid 1px #aaa; z-index:997;}
+#nav ul li div p{border-bottom:solid 1px #ddd;padding:0;margin:0; }
+#nav ul li div p a{margin:0 5px;color:#660;z-index:998;}
+#nav ul li div ul{z-index:999; background:#fff; }
+
+#nav ul li.sel{ background:#eee;}
+#nav ul li.sel a{color:#333;}
+#nav ul li.sel p a{color:#009;}
+
+#nav ul li ul li{ text-indent:5px;list-style:none;line-height:20px;height:auto;}
+#nav ul li ul li div{left:100px;}
+
+
+#menu{height:25px;padding:0;margin:0;}
+#menu li{padding:0;margin:0;line-height:25px;height:auto;float:left;padding:0 0 0 0;_width:90px;min-width:90px; text-align:center; position:relative; z-index:900;}
+#menu li a{color:#eff;font-size:12px;font-weight:bold;display:block;white-space:nowrap;}
+#menu li a:hover{color:#222;position:relative;z-index:902;background:url(img/bg.png) 0 -400px;}
+#menu li:hover a{color:#222;position:relative;z-index:902;background:url(img/bg.png) 0 -400px;border-right:1px solid #bbb;border-left:1px solid #bbb;}
+#menu li:hover li a{border:none;color:#345;}
+#menu li ul{display:none;position:absolute;padding:0;margin:0;top:24px;left:0px;width:auto;border:solid 1px #bbb;z-index:901;}
+#menu li ul li{padding:0;margin:0;clear:both;width:auto;line-height:25px; z-index:901;background:url(img/bg.png) 0 -400px;border:none;}
+#menu li ul li a{color:#678;font-size:12px;display:block;width:auto;width:100px;white-space:nowrap;padding:0 0 0 5px;border:none;position:static;}
+#menu li ul li a:hover{color:#123; background:#fff;}
+
+#bottom{height:5px; background:#367; position:absolute;bottom:0px;left:0;}
+
+
+/*自定义构造的树形样式*/
+.mytree{margin:0 0 0 10px;width:auto; text-align:left;}
+.mytree ul{margin:0;padding:0;text-align:left;}
+.mytree ul li{margin:0 0 0 0;line-height:25px;padding:0;text-align:left;clear:both;border-left:solid 1px #777;}
+
+.mytree ul li ul{margin:-5px 0 0 15px;font-size:0;}
+.mytree ul li div{height:25px;margin:0 0 0 -8px;}
+.mytree ul li div b{background:url(Img/tree/closed.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div em{background:url(Img/tree/folder.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div.opened b{background:url(Img/tree/opened.gif) no-repeat 0 center;}
+.mytree ul li div.opened em{background:url(Img/tree/folderopen.gif) no-repeat 0 center;}
+
+.mytree ul li.leaf{margin-left:0;}
+.mytree ul li.leaf div b{background:none;width:16px;display:inline-block;margin:0 0 0 0;}
+.mytree ul li.leaf div em{background:url(Img/tree/file.gif) no-repeat 0 center;width:24px;margin-left:-8px;}
+.mytree ul li div a{display:inline-block;float:left;font-size:12px;margin:0 0 0 0;text-indent:5px;color:#000;}
+.mytree ul li div a:hover{background:#aae;color:#500;}
+.mytree ul li.last{background:url(Img/tree/lastline.gif) no-repeat 0 -2px;border-left:none;}
+.mytree ul li.sel{background-color:#bbf;color:#600; z-index:0;}
+.mytree ul li.root{border:none;margin:0;}
+.mytree ul li div.root{margin-left:0;}
+.mytree ul li div.root b{background:url(Img/tree/root.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+
+/*弹出菜单样式*/
+.popUpMenu{width:100px;display:none;background:#eee url(Img/menubg1.jpg);border:solid 1px #aaa;position:absolute; z-index:999;top:0;left:0;}
+.popUpMenu a{display:block;height:22px;line-height:22px;text-indent:25px;margin:2px; text-align:left;}
+.popUpMenu a.edit{background:url(Img/edit.gif) 2px center no-repeat;}
+.popUpMenu a:hover{background-color:#ffe;border:solid 1px #966;height:20px;line-height:20px;}
+.popUpMenu label{display:block;height:1px;width:100px;border-top:solid 1px #bbb;margin-left:30px;}
+
+/*
+
+
+.topnav{font-weight:700;width:auto;height:22px;text-align:left;padding:0;border-bottom:solid 1px #369;}
+.topnav dl{float:left;line-height:18px;height:18px;width:auto;color:#000;margin-top:4px;}
+.topnav dl dt{float:left;max-width:200px;height:100%;margin:0;background:url(img/tabBG.png) right -216px no-repeat;font-weight:bold;width:auto;padding-left:0;margin-left:0px;}
+.topnav dl dt a{color:#fff;line-height:18px;background:url(img/tabBG.png) -40px -187px no-repeat;margin-right:28px;height:16px;padding:2px 5px 0 8px;text-align:center;font-size:12px;display:inline-block; text-decoration:none; cursor:pointer;}
+.topnav dl dd{width:auto;font-size:12px;font-weight:700;text-align:left;}
+.topnav dl dd a{color:#666;display:block;float:left;}
+.topnav dl dd span{display:block;float:left;background:url(Img/arrow1.gif) 5px center no-repeat;width:20px;height:25px;}
+.topnav dl dd label{float:left;}
+.topnav dl dd .info{color:#060;}
+
+.topnav ul{padding:0;margin:0 0 0 0;list-style:none;float:right;}
+.topnav ul li{float:left;width:auto;height:22px;margin:0 0 0 1px;color:#eee;}
+.topnav ul li b{color:#666;line-height:22px;}
+.topnav ul li input{border:solid 1px #aca;width:80px;}
+.topnav ul li select{border:solid 1px #aca;width:100px;}
+
+.topnav ul li a{color:#111;font-size:12px;display:inline-block;height:18px;margin-top:1px;width:auto; cursor:pointer;}
+.topnav ul li a span{display:inline-block;}
+.topnav ul li input.ck{width:20px;border:none;}
+.topnav ul li label{color:#666;}
+.topnav-btm{border:none;border-top:solid 1px #0b9594;}
+
+/*顶部查询区域样式
+.topfind{width:auto;min-height:22px;line-height:22px;padding:2px 15px 3px 0;}
+.topfind dl{padding:0;margin:0;list-style:none;text-align:left;display:block;clear:left;width:100%;}
+.topfind dl dt{float:left;width:80px;margin:auto 0;color:#111;line-height:22px; text-align:right;padding:0;}
+.topfind dl dt.sp{width:20px;}
+.topfind dl dd{float:left;height: 21px;width:120px;}
+.topfind dl dd input{border:solid 1px #aca;width:80px;margin:0;}
+.topfind dl dd.ckbs input{width:20px;border:none;}
+.topfind dl dd input.ckbs{width:20px;}
+.topfind dl dd input.ckb{width:20px;}
+.topfind dl dd input.sel{border:none;background:url(img/find.gif) center center no-repeat;height:20px;width:30px; cursor:pointer;}
+.topfind dl dd textarea{border:solid 1px #aca;width:80px;margin:0;}
+.topfind dl dd select{border:solid 1px #aca;width:100px;}
+
+.topfind dl dd a.btn input{border:solid 1px #68a;height: 20px;}
+
+/*左右布局
+.lrlayout{width:auto;}
+.lrlayout .left{width:350px;height:auto;float:left;border-right:solid 1px #666;}
+.lrlayout .right{width:auto;height:100%;margin-left:355px; z-index:888;}
+
+.lrfloat{width:auto;}
+.lrfloat .left{width:200px;height:100%;float:left;border-right:solid 1px #666;}
+.lrfloat .right{width:200px;height:100%;float:right; z-index:888;}
+
+/*自定义构造的树形样式
+.mytree{margin:0 0 0 10px;width:auto; text-align:left;}
+.mytree ul{margin:0;padding:0;text-align:left;}
+.mytree ul li{margin:0 0 0 0;line-height:25px;padding:0;text-align:left;clear:both;border-left:solid 1px #777;}
+
+.mytree ul li ul{margin:-5px 0 0 15px;font-size:0;}
+.mytree ul li div{height:25px;margin:0 0 0 -8px;}
+.mytree ul li div b{background:url(Img/tree/closed.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div em{background:url(Img/tree/folder.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div.opened b{background:url(Img/tree/opened.gif) no-repeat 0 center;}
+.mytree ul li div.opened em{background:url(Img/tree/folderopen.gif) no-repeat 0 center;}
+
+.mytree ul li.leaf{margin-left:0;}
+.mytree ul li.leaf div b{background:none;width:16px;display:inline-block;margin:0 0 0 0;}
+.mytree ul li.leaf div em{background:url(Img/tree/file.gif) no-repeat 0 center;width:24px;margin-left:-8px;}
+.mytree ul li div a{display:inline-block;float:left;font-size:12px;margin:0 0 0 0;text-indent:5px;color:#000;}
+.mytree ul li div a:hover{background:#aae;color:#500;}
+.mytree ul li.last{background:url(Img/tree/lastline.gif) no-repeat 0 -2px;border-left:none;}
+.mytree ul li.sel{background-color:#bbf;color:#600; z-index:0;}
+.mytree ul li.root{border:none;margin:0;}
+.mytree ul li div.root{margin-left:0;}
+.mytree ul li div.root b{background:url(Img/tree/root.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+
+
+/*输入表单样式
+.form{margin:0 auto auto auto;text-align:left;border:solid 1px #023d7f;height:auto;width:auto;}
+.form h1{text-align:center;font-size:14px;margin:0 0 0 0;padding:0;font-weight:700;background:#023d7f;border-bottom:solid 1px #333;color:#eee;line-height:25px;width:100%;}
+.form dl{display:block;clear:both;margin:0;line-height:25px;font-size:0;}
+.form dl dt{display:block;width:120px;text-align:right;float:left;padding-top:5px;font-size:12px;font-weight:bolder;color:#555;}
+.form dl dt.need{color:#f00;}
+.form dl dt.dis{color:#999;}
+.form dl dd{font-size:12px;color:#000;display:block;float:left;min-width:150px;padding-top:5px;}
+.form dl dd img{margin:0 5px 0 0;}
+.form dl dd input{background:#fefefe;margin:0;border:solid 1px #aca;width:120px;}
+.form dl dd select{background:#fefefe;width:100px;margin:0;border:solid 1px #669;}
+.form dl dd textarea{background:#fefefe;margin:0 0 1px 0;width:400px;height:50px;border:solid 1px #aca;}
+.form dl dd input.need{border:solid 1px #f00;background:#3ff;}
+.form dl dd input.dis{border-color: GrayText}
+.form dl dd textarea.need{border:solid 1px #900;background:#eff;}
+.form dl dd span.need{color:#f00;font-size:18px;line-height:25px;}
+.form dl dd.ckbs input{width:20px;border:none;}
+.form dl dd input.ckb{border:none;background:none;width:20px;}
+.form dl dd a.sel input{border:none;background:url(img/find.gif) center center no-repeat;height:20px;width:30px;}
+.form h2{text-align:center;padding:2px 0 0 0;margin:0;background:#dde0ed;border-top:solid 1px #0b9594;font-size:0;height:22px;line-height:22px; clear:both;}
+.form h3{text-align:center;padding:0;margin:0;margin-top:10px;background:#dde0ed;font-size:0;height:20px;line-height:20px;clear:both;font-size:12px;}
+.form h3 label{float:left; text-indent:30px;}
+.form h3 a{float:right;margin-right:20px;color:#333; cursor:pointer;}
+
+.form dl dd a.btn input{padding:2px 2px 0 2px;width:auto;font-size:12px;height:20px;border:1px solid #94b5b6;color:#fff; background:#0b9594;margin:0;}
+.form dl dd a.btn input.find{background:url(img/find.gif) center center no-repeat;}
+
+.tbform{border:solid 1px #aaa;width:auto;background:#f9fcfc;font-family:Geneva, Arial, Helvetica, sans-serif;min-height:5px; overflow:auto;}
+.tbform table{border-collapse:collapse;width:100%; }
+.tbform table td{width:auto;line-height:25px; text-align:left;padding-left:3px;border:solid 1px #bbb;}
+.tbform table td.label{width:100px; text-align:right;padding:0;}
+
+
+/*树形管理样式*//*
+.treemag{width:auto; position:relative;}
+.treemag .treearea{width:auto;}
+.treemag .magarea{ position:absolute;top:0;left:0;display:none; background:url(Img/touming-bg.png);}
+.treemag .magarea iframe{border:solid 2px #999;position:absolute;top:0;left:0;width:400px;height:400px;}
+
+.tblist{width:auto;overflow:auto;border:solid 1px #679;}
+.tblist table{width:100%;height:auto;border-bottom:solid 1px #aaa;border-collapse:collapse; background:#f9fcfc; font-family:Geneva, Arial, Helvetica, sans-serif;}
+.tblist table thead{background:#056bbd;font-weight:bold;color:#eee;}
+.tblist table tr td{height:20px;line-height:20px; text-align:center;border:solid 1px #aaa; cursor:pointer;}
+.tblist table tr.sel{ background:#e1fefd;}
+.tblist table tr.ck{ background:#b1fefd;}
+
+.tblist table tbody tr td.opr a{display:inline-block; cursor:pointer;width:26px;height:16px;margin:4px 5px auto 5px;background:url(Img/edit0.gif) center center no-repeat;}
+.tblist table tbody tr td.opr a:active{background:#307aaa url(Img/edit.gif) center center no-repeat;}
+.tblist table tbody tr td.opr a:hover{background:#307aaa url(Img/edit.gif) center center no-repeat;}
+.tblist table tbody tr td img{margin:5px;}
+
+a.btn{width:auto;margin:0 0 0 5px;}
+a.btn input{padding:2px 2px 0 2px;width:auto;font-size:12px;border:1px solid #369;color:#fff; background:#056bbd;margin:0;}
+a.btn input.find{ text-indent:20px; background:url(img/find.gif) center center no-repeat;}
+a.btn input.dis{ background:#999;}
+a.btn span{font-size:12px;color:#fff;height:18px;line-height:18px;border:solid 1px #006; background:#056bbd;padding:0 3px 0 3px;margin:0;}
+a.btn span b{color:#fff;}
+*//*
+/*自定义tabs选择样式*//*
+.tabs{margin:0;font-size:12px;position:relative;}
+.tabs h3{padding:0;margin:0; text-align:center;font-size:12px;color:#fff;background:#bbb;height:20px;line-height:20px;width:100%;}
+.tabs .tab-btns{background-color:#fff;height:22px;}
+.tabs .tab-btns .btns{ position:relative;float:left;height:22px;overflow:hidden;}
+.tabs .tab-btns ul{list-style:none;width:3000px;margin:0 0 0 0;padding:0 0 0 0;position:absolute;top:2px;left:0; cursor:pointer;}
+.tabs .tab-btns ul li{height:20px;min-width:80px;width:auto;background:#056bbd;text-align:center;border:solid 1px #666;border-bottom:none;margin:0 1px 0 0;line-height:20px;float:left; z-index:999;}
+.tabs .tab-btns ul li a{color:#eee;text-decoration:none;margin-right:5px;display:block;cursor:pointer;padding:0 5px 0 5px;}
+.tabs .tab-btns ul li.show{background:#cbfcfc;font-weight:bold;margin-top:0px;}
+.tabs .tab-btns ul li.show a{color:#097574;}
+.tabs .tab-cont{width:100%;border:solid 1px #096;}
+.tabs .tab-cont ul{height:100%;border:solid 9px #fff;padding:0;background:#fff;margin:0; list-style:none;}
+.tabs .tab-cont ul li{padding:5px 0 5px 0;background:#f9fafc;display:none;min-height:50px;}
+.tabs .tab-cont ul li.show{background:#f9fafc;display:block;}
+.tabs .tab-btns ol{float:right;width:25px;margin:0;padding:0; }
+.tabs .tab-btns ol li{width:10px;height:10px;float:left;margin:0 0 0 0;padding:0;border:solid 1px #999; visibility:hidden;}
+.tabs .tab-btns ol li.tolft{ background:url(img/toleft2.gif) 0 center no-repeat;}
+.tabs .tab-btns ol li.torit{ background:url(img/toright2.gif) 0 center no-repeat;}
+*/

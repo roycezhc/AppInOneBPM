@@ -1,0 +1,176 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="WECWebsite_Home_MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script type="text/javascript">
+        document.write('<link rel="stylesheet" type="text/css" href="<%=preUrl %>themes/wec/template/css/reset.css?r=' + Math.random() + '"" media="all" />');
+        document.write('<link rel="stylesheet" type="text/css" href="<%=preUrl %>themes/wec/template/css/snower.css?r=' + Math.random() + '"" media="all" />');
+        document.write('<link rel="stylesheet" type="text/css" href="<%=preUrl %>themes/wec/template/css/common.css?r=' + Math.random() + '"" media="all" />');
+        document.write('<script src="<%=preUrl %>themes/wec/template/js/maivl.js?r=' + Math.random() + '" type="text/javascript"><' + '/script>');
+        document.write('<script src="<%=preUrl %>themes/wec/template/js/swipe.js?r=' + Math.random() + '" type="text/javascript"><' + '/script>');
+        document.write('<script src="<%=preUrl %>themes/wec/template/js/zepto.js?r=' + Math.random() + '" type="text/javascript"><' + '/script>');
+        document.write('<script src="<%=preUrl %>lib/JQuery/jquery.min.js?r=' + Math.random() + '" type="text/javascript"><' + '/script>');
+    </script>
+    <%--<title>个人介绍</title>--%>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        name="viewport">
+    <meta name="Keywords" content="微信生意通/政务通、微信营销、微信代运营、微信定制开发、微信托管、微网站、微商城、微营销" />
+    <meta name="Description" content="微信生意通/政务通，国内最大的微信公众智能服务平台，微信生意通/政务通八大微体系：微菜单、微官网、微会员、微活动、微商城、微推送、微服务、微统计，企业微营销必备。" />
+    <!-- Mobile Devices Support @begin -->
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Mobile Devices Support @end -->
+    <%--<link rel="shortcut icon" href="http://stc.shengyt.com/img/favicon.ico" />--%>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+ <%--   <link rel="stylesheet" type="text/css" href="http://www.shengyt.com/wm-xin-a/font-awesome.css?v=2014031209" media="all" />--%>
+    <asp:ContentPlaceHolder ID="cphHead" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ID="cphBody" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ID="cphMenu" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <!--
+导航菜单
+   后台设置的快捷菜单
+-->
+    <!--
+分享前控制
+-->
+    <script type="text/javascript">
+        window.shareData = {
+              //"imgUrl":"/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+              "timeLineLink":"/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+              "sendFriendLink": "/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+//            "imgUrl": "http://stc.shengyt.com/img/default/official.jpg?v=2014-01-28-1",
+//            "timeLineLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername&wxref=mp.weixin.qq.com",
+//            "sendFriendLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername&wxref=mp.weixin.qq.com",
+            "weiboLink": "/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+//            "weiboLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername&wxref=mp.weixin.qq.com",
+            "tTitle": "111",
+            "tContent": "11111",
+            "fTitle": "111",
+            "fContent": "11111",
+            "wContent": "11111"
+        };
+    </script>
+    <footer style="overflow: visible;">
+			<%--	<div class="shengyt-copyright" style="padding-bottom:50px;">
+					<a href="/weisite/home?pid=87126&bid=180599&wechatid=fromUsername&wxref=mp.weixin.qq.com">© 个人介绍</a>
+				</div>
+									<span class="shengyt-support" style="display:none;">©微信生意通/政务通提供</span>--%>
+							</footer>
+    <div mark="stat_code" style="width: 0px; height: 0px; display: none;">
+    </div>
+</body>
+<script type="text/javascript">
+(function() {
+	var wtj = document.createElement('script'); wtj.type = 'text/javascript'; wtj.async = true;
+	wtj.src = 'http://tj.shengyt.com/wtj.js?url=' + encodeURIComponent(location.href);
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wtj, s);
+})();
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd80741dd59de91e1846b2add2c0ad2a2' type='text/javascript'%3E%3C/script%3E"));
+function shengytAfterShare(shareFromWechatId,sendFriendLink,shareToPlatform){
+	var wmShare = document.createElement('script'); wmShare.type = 'text/javascript'; wmShare.async = true;
+    wmShare.src = 'http://' + getShareApiRouter() + '/api-share.js?fromWechatId=' + shareFromWechatId + '&shareToPlatform=';
+	wmShare.src += shareToPlatform + '&pid=87126&sendFriendLink=' + encodeURIComponent(sendFriendLink);
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wmShare, s);
+}
+function getShareApiRouter(){ //得到共享API路由器
+	var str_domain = location.href.split('/',4)[2];
+	var tj_domain = '127.0.0.1';
+   
+    return;
+	switch(str_domain){
+		case 'www.shengyt.com':
+			tj_domain = 'tj.shengyt.com';
+			break;
+		case '112.124.28.82':
+			tj_domain = '112.124.28.82:400';
+			break;
+	}
+	return tj_domain;
+}
+if(typeof(window.shareData) == 'undefined'){
+	window.shareData = {
+				"imgUrl": "", 
+                "timeLineLink":"/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+              "sendFriendLink": "/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+              "weiboLink":"/site/WECWebsite/Home.aspx?aid=<%=aid%>",
+//		"timeLineLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername",
+//		"sendFriendLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername",
+//		"weiboLink": "http://www.shengyt.com/weisite/home?pid=87126&bid=180599&wechatid=fromUsername",
+		"tTitle": document.title,
+		"tContent": document.title,
+		"fTitle": document.title,
+		"fContent": document.title,
+		"wContent": document.title
+	}
+}
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {	 
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', { 
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			shengytAfterShare("",window.shareData.sendFriendLink,'appmessage');
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+						shengytAfterShare("",window.shareData.timeLineLink,'timeline');
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink,
+		}, function (res) {
+			shengytAfterShare("",window.shareData.weiboLink,'weibo');
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>
+<%--<script type="text/javascript" src="http://kf.shengyt.com/js/ChatFloat.js"></script>--%>
+<%--<script type="text/javascript">
+
+    new ChatFloat({
+        AId: '87126',
+        openid: "",
+        top: 150,
+        right: 0
+    });
+</script>--%>
+
+</html>

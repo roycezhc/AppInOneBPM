@@ -1,0 +1,17 @@
+﻿html,body{margin:0;padding:0;font-size:12px;}
+ul,li,ol{margin:0;padding:0; list-style:none;}
+#divMyRiLi{width:165px; text-align:left;border:solid 1px #aaa; position:absolute;top:10px;left:100px; z-index:9999; background:#eee;}
+#divMyRiLi ul li{margin:0;padding:0;}
+#divMyRiLi ul{clear:both;height:20px;width:auto;}
+#divMyRiLi ul.weeks{ background:#e3ebff;color:#000;}
+#divMyRiLi ul li{float:left;width:20px;height:20px;line-height:20px; text-align:center;margin:2px 0 0 3px; cursor:default;}
+#divMyRiLi ul.top{background:#fff;color:#000;}
+#divMyRiLi ul.top li{margin:0;}
+#divMyRiLi ul.top li a{width:15px;height:100%;color:#000; background:#e3ebf4; display:block;}
+#divMyRiLi ul li.preday{color:#e3ebf4;}
+#divMyRiLi ul li.over{color:#fff; background:#ffcc33;}
+#divMyRiLi ul li.selday{color:#fff; background:#ffcc33;}
+#divMyRiLi ul.btm{background:#fff;color:#fff;}
+#divMyRiLi ul.btm li{margin:0;width:auto;}
+#divMyRiLi ul.btm li a{width:15px;height:100%;color:#000; background:#e3ebff; display:block;float:left;}
+#divMyRiLi ul.btm li a.reset{width:35px;}

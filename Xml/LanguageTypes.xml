@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Languages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!--system default language 请注意多语言项 区分大小写-->
+  <DefaultLanguage>Chinese</DefaultLanguage>
+  <LanguageType>
+    <Key>Chinese</Key>
+    <CultureKey>zh-cn</CultureKey>
+    <Chinese>简体中文</Chinese>
+    <English>Simplified Chinese</English>
+    <French>Chinois</French>
+    <Spanish>chino simplificado</Spanish>
+    <Chinese_Traditional>簡體中文</Chinese_Traditional>
+    <Japanese>簡体字中国語</Japanese>
+  </LanguageType>
+  <LanguageType>
+    <Key>English</Key>
+    <CultureKey>en-us</CultureKey>
+    <Chinese>英语</Chinese>
+    <English>English</English>
+    <French>Anglais</French>
+    <Spanish>Inglés</Spanish>
+    <Chinese_Traditional>英語</Chinese_Traditional>
+    <Japanese>英語</Japanese>
+  </LanguageType>
+  <LanguageType>
+    <Key>French</Key>
+    <CultureKey>fr-fr</CultureKey>
+    <Chinese>法语</Chinese>
+    <English>French</English>
+    <French>langue française</French>
+    <Spanish>idioma francés</Spanish>
+    <Chinese_Traditional>法語</Chinese_Traditional>
+    <Japanese>フランス語</Japanese>
+  </LanguageType>
+  <LanguageType>
+    <Key>Spanish</Key>
+    <CultureKey>sp-sp</CultureKey>
+    <Chinese>西班牙语</Chinese>
+    <English>Spanish</English>
+    <French>langue espagnole</French>
+    <Spanish>idioma español</Spanish>
+    <Chinese_Traditional>西班牙語</Chinese_Traditional>
+    <Japanese>スペイン語</Japanese>
+  </LanguageType>
+  <LanguageType>
+    <Key>Chinese(Traditional)</Key>
+    <CultureKey>ch-tr</CultureKey>
+    <Chinese>繁体中文</Chinese>
+    <English>Traditional Chinese</English>
+    <French>chino tradicional</French>
+    <Spanish>chino tradicional</Spanish>
+    <Chinese_Traditional>繁體中文</Chinese_Traditional>
+    <Japanese>簡体字中国語</Japanese>
+  </LanguageType>
+  <LanguageType>
+    <Key>Japanese</Key>
+    <CultureKey>ja-ja</CultureKey>
+    <Chinese>日语</Chinese>
+    <English>Japanese language</English>
+    <French>langue japonaise</French>
+    <Spanish>idioma japonés</Spanish>
+    <Chinese_Traditional>name</Chinese_Traditional>
+    <Japanese>日本語</Japanese>
+  </LanguageType>
+</Languages>

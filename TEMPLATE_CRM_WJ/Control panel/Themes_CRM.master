@@ -1,0 +1,565 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="Themes_CRM" CodeFile="Themes_CRM.master.cs" %>
+
+<!DOCTYPE html PUBLIC "-/W3C/DTD XHTML 1.0 Transitional/EN" "http:/www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>admin - 控制面板 - 控制面板 - 易客CRM</title>
+    <style type="text/css">
+        @import url("./admin_files/style.black.css");
+    </style>
+    <link rel="stylesheet" href="./admin_files/buttons-min.css" />
+    <link rel="stylesheet" href="./admin_files/font-awesome.min.css" />
+    <style type="text/css">
+        #ActivityRemindercallback
+        {
+            position: fixed;
+            right: 0px;
+            bottom: 2px;
+            display: block;
+            padding: 0px;
+            z-index: 10;
+            font-weight: normal;
+            width: 205px;
+        }
+    </style>
+    <script language="javascript" type="text/javascript" src="./admin_files/jquery-1.10.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./admin_files/jquery-ui-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        var Jquery = $;
+    </script>
+    <script language="javascript" type="text/javascript" src="./admin_files/prototype.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./admin_files/dom-drag.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./admin_files/zh_cn.lang.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./admin_files/general.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./admin_files/json.js"></script>
+    <script language="javascript">
+        javaCalendarFirstDayOfWeek = 1;
+        var userDateFormat = "yyyy-mm-dd";
+    </script>
+</head>
+<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0" class="small"
+    style="">
+    <div id="status" style="position: absolute; display: none; left: 930px; top: 95px;
+        height: 27px; white-space: nowrap;">
+        <img src="./admin_files/status.gif">
+    </div>
+    <!-- ActivityReminder Customization for callback -->
+    <%--<div class="detail-panel-div" id="ActivityRemindercallback" align="left"><span id="ActivityReminder_callback_win_1393987922949" style="height: 75px;">
+
+<script type="text/javascript">    if (typeof (ActivityReminderRegisterCallback) != 'undefined') ActivityReminderRegisterCallback(1);</script></span></div>--%>
+    <div id="SelCustomer_popview" class="windLayerDiv" style="position: absolute; z-index: 60;
+        display: none;">
+    </div>
+    <br>
+    <table width="97%" border="0" cellspacing="0" cellpadding="0" align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <!--	! Setting List	-->
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                            <tr>
+                                <td class="detail-left-td">
+                                    <div class="detail-panel-div">
+                                        <!--Left Side Navigation Table-->
+                                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="setting-menu-tab">
+                                            <tbody>
+                                                <tr class="detail-heading" onmouseover="this.className=&#39;detail-heading-over&#39;;"
+                                                    onmouseout="this.className=&#39;detail-heading&#39;">
+                                                    <td nowrap="">
+                                                        &nbsp;&nbsp;基本设置
+                                                    </td>
+                                                </tr>
+                                                <!--	系统用户	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=index&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        系统用户
+                                                    </td>
+                                                </tr>
+                                                <!--	角色权限	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=listroles&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        角色权限
+                                                    </td>
+                                                </tr>
+                                                <!--	部门机构	 -->
+                                                <!-- 		<tr onclick="location.href='index.aspx?module=Users&action=listgroups&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			部门机构</td>
+	</tr> -->
+                                                <!--	全局共享规则	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=OrgSharingDetailView&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        全局共享规则
+                                                    </td>
+                                                </tr>
+                                                <!--	自定义共享规则	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomSharingDetailView&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        自定义共享规则
+                                                    </td>
+                                                </tr>
+                                                <!--	系统日志	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=AuditTrailList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        系统日志
+                                                    </td>
+                                                </tr>
+                                                <!--	登陆地址	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=ListLoginHistory&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        登录历史
+                                                    </td>
+                                                </tr>
+                                                <tr class="detail-heading" onmouseover="this.className=&#39;detail-heading-over&#39;;"
+                                                    onmouseout="this.className=&#39;detail-heading&#39;" height="25px">
+                                                    <td nowrap="">
+                                                        &nbsp;&nbsp;系统定制
+                                                    </td>
+                                                </tr>
+                                                <!--	模块开发	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomModuleList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        模块开发
+                                                    </td>
+                                                </tr>
+                                                <!--	显示区域	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomBlockList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        显示区域
+                                                    </td>
+                                                </tr>
+                                                <!--	自定义字段	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomFieldList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        自定义字段
+                                                    </td>
+                                                </tr>
+                                                <!--	下拉框选项	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=PickList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(50, 166, 54)">
+                                                        下拉框选项
+                                                    </td>
+                                                </tr>
+                                                <!--	页面布局	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=LayoutList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        页面布局
+                                                    </td>
+                                                </tr>
+                                                <!--	主菜单	 -->
+                                                <tr id="Tr1" onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomTabList&amp;parenttab=Settings&#39; "
+                                                    runat="server">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        主菜单
+                                                    </td>
+                                                </tr>
+                                                <!--	全局字段	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Users&amp;action=DefaultFieldPermissions&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        全局字段
+                                                    </td>
+                                                </tr>
+                                                <!--	相关信息	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=RelatedList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        相关信息
+                                                    </td>
+                                                </tr>
+                                                <!--	打印模板	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=PrintTemplate&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        打印模板
+                                                    </td>
+                                                </tr>
+                                                <!--	关联产品字段	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=ProductField&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        关联产品字段
+                                                    </td>
+                                                </tr>
+                                                <!--	审批流程	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=MultiApprove&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        审批流程
+                                                    </td>
+                                                </tr>
+                                                <!--	级联字段	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomMultiFieldList&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        级联字段
+                                                    </td>
+                                                </tr>
+                                                <!--	字段规则	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=FieldRules&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        字段规则
+                                                    </td>
+                                                </tr>
+                                                <!--	自定义编号	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CustomModEntityNo&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        自定义记录编号
+                                                    </td>
+                                                </tr>
+                                                <!--	字段修改日志	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=LogField&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        字段修改日志
+                                                    </td>
+                                                </tr>
+                                                <tr class="detail-heading" onmouseover="this.className=&#39;detail-heading-over&#39;;"
+                                                    onmouseout="this.className=&#39;detail-heading&#39;" height="25px">
+                                                    <td nowrap="">
+                                                        &nbsp;&nbsp;其它设置
+                                                    </td>
+                                                </tr>
+                                                <!--	Email模板	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=db_backup&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        数据库备份
+                                                    </td>
+                                                </tr>
+                                                <!--	公司信息	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=OrganizationConfig&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        公司信息
+                                                    </td>
+                                                </tr>
+                                                <!--	SMTP服务器	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=EmailConfig&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        SMTP服务器
+                                                    </td>
+                                                </tr>
+                                                <!--	短信通道	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=MessageConfig&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        短信通道
+                                                    </td>
+                                                </tr>
+                                                <!--	货币币种	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CurrencyListView&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        货币币种
+                                                    </td>
+                                                </tr>
+                                                <!--	授权许可	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=LicenseConfig&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        授权许可
+                                                    </td>
+                                                </tr>
+                                                <!--	多仓库管理	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=MultiWarehouseListView&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        多仓库管理
+                                                    </td>
+                                                </tr>
+                                                <!--	导入Shopex	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=ShopexConfig&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        导入Shopex
+                                                    </td>
+                                                </tr>
+                                                <!--	公司账户	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=CompanyAcct&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        公司账户
+                                                    </td>
+                                                </tr>
+                                                <!--	条件条款	 -->
+                                                <tr onclick="location.href=&#39;index.aspx?module=Settings&amp;action=ClauseListView&amp;parenttab=Settings&#39;">
+                                                    <td class="detail-list-div" onmouseover="this.className=&#39;detail-list-over&#39;;"
+                                                        onmouseout="this.className=&#39;detail-list-div&#39;" style="color: rgb(102, 102, 102)">
+                                                        条件条款
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:ContentPlaceHolder ID="cphBody" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </td>
+                                <td class="detail-content-td">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="createmodule" class="windLayerDiv" style="display: none; width: 600px; left: 500px;
+                        top: 150px; z-index: 100002;">
+                        <table width="100%" border="0" cellpadding="3" cellspacing="0" class="windLayerHeadingULine">
+                            <tr class="windLayerHeadingTr">
+                                <td class="windLayerHeading" align="left" width="80%" style="cursor: move">
+                                    &nbsp;&nbsp;新增模块
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td align="right">
+                                    <input class="windLayerBtclose" type="button" title="关闭" onclick="CloseLockDiv('createmodule');">&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                        <table border="0" cellspacing="0" cellpadding="5" width="95%" align="center">
+                            <tr>
+                                <td class="small">
+                                    <!-- popup specific content fill in starts -->
+                                    <div id="createmoduleContent">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <script>
+                            WindLayerDrag("createmodule", 'windLayerHeading');
+                        </script>
+                    </div>
+                    <div id="crmModellistdiv" class="windLayerDiv" style="display: none; width: 300px;
+                        left: 320px; top: 220px; overflow-x: auto; overflow-y: auto; z-index: 100002;">
+                        <table width="100%" border="0" cellpadding="3" cellspacing="0" class="windLayerHeadingULine">
+                            <tr class="windLayerHeadingTr">
+                                <td class="windLayerHeading" align="left" width="80%" style="cursor: move" id="shlisttitle">
+                                    编辑
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td align="right">
+                                    <input class="windLayerBtclose" type="button" title="关闭" onclick="CloseLockDiv('crmModellistdiv');">&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                        <table border="0" cellspacing="0" cellpadding="5" width="100%" align="center">
+                            <tr>
+                                <td class="small">
+                                    <!-- popup specific content fill in starts -->
+                                    <div id='serialinfodiv'>
+                                        <form action="index.aspx" method="post" name="EditForm">
+                                        <input type="hidden" name="module" value="Settings">
+                                        <input type="hidden" name="action" value="SettingsAjax">
+                                        <input type="hidden" name="file" value="SaveModuleName">
+                                        <input type="hidden" name="tabid" value="">
+                                        <input type="hidden" name="tableModule" value="">
+                                        <table class="small" width="100%" border="0" cellpadding="3" cellspacing="1">
+                                            <tr>
+                                                <td align="right">
+                                                    中文名称
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="newModelName" id="newModelName" value="" style="font-size: 14px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" align="center">
+                                                    <button type="button" class="pure-button pure-button-success" title="保存" onclick="CallSaveModuleNameForm();return false;">
+                                                        <i class="icon-ok"></i>保存
+                                                    </button>
+                                                    &nbsp;
+                                                    <button type="button" class="pure-button pure-button-cancel" title="关闭" onclick="CloseLockDiv('crmModellistdiv');return false;">
+                                                        <i class="icon-off"></i>关闭
+                                                    </button>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        </form>
+                        <br>
+                        <script>
+                            WindLayerDrag("crmModellistdiv", 'windLayerHeading');
+                        </script>
+                    </div>
+                    <!-- <div id="editdiv" style="display:block;position:absolute;width:510px;"></div> -->
+                    <div id="editdiv" class="windLayerDiv" style="display: none; width: 510px; left: 550px;
+                        top: 200px; z-index: 10001; visibility: hidden;">
+                        <table width="100%" border="0" cellpadding="3" cellspacing="0" class="windLayerHeadingULine">
+                            <tbody>
+                                <tr class="windLayerHeadingTr">
+                                    <td class="windLayerHeading" align="left" width="80%" style="cursor: move" id="block-title">
+                                        &nbsp;&nbsp;编辑下拉框列表 -
+                                    </td>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                    <td align="right">
+                                        <input class="windLayerBtclose" type="button" title="关闭" onclick="CloseLockDiv(&#39;editdiv&#39;);">&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table border="0" cellspacing="0" cellpadding="5" width="95%" align="center">
+                            <tbody>
+                                <tr>
+                                    <td class="small">
+                                        <!-- popup specific content fill in starts -->
+                                        <div id="createblockContent">
+                                          
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <script>
+                            WindLayerDrag("editdiv", 'windLayerHeading');
+                        </script>
+                    </div>
+                    <script>
+                        function SavePickList(fieldname, module, uitype) {
+                            $("status").style.display = "inline";
+                            //Effect.Puff($('editdiv'),{duration:2});
+                            var body = escape($("picklist_values").value);
+                            var post_url = 'index.aspx?action=SettingsAjax&module=Settings&directmode=ajax&file=UpdateComboValues&table_name=' + fieldname + '&fld_module=' + module + '&listarea=' + body + '&uitype=' + uitype;
+
+                            new Ajax.Request(
+        	post_url,
+	        { queue: { position: 'end', scope: 'command' },
+	            method: 'get',
+	            postBody: null,
+	            /* postBody: 'action=SettingsAjax&module=Settings&directmode=ajax&file=UpdateComboValues&table_name='+fieldname+'&fld_module='+module+'&listarea='+body, */
+	            onComplete: function (response) {
+	                $("status").style.display = "none";
+	                $("picklist_datas").innerHTML = response.responseText;
+	                CloseLockDiv('editdiv');
+	            }
+	        }
+	);
+                        }
+                        function changeModule(pickmodule) {
+                            $("status").style.display = "inline";
+
+                            var module = pickmodule.options[pickmodule.options.selectedIndex].value;
+                            new Ajax.Request(
+                'index.aspx',
+                { queue: { position: 'end', scope: 'command' },
+                    method: 'post',
+                    postBody: 'action=SettingsAjax&module=Settings&directmode=ajax&file=PickList&fld_module=' + module,
+                    onComplete: function (response) {
+
+                        $("status").style.display = "none";
+                        $("picklist_datas").innerHTML = response.responseText;
+                    }
+                }
+
+        );
+
+
+                        }
+
+                        function fetchEditPickList(module, fieldname, uitype) {
+                            Jquery("#status").css("display", "inline");
+                            var urlstring = "&fld_module=" + module + "&fieldname=" + fieldname + "&uitype=" + uitype + "";
+                            Jquery.ajax({
+                                url: "index.aspx",
+                                data: "module=Settings&action=SettingsAjax&file=EditComboField" + urlstring,
+                                success: function (rest) {
+                                    Jquery("#status").css("display", "none");
+                                    if (rest && rest != '') {
+                                        Jquery("#createblockContent").html(rest);
+                                        ShowLockDiv('editdiv');
+                                    }
+                                }
+                            });
+                        }
+
+                        function picklist_validate(mode, fieldname, module, uitype) {
+
+                            var pick_arr = new Array();
+                            pick_arr = trim($("picklist_values").value).split('\n');
+                            var len = pick_arr.length;
+                            for (i = 0; i < len; i++) {
+                                var valone;
+                                curr_iter = i;
+                                valone = pick_arr[curr_iter];
+                                for (j = curr_iter + 1; j < len; j++) {
+                                    var valnext;
+                                    valnext = pick_arr[j];
+                                    if (trim(valone) == trim(valnext)) {
+                                        alert("下拉框列表值重复");
+                                        return false;
+                                    }
+                                }
+                                i = curr_iter
+
+                            }
+                            if (mode == 'edit') {
+                                if (trim($("picklist_values").value) == '') {
+                                    alert("下拉框列表值重复");
+                                    $("picklist_values").focus();
+                                    return false;
+                                }
+                            }
+                            SavePickList(fieldname, module, uitype)
+                        }
+                    </script>
+                    &nbsp;
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--	/ Setting List	-->
+    <script language="JavaScript" type="text/javascript" src="./admin_files/popup.js"></script>
+    <br>
+    <br>
+    <br>
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="settingsSelectedUI">
+        <tbody>
+            <tr>
+                <td class="small" align="left">
+                    <a href="http:/www.c3crm.com/" target="_blank">E-CRM7.0.28</a>
+                </td>
+                <td class="small" align="right">
+                    Powered by <a href="http:/www.c3crm.com/" target="_blank">&nbsp;<img src="./admin_files/crm-logo-red.png"
+                        width="60" border="0"></a> &nbsp;&nbsp; 咨询热线: 400 680 5898 &nbsp;&nbsp; <a href="http:/www.c3crm.com/cpjs/298.html"
+                            target="_blank"><i class="icon-mobile-phone icon-large"></i>手机登陆 </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">        if (typeof (ActivityReminderCallback) != 'undefined') ActivityReminderCallback();</script>
+    <!--end body panes-->
+    <div id="bgDiv" style="position: absolute; top: 0px; background-color: rgb(204, 204, 204);
+        opacity: 0.3; left: 0px; width: 1440px; height: 3748px; z-index: 10000; visibility: hidden;
+        display: none; background-position: initial initial; background-repeat: initial initial;">
+    </div>
+</body>
+</html>

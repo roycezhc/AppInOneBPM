@@ -1,0 +1,116 @@
+﻿using System;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Web;
+
+namespace QYTang.Gengerate
+{
+    public class Gengerate
+    {
+        public void GengerateHtml()
+        { 
+            // 声明控件的正则表达式
+            Regex regRepeat = new Regex("<!--Repeat(.*)RepeatEnd-->", RegexOptions.IgnoreCase);
+
+            // 声明替换的正则表达式
+            Regex regReplaceBlank = new Regex(">(\\s+)<", RegexOptions.IgnoreCase);
+            Regex regReplaceLine = new Regex("\\s\\n", RegexOptions.IgnoreCase);
+
+            // 取根目录
+            string strRoot = HttpContext.Current.Request.PhysicalApplicationPath;
+
+            // 声明模板文件源码字符串
+            string strStatic = regReplaceBlank.Replace(regReplaceLine.Replace(File.ReadAllText(strRoot + "Static.htm", System.Text.Encoding.UTF8), ""), "><");
+            string strStaticDetail = regReplaceBlank.Replace(regReplaceLine.Replace(File.ReadAllText(strRoot + "StaticDetail.htm", System.Text.Encoding.UTF8), ""), "><");
+            
+            // 生成列表页
+            Match mRepeat = regRepeat.Match(strStatic);
+            
+            while  (mRepeat.Success)
+            { 
+                // 替换Repeat控件
+                strStatic = strStatic.Replace(mRepeat.Value, GengerateRepeat(mRepeat.Value));
+                // 生成StaticMain.htm
+                File.WriteAllText(strRoot + "StaticMain.htm", strStatic, System.Text.Encoding.UTF8);
+                mRepeat = mRepeat.NextMatch();
+            }
+
+            // 生成详细页
+            // 获取数据源
+            DataSet ds = OpOleDb.GetDataSet(OpOleDb.connStr, "select * from Test", null);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                // 声明一个新的字符串，用来替换数据标签并最终生成文件
+                string strTmpDetail = strStaticDetail;
+
+                // 循环替换标签
+                foreach (DataColumn dc in ds.Tables[0].Columns)
+                {
+                    strTmpDetail = strTmpDetail.Replace("{" + dc.ColumnName + "}", dr[dc.ColumnName].ToString());
+                }
+
+                // 生成文件
+                File.WriteAllText(strRoot + "StaticDetail_" + dr["Id"].ToString() + ".htm", strTmpDetail, System.Text.Encoding.UTF8);
+            }
+        }
+        private string GengerateRepeat(string source)
+        {
+            string html = "";
+
+            // 声明strStratTag和strEndTag
+            string strStartTag = "<!--Repeat{";
+            string strEndTag = "<!--Repeat End-->";
+            string strSql = "";
+
+            // 替换title的正则表达式，用于提取控件{}内的sql查询字符串
+            Regex regReplaceTitle = new Regex("<!--(\\w{3,7}){(.*)}-->", RegexOptions.IgnoreCase);
+
+            // 提取strSql，并将source的值去掉标签部分
+            Match mTitle = regReplaceTitle.Match(source);
+            if (mTitle.Success)
+            {
+                strSql = mTitle.Value.Replace(strStartTag, "").Replace("}-->", "");
+                source = source.Replace(mTitle.Value, "").Replace(strEndTag, "");
+            }
+
+            // 取数据源
+            if (strSql != "")
+            {
+                DataSet ds = OpOleDb.GetDataSet(OpOleDb.connStr, strSql, null);
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        { 
+                            // 声明一个临时字符串，用于保存替换过后的值
+                            string strTmp = source;
+
+                            // 循环替换临时字符串中的数据标签
+                            foreach (DataColumn dc in ds.Tables[0].Columns)
+                            {
+                                strTmp = strTmp.Replace("{" + dc.ColumnName + "}",dr[dc.ColumnName].ToString());
+                            }
+
+                            // 将替换过数据标签的字符串添加到需要返回的字符串中
+                            html += strTmp;
+                        }
+                    }
+                }
+                else
+                {
+                    html = "暂无数据！";
+                }
+            }
+            else
+            {
+                html = "该控件没有配置Sql查询字符串！";
+            }
+
+            return html;
+        }
+    }
+}

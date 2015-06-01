@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../Lib/DHX/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/dhtmlxgrid_skins.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../Lib/DHX/dhtmlxcommon.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/dhtmlxgrid.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/dhtmlxgridcell.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/ext/dhtmlxgrid_start.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/excells/dhtmlxgrid_excell_link.js" type="text/javascript"></script>
+
+
+   <script type="text/javascript">
+       dhtmlx.skin = "dhx_skyblue";
+
+       function createGrid(me) {
+           var mygrid = new dhtmlXGridFromTable('tblToGrid');
+           me.style.display = 'none';
+
+           //mygrid.splitAt(4);
+           //mygrid.setHeader("序号,车次,查询区间,#cspan,区间运行时刻,#cspan");
+           //mygrid.attachHeader("#rspan,#rspan,发站,到站,发时,到时,历时,始发站");
+           mygrid.setInitWidths("30,50,60,60,40,40");
+           mygrid.setColAlign("center,center,center,center,center,center");
+           mygrid.setColTypes("ro,link,link,link,ro,ro");
+           mygrid.setColSorting("int,str,str,str,str,str");
+
+           alert(mygrid.getColType(0));
+       }
+    </script>
+
+</head>
+<body>
+<div><a href="javascript:void(0)" onClick="createGrid(this);">Convert table to grid</a></div>
+<table id="tblToGrid" name="grid1" gridHeight="auto" style="width:400px" imgpath="../../lib/DHX/imgs/" border="1" lightnavigation="true">
+    <thead>
+     <tr>
+        <td type="ro">Column 1</td>
+        <td type="ro">Column 2</td>
+        <td type="ro">Column 3</td>
+        <td type="ro">Column 4</td>
+        <td type="ro">Column 5</td>
+        <td type="ro">Column 6</td>
+    </tr>
+    </thead>
+   <tbody>
+    <tr>
+        <td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 21</td>
+        <td>value 22</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 31</td>
+        <td>value 32</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 41</td>
+        <td>value 42</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 51</td>
+        <td>value 52</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+ 
+<div style=" overflow:scroll;width:500px;">
+<table class="dhtmlxGrid" gridHeight="auto" imgpath="../../lib/DHX/imgs/" style="width:400px;overflow:scroll;" lightnavigation="true">
+  <thead><tr>
+  <th>111</th><th>111</th><th>111</th><th>111</th>
+  <th>111</th><th>111</th><th>111</th><th>111</th>
+  <th>111</th><th>111</th><th>111</th><th>111</th>
+  <th>111</th><th>111</th><th>111</th><th>111</th>
+  </tr></thead>
+  <tbody>
+  <tr>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+         <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+         <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+         <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+         <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+    </tr>
+    <tr>
+        <td>value 11</td>
+        <td>value 12</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td>value 11</td>
+        <td>value 12</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td>value 11</td>
+        <td>value 12</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td>value 11</td>
+        <td>value 12</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+        <td>value 11</td>
+        <td>value 12</td>
+        <td type="ro">Column 1</td>
+        <td>Column 2</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

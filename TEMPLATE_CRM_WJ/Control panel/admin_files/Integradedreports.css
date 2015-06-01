@@ -1,0 +1,10 @@
+/* 报表表格 */
+.reporttab{background-color:#C9D3EB; color:#333;}/* 表格整体样式 */
+.reporthead{color:#fff; background-color:#7B95C7; font-weight:bolder;}
+.reporttab tr.reporthead{color:#fff; background-color:#7B95C7; font-weight:bolder;}/*报表表格中的表头样式*/
+.reporttab tr.reporttotle{background-color:#EEEEEE;}/*报表表格中的合计样式*/
+.reporttab tr{height: 24px; background-color:#FFF;}
+.reporttab td{white-space:nowrap;padding-left:5px;padding-right:5px;}
+
+.reportcenter{background-color:#DBE2F2;}/*侧边*/
+.reporttotle{background-color:#EEEEEE;}/*合计*/

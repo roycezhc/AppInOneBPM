@@ -1,0 +1,87 @@
+.loadmask {
+    z-index: 100;
+    position: absolute;
+    top:0;
+    left:0;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    background-color: #CCC;
+    width: 100%;
+    height: 100%;
+    zoom: 1;
+}
+.loadmask-msg {
+    z-index: 20001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border:1px solid #6593cf;
+    background: #c3daf9;
+    padding:2px;
+}
+.loadmask-msg div {
+    padding:5px 10px 5px 25px;
+    background: #fbfbfb url('loading.gif') no-repeat 5px 5px;
+    line-height: 16px;
+	border:1px solid #a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    cursor:wait;
+}
+.loadmask-msg tr {
+    padding:5px 10px 5px 25px;
+    background: #fbfbfb url('loading.gif') no-repeat 5px 5px;
+    line-height: 16px;
+	border:1px solid #a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    cursor:wait;
+}
+.loadmask-msg .maskmsgtool
+{
+	padding:0px 0px 0px 0px;
+    line-height: 16px;
+	border:1px solid #a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    cursor:default;
+    background:#eee;
+}
+.loadmask-msg .maskmsgtool a{float:right; cursor:pointer; margin-top: 3px; margin-right:5px;}
+.loadmask-msg .msgtblist{overflow:auto;clear:both;width:100%;min-height:50px;_height:50px;background:#fff;padding:0px 0px 0px 0px; cursor:default; background:none;}
+.loadmask-msg .msgtblist table{cursor:default; width:100%;_width:99%;height:auto;border:none;border-collapse:collapse;font-family:Geneva, Arial, Helvetica, sans-serif;}
+.loadmask-msg .msgtblist table thead{background:url(bg.png) 0 -310px;color:#444;font-weight:bold; }
+.loadmask-msg .msgtblist table thead tr{background:url(bg.png) 0 -310px;cursor:default;}
+.loadmask-msg .msgtblist table thead tr td,th{border:solid 1px #bbc;line-height:22px;}/**/
+
+.loadmask-msg .msgtblist table thead tr td.first,th.first{width:30px;}
+.loadmask-msg .msgtblist table thead tr td.first input,th.first input{ background:none;}
+
+.loadmask-msg .msgtblist table tbody tr{background:none;cursor:default;}
+.loadmask-msg .msgtblist table tbody tr td{width:auto;color:#333;line-height:20px;font-size:12px; border:solid 1px #aaa;white-space:nowrap;}
+.loadmask-msg .msgtblist table tbody tr td.first{background:#def url(bg.png--) 0 -310px; vertical-align:top;}
+.loadmask-msg .msgtblist table tbody tr td.first a{color:#600;}
+.loadmask-msg .msgtblist table tbody tr td.edited{ background:#ddf;}
+.loadmask-msg .msgtblist table tbody tr td a{cursor:pointer; text-decoration:none;color:#009;margin:0 3px 0 3px;}
+.loadmask-msg .msgtblist table tbody tr td a.dis{color:#aaa;}
+.loadmask-msg .msgtblist table tbody tr td input{border:none; background:none;}
+
+.loadmask-msg .msgtblist table tbody tr.tr-h td{background:url(bg.png) 0 -310px;color:#333;}
+
+.loadmask-msg .msgtblist table tbody tr.sel{ background:#ffeeaa; cursor:pointer;}
+.loadmask-msg .msgtblist table tbody tr.sel td{color:#036;}
+.loadmask-msg .msgtblist table tbody tr.over{ background:#efd;}
+.loadmask-msg .msgtblist table tbody tr.over td{color:#009;}
+.loadmask-msg .msgtblist table table thead{ background:#eee;}
+.loadmask-msg .msgtblist table table thead th{height:20px;line-height:20px;color:#333;font-weight:normal;}
+
+.masked {
+    overflow: hidden !important;
+}
+.masked-relative {
+    position: relative !important;
+}
+.masked-hidden {
+    visibility: hidden !important;
+}

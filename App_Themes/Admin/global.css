@@ -1,0 +1,198 @@
+﻿* {margin:0;padding:0;}
+html { overflow-x: hidden; overflow-y: auto; }
+body {font-family:Arial, Helvetica, sans-serif;font-size:12px;background:#fff; text-align:center;}
+ul,li,ol{list-style:none;padding:0;margin:0;}
+dl,dt,dd{padding:0;margin:0;}
+img {border:0;}
+.clear{clear:both;}
+a{ text-decoration:none;color:#36c;}
+
+/*顶部导航样式*/
+.topnav{font-weight:700;width:100%;line-height:22px;height:22px;text-align:left;padding-top:0px;border-bottom:solid 1px #369;}
+.topnav dl{float:left;line-height:18px;height:18px;margin-top:4px;width:auto;color:#000;}
+.topnav dl dt{float:left;height:100%;margin:0;background:url(img/tabBG.png) right -35px no-repeat;font-weight:bold;width:auto;padding-left:0;margin-left:0px;}
+.topnav dl dt a{color:#097574;background:url(img/tabBG.png) -16px -6px no-repeat;margin-right:5px;padding:0 5px 0 8px;text-align:center;font-size:12px;display:inline-block; text-decoration:none; cursor:pointer;}
+.topnav dl dd{float:left;width:auto;font-size:12px;font-weight:700;text-align:left;}
+.topnav dl dd a{margin-left:20px;}/*连接*/
+
+/*顶部靠右边的连接*/
+.topnav ul{padding:0;margin:0 0 0 0;list-style:none;float:right;width:auto;}
+.topnav ul li{float:left;width:auto;height:22px;line-height:22px;margin:0 0 0 3px;padding:0;color:#eee;}
+.topnav ul li label{color:#060; text-align:right; float:right; margin-right:20px;}/*提示信息*/
+.topnav ul li b{color:#060; text-align:right;margin-right:20px;}/*提示信息*/
+
+/*工具栏*/
+.tool ol{padding:0;margin:0 0 0 0;list-style:none;float:left;}
+.tool ol li{float:left;width:auto;height:22px;line-height:22px;margin:0 3px 0 3px;padding:0;color:#eee;}
+
+.tool ul{padding:0;margin:0 0 0 0;list-style:none;float:right;}
+.tool ul li{float:left;width:auto;height:22px;line-height:22px;margin:0 3px 0 3px;padding:0;color:#eee;}
+
+
+/*顶部查询区域样式*/
+.topfind{width:auto;min-height:20px;line-height:20px;padding:2px 0 3px 0;}
+.topfind dl{line-height:20px;height:20px;padding:0;margin:0;text-align:left;clear:left;}
+.topfind dl dt{float:left;width:90px;margin:0;color:#333;text-align:right;padding:0;}
+.topfind dl dt.sp{width:20px;}
+.topfind dl dd{float:left;width:150px;}
+.topfind dl dd input{border:solid 1px #aca;width:100px;margin:0;}
+.topfind dl dd.ckbs input{width:20px;border:none;}
+.topfind dl dd input.ckb{width:20px;border:none;}
+.topfind dl dd input.sel{border:none;background:url(img/find.gif) center center no-repeat;height:20px;width:30px; cursor:pointer;}
+.topfind dl dd textarea{border:solid 1px #aca;width:100px;margin:0;}
+.topfind dl dd select{border:solid 1px #aca;width:100px;}
+.topfind dl dd.w200{width:200px;}
+
+/*主区块范围*/
+.main{width:auto;padding:0 0 0 0;}
+
+/*分页*/
+.pages{margin-top:10px;}
+
+/*分组样式*/
+fieldset{margin:10px;border:solid 1px #ccc;width:auto;text-align:left;}
+fieldset legend{text-indent:10px;color:#0b9594;font-weight:bold;border:solid 1px #ddd;}
+fieldset legend label{float:left;}
+fieldset legend a{float:left;margin-left:50px;color:#789;cursor:pointer;}
+
+/*数据列表样式*/
+.tblist{width:100%;overflow:auto;border:solid 1px #679;}
+.tblist table{width:100%;height:auto;border-bottom:solid 1px #aaa;border-collapse:collapse; background:#f9fcfc; font-family:Geneva, Arial, Helvetica, sans-serif;}
+.tblist table thead{background:#0b9594;font-weight:bold;color:#fff;}
+.tblist table tr td{height:20px;line-height:20px; text-align:left;border:solid 1px #aaa;padding-left:10px;}
+.tblist table tr td a{ cursor:pointer;}
+.tblist table tr.sel{ background:#69a;color:#fff;}
+.tblist table tr.sel0{ background:#01fefd;}
+.tblist table tr.sel1{ background:#e1fe0d;}
+.tblist table tr.sel2{ background:#ff0000;}
+
+/*自定义水平多面板选择样式*/
+.tabs{margin:0;font-size:12px;width:auto;}
+.tabs h3{padding:2px 0 0 0;margin:0; text-align:center;font-size:12px;color:#fff;background:#dde;height:25px;line-height:25px;width:auto;border:solid 1px #367;}
+.tabs .tab-btns{background-color:#fff;height:22px;clear:both;}
+.tabs .tab-btns .btns{ position:relative;float:left;height:22px;overflow:hidden;}
+.tabs .tab-btns ul{list-style:none;width:3000px;margin:0 0 0 0;padding:0 0 0 0;position:absolute;top:2px;left:0; cursor:pointer;}
+.tabs .tab-btns ul li{height:20px;min-width:80px;width:auto;background:#378;text-align:center;border:solid 1px #666;border-bottom:none;margin:0 1px 0 0;float:left; z-index:999;}
+.tabs .tab-btns ul li a{color:#eee;text-decoration:none;margin:0;line-height:20px;padding:0 10px 0 10px;min-width:80px;display:block;cursor:pointer;}
+.tabs .tab-btns ul li.show{background:#cbfcfc;font-weight:bold;}
+.tabs .tab-btns ul li.show a{color:#097574;}
+.tabs .tab-cont{width:100%;border:solid 1px #096; }
+.tabs .tab-cont ul{height:100%;border:solid 1px #fff;padding:0;background:#f1e5ec;margin:0; list-style:none;}
+.tabs .tab-cont ul li{padding:10px 0 10px 0;background:#f9fafc;display:none;min-height:50px;overflow:auto;}
+.tabs .tab-cont ul li.show{background:#f9fafc;display:block;}
+.tabs .tab-btns ol{float:right;width:25px;margin:0;padding:0; }
+.tabs .tab-btns ol li{width:10px;height:10px;float:left;margin:0 0 0 0;padding:0;border:solid 1px #999; visibility:hidden;}
+.tabs .tab-btns ol li.tolft{ background:url(img/toleft2.gif) 0 center no-repeat;}
+.tabs .tab-btns ol li.torit{ background:url(img/toright2.gif) 0 center no-repeat;}
+
+
+/*自定义垂直多面板选择样式*/
+.vtabs{width:auto;margin:0 auto 0 auto;font-size:12px;}
+.vtabs .tab-btns{background-color:#fff;float:left;width:25px;}
+.vtabs .tab-btns ul{list-style:none;width:25px;margin:0 0 0 0;padding:0 0 0 0; cursor:pointer;}
+.vtabs .tab-btns ul li{height:auto;width:25px;background:#fff;text-align:center;border:solid 1px #aaa;margin:0 0 0 0;}
+.vtabs .tab-btns ul li a{color:#666;width:25px;min-height:60px; vertical-align:middle; display:block;border:none;padding:10px 0 10px 0; cursor:pointer; font-weight:bold;font-family:宋体;}
+.vtabs .tab-btns ul li.show{background:#0b9594;font-weight:bold;}
+.vtabs .tab-btns ul li.show a{color:#fff;}
+.vtabs .tab-cont{width:auto;margin-left:27px;}
+.vtabs .tab-cont ul{height:100%;padding:0;background:#f1e5ec;margin:0; list-style:none;}
+.vtabs .tab-cont ul li{padding:0 0 0 0;background:#f9fafc;display:none;min-height:200px;height:100%;}
+.vtabs .tab-cont ul li.show{background:#f9fafc;display:block;}
+
+
+/*列表输入表单和信息显示样式*/
+.form{margin:0 auto auto auto;text-align:left;border:solid 1px #0b9594;height:auto;width:auto;}
+.form div.f-warn{line-height:22px;color:#900; text-indent:20px;}
+.form div.scrol{overflow:auto;}/*表单可以滚动区域*/
+.form h1{text-align:center;font-size:14px;margin:0 0 0 0;padding:0;font-weight:700;background:#dde;border-bottom:solid 1px #333;color:#111;line-height:25px;width:100%;}
+.form dl{display:block;clear:left;line-height:25px;height:auto;margin:0;font-size:0;}
+.form dl dt{display:block;width:150px;text-align:right;float:left;padding-top:0px;font-size:12px;font-weight:bolder;color:#555;}
+.form dl dt.need{color:#f00;}/*必填*/
+.form dl dt.dis{color:#999;}/*非输入项*/
+.form dl dd{font-size:12px;color:#000;display:block;float:left;width:150px;min-width:150px;}
+.form dl dd div{height:auto;}
+.form dl dd div iframe{height:auto;}
+.form dl dd img{margin:0 5px 0 0;}
+.form dl dd input{background:#fefefe;margin:0;border:solid 1px #aca;width:100px;height: 16px;}
+.form dl dd select{background:#fefefe;width:120px;margin:0;border:solid 1px #669;width:100px;}
+.form dl dd textarea{background:#fefefe;margin:0 0 1px 0;width:300px;border:solid 1px #aca;}
+.form dl dd input.need{border:solid 1px #f00;background:#3ff;}
+.form dl dd input.dis{border:solid 1px #999;}/*非输入项颜色*/
+.form dl dd textarea.need{border:solid 1px #900;background:#eff;}
+.form dl dd textarea.dis{border:solid 1px #999;background:#eff;}
+.form dl dd span.need{color:#f00;font-size:18px;line-height:25px;}
+.form dl dd.ckbs input{width:20px;border:none;background:none;}
+.form dl dd input.ckb{border:none;background:none;width:20px;}
+.form dl dd input.sel{border:none;background:url(img/find.gif) center center no-repeat;height:20px;width:25px;}
+.form h2{text-align:center;padding:3px 0 0 auto;background:#dde;border-top:solid 1px #0b9594;font-size:0;height:auto;line-height:25px;height:25px; clear:both; position:relative;}
+.form h2 a{margin:0 0 0 20px;}
+.form h2 .wait{ position:absolute;top:0;height:100%;width:100%;left:0;display:block;display:none;color:#900;font-size:12px; background:#eee;}
+
+.form dl dd table tbody td input{width:100%;}
+/*表格表单和信息显示样式*/
+.tbform{border:solid 1px #aaa;width:auto;background:#f9fcfc;font-family:Geneva, Arial, Helvetica, sans-serif;min-height:60px; overflow:auto;}
+.tbform table{border-collapse:collapse;width:100%;margin:0 0 0 -25px;}
+.tbform table td{width:auto;line-height:25px; text-align:left;padding:0;border:solid 1px #bbb; text-indent:5px;}
+.tbform table td.label{width:120px; text-align:right;padding:0;}
+
+/*左右布局，右边自动宽度*/
+.lrlayout{width:auto;}
+.lrlayout .left{width:350px;height:100%;float:left;border-right:solid 1px #666;padding-right:0px;}
+.lrlayout .cent{width:50px;height:100%;float:left;border-right:solid 1px #666;padding-right:0px;}
+.lrlayout .right{width:auto;height:100%;margin-left:355px; z-index:888;padding-left:2px;}
+.lrlayout .right iframe{border:none;}
+
+/*左右布局，左右宽度固定*/
+.lrfloat{width:auto;}
+.lrfloat .left{width:200px;height:100%;float:left;border-right:solid 1px #666;}
+.lrfloat .right{width:200px;height:100%;float:right; z-index:888;}
+
+
+/*自定义构造的树形样式*/
+.mytree{margin:0 0 0 10px;width:auto; text-align:left;}
+.mytree ul{margin:0;padding:0;text-align:left;}
+.mytree ul li{margin:0 0 0 0;line-height:25px;padding:0;text-align:left;clear:both;border-left:solid 1px #777;}
+.mytree ul li ul{margin:-5px 0 0 15px;font-size:0;}
+.mytree ul li div{height:25px;margin:0 0 0 -8px;}
+.mytree ul li div b{background:url(Img/tree/closed.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div em{background:url(Img/tree/folder.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div.opened b{background:url(Img/tree/opened.gif) no-repeat 0 center;}
+.mytree ul li div.opened em{background:url(Img/tree/folderopen.gif) no-repeat 0 center;}
+
+.mytree ul li.leaf{margin-left:0;}
+.mytree ul li.leaf div b{background:none;width:16px;display:inline-block;margin:0 0 0 0;}
+.mytree ul li.leaf div em{background:url(Img/tree/file.gif) no-repeat 0 center;width:24px;margin-left:-8px;}
+.mytree ul li div a{display:inline-block;float:left;font-size:12px;margin:0 0 0 0;text-indent:5px;color:#000;}
+.mytree ul li div a:hover{background:#aae;color:#500;}
+.mytree ul li.last{background:url(Img/tree/lastline.gif) no-repeat 0 -2px;border-left:none;}
+.mytree ul li.sel{background-color:#bbf;color:#600; z-index:0;}
+.mytree ul li.root{border:none;margin:0;}
+.mytree ul li div.root{margin-left:0;}
+.mytree ul li div.root b{background:url(Img/tree/root.gif) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+
+/*特殊处理*/
+.mytree ul.gridsel li div em{background:url(Img/closed1.png) no-repeat 0 center;}
+.mytree ul.gridsel li div.opened em{background:url(Img/opened1.png) no-repeat 0 center;}
+.mytree ul li div em.line{background:url(Img/xian1.png) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+.mytree ul li div em.tg{background:url(Img/taiqu1.png) no-repeat 0 center;float:left;width:16px;height:100%;display:inline-block;}
+
+/*自定义按钮样式*/
+a.btn{height:20px;line-height:20px;display:inline-block;}
+a.btn span{font-size:12px;color:#fff;display:inline-block;width:auto;padding:0;margin:0;border:1px solid #366;height:auto;line-height:20px;}
+a.btn span input{padding:0 5px 0 5px;width:auto;height:20px;line-height:20px;font-size:12px;border:1px solid #fff; color:#fff;background:#366;margin:0; font-weight:normal;}
+a.btn span input.find{ text-indent:20px; background:url(img/find.gif) center center no-repeat;width:30px;}
+a.btn span input.dis{ background:#999;}
+a.btn span b{padding:0 5px 0 5px;margin:0;color:#fff;width:auto; background:#366;height:18px;line-height:18px; cursor:pointer;border:1px solid #fff; display:inline-block;font-weight:normal; text-align:center;}
+
+a.btn span.warn{border:1px solid #f00;color:#ffe;}
+
+a.btn0 span{border:none; background:none;}
+a.btn0 span b{color:#099;}
+
+
+/*列表导航样式*/
+.listnav{margin:5px 0 0 10px;padding:0;}
+.listnav li{ text-align:left;line-height:25px;background:url(img/arrow4.gif) 0 center no-repeat; text-indent:25px;}
+.listnav li a{color:#666;}
+.listnav li a:hover{color:#000; text-decoration:underline;}
+

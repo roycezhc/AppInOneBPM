@@ -1,0 +1,108 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.AppInOne.Common;
+public partial class HR_DEPT_MANAGEREdit : AgileFrame.AppInOne.Common.BaseAdminPage
+{
+    HR_DEPT_MANAGER valObj =new HR_DEPT_MANAGER();
+    int count = 0;
+    string deptid = "";
+    protected string title = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        title = valObj._ZhName + "±à¼­";
+        Page.Title = title;
+        if (!string.IsNullOrEmpty(Request["DEPT_ID"]))
+        {
+            deptid = Request["DEPT_ID"]; //Response.Write(deptid);
+        }
+        if (!IsPostBack)
+        {
+                    
+            txtLEVEL_CODE.Items.AddRange(FormHelper.GetListItem(HR_DEPT_MANAGER.Attribute.LEVEL_CODE));
+            //wucSelStaff1.Staff_ID=
+            //this.txtDEPT_ID.Disabled = true;
+            //this.txtDEPT_ID.Attributes["class"] = "dis";
+            if (txtLEVEL_CODE.Items.Count > 1) {
+                txtLEVEL_CODE.SelectedIndex = 1;
+            }
+        }
+    }
+
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            HR_DEPT_MANAGER valObj = new HR_DEPT_MANAGER();
+
+
+
+            valObj.DEPT_ID = deptid;
+
+
+            if (wucSelStaff1.Staff_ID > 0)
+            {
+                valObj.STAFF_ID = wucSelStaff1.Staff_ID;
+
+                valObj.MAG_NAME = wucSelStaff1.Staff_NAME;
+            }
+            if(txtLEVEL_CODE.Value !="" )
+                valObj.LEVEL_CODE = Convert.ToString(txtLEVEL_CODE.Value);
+
+            count = BLLTable<HR_DEPT_MANAGER>.Factory(conn).Insert(valObj, HR_DEPT_MANAGER.Attribute.MAG_ID);
+
+
+            if (count > 0)
+            {
+                //StringBuilder sbData = new StringBuilder("({valObj:''");
+                //List<AttributeItem> lstCol = valObj.af_AttributeItemList;
+                //for (int i = 0; i < lstCol.Count; i++)
+                //{
+                //    object val = valObj.GetValue(lstCol[i]);
+                //    if (val != null)
+                //    {
+                //        sbData.Append(",").Append(lstCol[i].FieldName).Append(":'").Append(val.ToString()).Append("'");
+                //    }
+                //}
+                //sbData.Append("})");
+
+                Button btn = (Button)sender;
+                if (btn.ID == "btnOK")
+                {
+                    if (ViewState["hadSave"] == null)
+                    {
+                        ScriptManager.RegisterStartupScript(Page, this.GetType(), "goto", "if (window.opener){window.opener.returnValue = 're';}else{window.returnValue = 're';}window.close();", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, this.GetType(), "goto", "if (window.opener){window.opener.returnValue = 're';}else{window.returnValue = 're';}window.close();", true);
+                    }
+                }
+                else
+                {
+                    
+                    
+                    //txtDEPT_ID.Value ="";
+                    
+                    
+                    //txtSTAFF_ID.Value ="";
+                    
+                    
+                    txtLEVEL_CODE.Value ="";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            litWarn.Text = ex.Message;
+        }
+    }
+
+}

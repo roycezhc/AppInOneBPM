@@ -1,0 +1,1 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="WEC_CS_DEFAULTRESPONSEAJAX.aspx.cs" Inherits="WEC_CS_DEFAULTRESPONSEAJAX" %>

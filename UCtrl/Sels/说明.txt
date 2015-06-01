@@ -1,0 +1,8 @@
+﻿
+
+    protected string tableName = "";
+    protected string ID_FIELD = "";
+    protected string NAME_FIELD = "";
+    protected string PID_FIELD = "";
+    protected string TypeTree = "";
+

@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="UCtrl_wucSelORG" CodeFile="wucSelORG.ascx.cs" %>
+<span><input id="txtORG_NAME" readonly="readonly"  runat="server" type="text" style="width:70%;float:left;" /><input id="hidORG_ID" type="hidden"  runat="server"/><input id="btnSelDept" runat="server" class="sel" type="button" onclick="selORG(this);" value="" style="float:left;"/></span>

@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+public partial class TJ_DEVICESel : AgileFrame.AppInOne.Common.BasePage
+{
+    TJ_DEVICE valObj = new TJ_DEVICE();
+    TJ_DEVICE condObj = new TJ_DEVICE();
+    List<TJ_DEVICE> listObj = new List<TJ_DEVICE>();
+    int recount = -1;
+    protected string title = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        title = valObj._ZhName + "Ñ¡Ôñ";
+        Page.Title = title;
+        if (!IsPostBack)
+        {
+            aspPager.CurrentPageIndex = 1;
+            aspPager.PageSize = 20;
+            try
+            {
+                listObj = BLLTable<TJ_DEVICE>.Factory(conn).SelectByPage(valObj, condObj, aspPager.PageSize, 1, ref recount);
+                repCus.DataSource = listObj;
+                repCus.DataBind();
+            }
+            catch (Exception ex)
+            {
+                litWarn.Text = ex.Message;
+            }
+            aspPager.RecordCount = recount;
+        }
+    }
+    protected void aspPager_PageChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            if (hidCondition.Value != "")
+            {
+                condObj = JsonServiceBase.FromJson<TJ_DEVICE>(hidCondition.Value);
+            }
+            listObj = BLLTable<TJ_DEVICE>.Factory(conn).SelectByPage(valObj, condObj, aspPager.PageSize, aspPager.CurrentPageIndex, ref recount);
+
+            repCus.DataSource = listObj;
+            repCus.DataBind();
+        }
+        catch (Exception ex)
+        {
+            litWarn.Text = ex.Message;
+        }
+    }
+    protected void btnFind_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            condObj = new TJ_DEVICE();
+
+            
+            
+            if(txtD_NAME.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.D_NAME, Convert.ToString(txtD_NAME.Value));
+            
+            
+            if(txtD_NO.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.D_NO, Convert.ToString(txtD_NO.Value));
+            
+            
+            if(txtD_ID.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.D_ID, Convert.ToString(txtD_ID.Value));
+            
+            
+            if(txtMETERID.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.METERID, Convert.ToDecimal(txtMETERID.Value));
+            
+            
+            if(txtSUB_ID.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.SUB_ID, Convert.ToString(txtSUB_ID.Value));
+            
+            
+            if(txtPART_ID.Value !="" )
+                condObj.Like(TJ_DEVICE.Attribute.PART_ID, Convert.ToString(txtPART_ID.Value));
+
+            listObj = BLLTable<TJ_DEVICE>.Factory(conn).SelectByPage(valObj, condObj, aspPager.PageSize, 1, ref recount);
+            repCus.DataSource = listObj;
+            repCus.DataBind();
+        }
+        catch (Exception ex)
+        {
+            litWarn.Text = ex.Message;
+        }
+        aspPager.RecordCount = recount;
+    }
+}

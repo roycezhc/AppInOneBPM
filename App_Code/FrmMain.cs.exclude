@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+/// <summary>
+///FrmMain 的摘要说明
+/// </summary>
+public class FrmMain
+{
+	public FrmMain()
+	{
+		
+	}
+    public string shouquan(string username,string password) {
+        FrmIE ie = new FrmIE("");
+        ie.Show();
+
+    _begin:
+        ie.Go("https://mp.weixin.qq.com/");  //公众平台登录
+        ie.Delay(2000);
+        if (ie.HtmlExist("&id:account"))
+        {
+            ie.HtmlClick("&id:account").Delay(100);  //点击:邮箱微信号号
+            ie.HtmlInput("newscarlet@126.com", "&id:account").Delay(100);  //输入
+            ie.HtmlInput("jin123456", "&id:password").Delay(100);  //输入
+            ie.HtmlClick("id:login_button").Delay(2000);  //点击:点击登录登录
+        }
+        ie.HtmlClick("tag:dt&index:0&txt:%功能%").Delay(100);  //点击:功能  //tag:i&index:3
+        //ie.HtmlClick("tag:i&index:3").Delay(100);
+
+        ie.HtmlClick("tag:a&index:11&txt:%高级功能%").Delay(100);  //点击:高级功能
+        //ie.HtmlClick("&tag:ul&index:0").Delay(1000);  //点击:编辑模式在此模式下可以通过简单
+        ie.HtmlClick("tag:p&index:2&txt:%已开启已关闭进入%|tag:a&index:0&txt:%进入%").Delay(2000);  //点击:进入
+        //tag:p&index:2&txt:%已开启已关闭进入%   //&tag:a&index:21&txt:%进入%
+        if (!ie.HtmlExist("&tag:a&index:27&txt:%修改%"))
+            goto _begin;
+
+        ie.HtmlClick("&tag:a&index:27&txt:%修改%").Delay(100);  //点击:修改
+        ie.ScrollTo(0, 300);
+        ie.HtmlClick("&tag:i&index:13").Delay(500);  //点击:父元素:我同意以上微信公众平台开发者服
+        ie.HtmlClick("&tag:div&index:19&txt:%下一步%").Delay(1000);  //点击:下一步
+        ie.HtmlClick("&id:nextBt").Delay(1000);  //点击:下一步
+        ie.HtmlClick("&id:url").Delay(1000);  //点击:必须以开头目前支持端口
+        ie.HtmlInput("http://115.29.224.227/Default.aspx", "&id:url").Delay(100);  //输入
+        ie.HtmlInput("123456", "&id:token").Delay(100);  //输入
+        if (!ie.HtmlExist("&tag:button&index:0&txt:%提交%"))
+            goto _begin;
+        ie.HtmlClick("&tag:button&index:0&txt:%提交%").Delay(1000);  //点击:提交
+    }
+}

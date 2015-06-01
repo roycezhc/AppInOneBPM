@@ -1,0 +1,53 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="wdsback.aspx.cs" Inherits="HR_CheckWork_wdsback" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="divC" runat="server">
+    <rows>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        <asp:Repeater ID="Repeater1" runat="server">
+        <ItemTemplate>
+        <row>
+        <cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell><cell>12</cell>
+        </row>
+        </ItemTemplate>
+        </asp:Repeater>
+        </rows></div>
+    </form>
+</body>
+</html>

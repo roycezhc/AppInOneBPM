@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="UCtrl_Sels_wucSelSub_Stru" CodeFile="wucSelSub_Stru.ascx.cs" %>
+<span><input id="txtDEPT_NAME" readonly="readonly" style="width:70%;float:left;" runat="server" type="text" /><input id="hidDEPT_ID" type="hidden"  runat="server"/><input id="btnSelDept" runat="server" class="sel" type="button" onclick="selDept(this);" value="" style="float:left;" /></span>

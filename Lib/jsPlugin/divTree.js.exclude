@@ -1,0 +1,217 @@
+﻿var TV = {};
+TV.getELByDataObj = function (obj, level, sc) {
+    var liHtml = "";
+    licls = "";
+    if (obj.sc == 0) {
+        licls += " class='leaf'";
+    }
+    var bcls = "";
+    if (obj.clsname != undefined && obj.clsname != "") {
+        bcls = " class='" + arr[i].clsname + "'"
+    }
+    if (bcls == "") {
+        if (obj.ntype != undefined && obj.ntype != "") {
+            bcls = " class='tp_" + obj.ntype + "'"
+        }
+    }
+    if (level != undefined) {
+        obj.level = level;
+    }
+    if (sc != undefined) {
+        obj.sc = sc;
+    }
+    liHtml = "<li " + licls + " data=\"" + TV.jsonToStr(obj) + "\"><div><b " + bcls + "><em></em></b><a href='#'>" + obj.name + "</a></div></li>";
+    return $(liHtml);
+}
+
+TV.jsonToStr = function (objData) {
+    var str = "{";
+    for (var el in objData) {
+        if (str.length > 1) {
+            str += ",";
+        }
+        str += el.toString() + ":'" + objData[el.toString()] + "'";
+    }
+    str += "}";
+    return str;
+}
+TV.jsonToPara = function (tndata) {
+    var str = "";
+    for (var el in tndata) {
+        if (str.length > 1) {
+            str += "&";
+        }
+        str += el.toString() + "=" + escape(tndata[el.toString()]);
+    }
+    return str;
+}
+
+TV.TreePrototype = function () {
+    this.Msg = function (msg) {
+        alert(msg);
+    }
+
+    
+
+    this.getBackUrl = function (url, morepara) {
+        if (url.indexOf("?") == -1) {
+            return url + "?" + morepara;
+        } else {
+            return url + "&" + morepara;
+        }
+    }
+
+};
+TV.Tree = function (id, option) {
+    //this.Msg('dddddd');
+    //option:
+    if (id == undefined) {
+        alert("请将树形容器元素的ID作为参数传入。");
+        return;
+    }
+    //树形插件容器对象
+    var cObj = $("#" + id);
+    if (cObj[0].tagName != "UL") {
+        cObj = cObj.find("ul:first");
+    }
+    //默认参数
+    var defaultOptions = {
+        ifrID: 'ifrMain',
+        pageBack: 'DeptBack.aspx',
+        pageDefault: 'deptedit.aspx',
+        selNodeHandle: function (tn) { }
+    }
+    var opts = defaultOptions;
+    if (option != undefined) {
+        opts = $.extend(opts, option);
+    }
+
+    var _selNode = null; //选中的节点
+
+    this.getSelNode = function () {
+        return _selNode;
+    }
+
+    //初始化根节点信息和事件
+
+    var _LIS = cObj.children();
+
+    var bindNodeEvent = function (el) {
+        var aObj = el.find("a:first");
+        var bObj = el.find("b:first");
+        aObj.bind("mousedown", aObj, function (e) {
+            e.stopPropagation();
+            if (_selNode != null) {
+                _selNode.getEL().removeClass("sel");
+            }
+            var el = e.data.parent().parent();
+            el.addClass("sel");
+
+            _selNode = new TreeNode(el);
+
+            $("iframe[id='" + opts.ifrID + "']").attr("src", opts.pageDefault);
+            opts.selNodeHandle(_selNode);
+
+            return false;
+        });
+
+        bObj.bind("mousedown", bObj, function (e) {
+            e.stopPropagation();
+            var el = e.data.parent().parent();
+            _selNode = new TreeNode(el);
+            _selNode.showNodes();
+
+            return false;
+        });
+    }
+
+    _LIS.each(function (i) {
+        $(this).css("border", "none");
+        $(this).find("div:first").addClass("root");
+
+        bindNodeEvent($(this));
+
+    });
+
+
+    var TreeNode = function (Obj) {
+        var _EL = Obj;
+
+        var dataObj = null;
+        if (Obj.length > 0 && Obj[0].tagName == 'LI') {
+            var ddd = Obj.attr("data");
+            dataObj = eval("(" + ddd + ")");
+        } else {
+            alert("创建借点参数对象异常！");
+            return;
+        }
+        this.getOpts = function () { return opts; }
+        this.getEL = function () { return _EL; }
+        this.getDataObj = function () { return dataObj; }
+
+        var _NID = dataObj.id || "";
+        this.getNID = function () { return _NID; }
+        this.setNID = function (nid) { _NID = nid; }
+
+        var _PNID = dataObj.pid || "";
+        this.getPNID = function () { return _PNID; }
+        this.setPNID = function (pnid) { _PNID = pnid; }
+
+        var _NAME = dataObj.name || "";
+        this.getNAME = function () { return _NAME; }
+        this.setNAME = function (name) { _NAME = name; }
+
+        var _SNUM = dataObj.sc || 0;
+        this.getSNUM = function () {
+            return _SNUM;
+        }
+        this.setSNUM = function (subnum) { _SNUM = subnum; }
+        this.getSUBNUM = function () {
+            return liObj.find("ul:first").children().length;
+        }
+
+        var _SORT = dataObj.no || 0;
+        this.getSORT = function () { return _SORT; }
+        this.setSORT = function (sort) { _SORT = sort; }
+
+        var _LEVEL = dataObj.level || 0;
+        this.getLEVEL = function () { return _LEVEL; }
+        this.setLEVEL = function (level) { _LEVEL = level; }
+
+        var _NTYPE = dataObj.ntype || 0;
+        this.getNTYPE = function () { return _NTYPE; }
+        this.setNTYPE = function (level) { _NTYPE = level; }
+
+
+
+    }
+    TreeNode.prototype = new TV.TreePrototype();
+    TreeNode.prototype.showNodes = function () {
+        var opts = this.getOpts();
+        var dataObj = this.getDataObj();
+        var url = this.getBackUrl(opts.pageBack, "ShowSubNodes=" + Math.random());
+        //alert(TV.jsonToStr(dataObj));
+        var tn = this;
+        $.get(url, dataObj, function (data) {
+            var arr = eval(data);
+            for (var i = 0; i < arr.length; i++) {
+                tn.showNode(arr[i]);
+            }
+        });
+
+        return false;
+    }
+    TreeNode.prototype.showNode = function (obj) {
+        var el = TV.getELByDataObj(obj);
+        var _EL = this.getEL();
+        var ulObj = _EL.find("ul:first");
+        if (ulObj.length == 0) {
+            ulObj = $("<ul></ul>");
+            _EL.append(ulObj);
+        }
+        ulObj.append(el);
+        bindNodeEvent(el);
+    }
+
+};
+TV.Tree.prototype = new TV.TreePrototype();

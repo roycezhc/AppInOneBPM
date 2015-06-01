@@ -1,0 +1,15 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Themes/Blank.master" AutoEventWireup="true" CodeFile="ttt.aspx.cs" Inherits="HR_CheckWork_ttt" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" Runat="Server">
+    <rows>
+    <row><cell>as</cell></row>
+    <asp:Repeater ID="Repeater1" runat="server">
+    <ItemTemplate>
+    <row><cell><%#12 %></cell><cell><%#12 %></cell><cell><%#12 %></cell><cell><%#12 %></cell></row>
+    </ItemTemplate>
+    </asp:Repeater>
+    </rows>
+</asp:Content>
+

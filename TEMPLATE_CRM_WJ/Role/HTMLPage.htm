@@ -1,0 +1,906 @@
+﻿
+<!DOCTYPE HTML >
+<html>
+<head>
+	<title>admin - 控制面板 - 控制面板 - 易客CRM</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<style type="text/css">@import url("themes/softed/style.black.css");</style>
+		
+	<link rel="stylesheet" href="themes/softed/font-awesome/buttons-min.css">
+	<link rel="stylesheet" href="themes/softed/font-awesome/font-awesome.min.css">
+	
+	<!--[if IE 7]>
+	  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome-ie7.min.css">
+	<![endif]-->
+	
+
+	<!-- ActivityReminder customization for callback -->
+	
+	<style type="text/css">
+	#ActivityRemindercallback{position:fixed;right:0px;bottom:2px;display:block;padding:0px;z-index:10;font-weight:normal;width:205px;}
+        </style>
+	<!--[if lte IE 6]>
+	<style type="text/css">	
+	#ActivityRemindercallback {position: absolute;display:block;width:209px;
+	top:expression(eval(document.compatMode &&
+	document.compatMode=='CSS1Compat') ?
+	documentElement.scrollTop
+	+(documentElement.clientHeight-this.clientHeight)
+	: document.body.scrollTop
+	+(document.body.clientHeight-this.clientHeight));}
+	</style>
+	<![endif]-->
+	
+	<!-- End -->
+	<!-- header -->
+	<!-- header-crm name & RSS -->
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/jquery-1.10.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/jquery-ui-1.10.2.min.js"></script>
+	<script type="text/javascript">
+	    var Jquery = $;
+	</script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/prototype.min.js"></script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/dom-drag.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/zh_cn.lang.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/general.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/json.js"></script>
+	
+	<script language="javascript">
+	    javaCalendarFirstDayOfWeek = 1;
+	    var userDateFormat = "yyyy-mm-dd";
+        </script>
+</head>
+	<body leftmargin=0 topmargin=0 marginheight=0 marginwidth=0 class=small>
+
+<div id="status" style="position:absolute;display:none;left:930px;top:95px;height:27px;white-space:nowrap;"><img src="themes/softed/images/status.gif"></div>
+<!-- ActivityReminder Customization for callback -->
+<div class="detail-panel-div" id="ActivityRemindercallback" align="left">
+</div>
+<div id="SelCustomer_popview" class="windLayerDiv" style="position:absolute;z-index:60;display:none;">
+</div><br>
+<table width="97%" border="0" cellspacing="0" cellpadding="0" align=center>
+  <tr>
+    <td>
+<!--	! Setting List	-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align=center>
+  <tr>
+    <td class="detail-left-td">
+		<div class="detail-panel-div">
+					<!--Left Side Navigation Table-->
+<table border=0 cellspacing=0 cellpadding=0 width=100% id="setting-menu-tab">
+	<tr class="detail-heading" onmouseover="this.className='detail-heading-over';" 
+			onmouseout="this.className='detail-heading'">
+		<td nowrap>&nbsp;&nbsp;基本设置</td>
+	</tr>
+
+	<!--	系统用户	 -->
+			<tr onclick="location.href='index.php?module=Users&action=index&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			系统用户</td>
+	</tr>
+
+	<!--	角色权限	 -->
+			<tr onclick="location.href='index.php?module=Users&action=listroles&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			角色权限</td>
+	</tr>
+	
+	<!--	部门机构	 -->
+	<!-- 		<tr onclick="location.href='index.php?module=Users&action=listgroups&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			部门机构</td>
+	</tr> -->
+	
+	<!--	全局共享规则	 -->
+			<tr onclick="location.href='index.php?module=Users&action=OrgSharingDetailView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			全局共享规则</td>
+	</tr>
+
+	<!--	自定义共享规则	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomSharingDetailView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			自定义共享规则</td>
+	</tr>
+
+	<!--	系统日志	 -->
+			<tr onclick="location.href='index.php?module=Users&action=AuditTrailList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			系统日志</td>
+	</tr>
+
+	<!--	登陆地址	 -->
+			<tr onclick="location.href='index.php?module=Users&action=ListLoginHistory&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			登录历史</td>
+	</tr>
+	
+
+	
+	<tr class="detail-heading" onmouseover="this.className='detail-heading-over';" 
+			onmouseout="this.className='detail-heading'" height=25px>
+		<td nowrap>&nbsp;&nbsp;系统定制</td>
+	</tr>
+
+	<!--	模块开发	 -->
+						<tr onclick="location.href='index.php?module=Settings&action=CustomModuleList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(50, 166, 54)">
+			模块开发</td>
+	</tr>
+
+	<!--	显示区域	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomBlockList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			显示区域</td>
+	</tr>
+
+	<!--	自定义字段	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomFieldList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			自定义字段</td>
+	</tr>
+
+	<!--	下拉框选项	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=PickList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			下拉框选项</td>
+	</tr>
+
+	<!--	页面布局	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=LayoutList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			页面布局</td>
+	</tr>
+
+	<!--	主菜单	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomTabList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			主菜单</td>
+	</tr>
+
+	<!--	全局字段	 -->
+			<tr onclick="location.href='index.php?module=Users&action=DefaultFieldPermissions&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			全局字段</td>
+	</tr>
+	
+	<!--	相关信息	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=RelatedList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			相关信息</td>
+	</tr>
+
+	<!--	打印模板	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=PrintTemplate&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			打印模板</td>
+	</tr>
+
+	<!--	关联产品字段	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=ProductField&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			关联产品字段</td>
+	</tr>
+
+	<!--	审批流程	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=MultiApprove&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			审批流程</td>
+	</tr>
+
+	<!--	级联字段	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomMultiFieldList&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			级联字段</td>
+	</tr>
+
+	<!--	相关信息模块字段	 -->
+	<!-- 		<tr onclick="location.href='index.php?module=Settings&action=RelmodField&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			相关信息模块字段</td>
+	</tr> -->
+
+	<!--	字段规则	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=FieldRules&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			字段规则</td>
+	</tr>
+
+	<!--	自定义编号	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CustomModEntityNo&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			自定义记录编号</td>
+	</tr>
+
+	<!--	字段修改日志	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=LogField&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			字段修改日志</td>
+	</tr>
+
+	<tr class="detail-heading" onmouseover="this.className='detail-heading-over';" 
+			onmouseout="this.className='detail-heading'" height=25px>
+		<td nowrap>
+			&nbsp;&nbsp;其它设置
+		</td>
+	</tr>
+	
+	<!--	Email模板	 -->
+	<!-- 		<tr onclick="location.href='index.php?module=Users&action=listemailtemplates&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			Email模版</td>
+	</tr> -->
+
+	<!--	Email模板	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=db_backup&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			数据库备份</td>
+	</tr>
+
+	<!--	公司信息	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=OrganizationConfig&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			公司信息</td>
+	</tr>
+
+	<!--	SMTP服务器	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=EmailConfig&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			SMTP服务器</td>
+	</tr>
+
+	<!--	短信通道	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=MessageConfig&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			短信通道</td>
+	</tr>
+
+	<!--	货币币种	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CurrencyListView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			货币币种</td>
+	</tr>
+
+	<!--	单页显示方式	 -->
+	<!-- 		<tr onclick="location.href='index.php?module=Users&action=DefModuleView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			单页显示方式</td>
+	</tr> -->
+
+	<!--	授权许可	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=LicenseConfig&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			授权许可</td>
+	</tr>
+
+	<!--	回收站	 -->
+	<!-- 		<tr onclick="location.href='index.php?module=Recyclebin&action=index&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			回收站</td>
+	</tr> -->
+
+	<!--	多仓库管理	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=MultiWarehouseListView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			多仓库管理</td>
+	</tr>
+	
+	<!--	导入Shopex	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=ShopexConfig&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			导入Shopex</td>
+	</tr>
+
+	<!--	公司账户	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=CompanyAcct&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			公司账户</td>
+	</tr>
+
+	<!--	条件条款	 -->
+			<tr onclick="location.href='index.php?module=Settings&action=ClauseListView&parenttab=Settings'">
+		<td class="detail-list-div" onmouseover="this.className='detail-list-over';" 
+		onmouseout="this.className='detail-list-div'" style="color:rgb(102, 102, 102)">
+			条件条款</td>
+	</tr>
+</table>		</div>
+	</td>
+	<td class="detail-content-td">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr><td valign=top>
+				<div class="detail-panel-div">
+											<script language="JavaScript" type="text/javascript" src="include/js/customview.js"></script>
+<link rel="stylesheet" type="text/css" href="include/ajaxtabs/ajaxtabs.css">
+<script language="javascript">
+
+    function deleteCustomModule(id) {
+        if (confirm(alert_arr.SURE_TO_DELETE)) {
+            /* document.form.action="index.php?module=Settings&action=DeleteCustomModule&id="+id;
+            document.form.submit();*/
+            window.location.href = "index.php?module=Settings&action=DeleteCustomModule&id=" + id;
+        }
+    }
+    function exportCustomModule(id) {
+        if (confirm(alert_arr.SURE_TO_EXPORT)) {
+            /*  document.form.action="index.php?module=Settings&action=SettingsAjax&file=exportCustomModule&id="+id;
+            document.form.submit();*/
+            window.location.href = "index.php?module=Settings&action=SettingsAjax&file=exportCustomModule&id=" + id;
+        }
+    }
+    function installCustomModule(id) {
+        if (confirm(alert_arr.SURE_TO_INSTALL)) {
+            window.location.href = "index.php?module=Settings&action=installCustomModule&id=" + id;
+        }
+    }
+    function uninstallCustomModule(id) {
+        if (confirm(alert_arr.SURE_TO_UNINSTALL)) {
+            window.location.href = "index.php?module=Settings&action=uninstallCustomModule&id=" + id;
+        }
+    }
+
+    function getCreateCustomModuleForm(id) {
+        new Ajax.Request(
+		'index.php',
+		{ queue: { position: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Settings&action=SettingsAjax&file=CreateCustomModule&id=' + id + '&parenttab=Settings&ajax=true',
+		    onComplete: function (response) {
+		        $("createmoduleContent").innerHTML = response.responseText;
+		        ShowLockDiv("createmodule");
+		        //execJS($('moduleLayer'));
+		    }
+		}
+	);
+
+    }
+    function checkIsCreateModule() {
+        var enname = document.addtodb.enname.value;
+        new Ajax.Request(
+		'index.php',
+		{ queue: { position: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Settings&action=SettingsAjax&file=isCreateModule&parenttab=Settings&ajax=true&enname=' + enname,
+		    onComplete: function (response) {
+		        if (response.responseText == "true") {
+		            document.addtodb.submit();
+		        } else if (response.responseText == "false") {
+		            alert(alert_arr.MODULES_FOLDER_NOT_WRITABLE);
+		        } else {
+		            alert(alert_arr.MODULES_EXISTED);
+		        }
+		    }
+		}
+	);
+
+    }
+    function validate_module() {
+        if (document.addtodb.enname.value == "") {
+            alert(alert_arr.TAB_KEY_IS_NULL);
+            document.addtodb.enname.focus();
+            return false;
+        } else {
+            var str = document.addtodb.enname.value;
+            var re = /^[a-zA-Z]+$/i;
+            if (!re.test(str)) {
+                alert(alert_arr.INPUT_VALID_CHARACTER);
+                document.addtodb.enname.focus();
+                return false;
+            } else if (str.length < 5) {
+                alert(alert_arr.INPUT_VALID_CHARACTER_LENGTH);
+                document.addtodb.enname.focus();
+                return false;
+            }
+        }
+        if (document.addtodb.cnname.value == "") {
+            alert(alert_arr.TAB_LABEL_IS_NULL);
+            document.addtodb.cnname.focus();
+            return false;
+        } else {
+            if (isNaN(trim(document.addtodb.order.value))) {
+                alert(alert_arr.LBL_ENTER_VALID_NO);
+                document.addtodb.order.focus();
+                return false;
+            }
+        }
+        if (document.addtodb.order.value == "") {
+            alert(alert_arr.DISPLAY_ORDER_IS_NULL);
+            document.addtodb.order.focus();
+            return false;
+        } else {
+            if (isNaN(trim(document.addtodb.order.value))) {
+                alert(alert_arr.LBL_ENTER_VALID_NO);
+                document.addtodb.order.focus();
+                return false;
+            }
+        }
+        Jquery.ajax({
+            url: "index.php",
+            data: "module=Settings&action=SettingsAjax&file=CheckEnname&enname=" + document.addtodb.enname.value,
+            success: function (rest) {
+                if (rest == 'SUCCESS') {
+                    alert(alert_arr.INPUT_VALID_CHARACTER_MODULE);
+                    document.addtodb.enname.focus();
+                    return false;
+                } else {
+                    if (checkRelatedmodule()) {
+                        checkIsCreateModule();
+                    }
+                }
+            }
+        })
+
+    }
+    function checkRelatedmodule() {
+        var relatedmodule1 = document.addtodb.relatedmodule1.value;
+        var relatedmodule2 = document.addtodb.relatedmodule2.value;
+        var relatedmodule3 = document.addtodb.relatedmodule3.value;
+        if (relatedmodule1 != "") {
+            if (relatedmodule2 != "") {
+                if (relatedmodule1 == relatedmodule2) {
+                    alert(alert_arr.RELATEDMODULE_REPEATED);
+                    return false;
+                }
+            }
+            if (relatedmodule3 != "") {
+                if (relatedmodule1 == relatedmodule3) {
+                    alert(alert_arr.RELATEDMODULE_REPEATED);
+                    return false;
+                }
+            }
+
+        }
+        if (relatedmodule2 != "") {
+            if (relatedmodule1 == "") {
+                alert(alert_arr.RELATEDMODULE1_ISNULL);
+                return false;
+            }
+            if (relatedmodule3 != "") {
+                if (relatedmodule2 == relatedmodule3) {
+                    alert(alert_arr.RELATEDMODULE_REPEATED);
+                    return false;
+                }
+            }
+
+        }
+        if (relatedmodule3 != "") {
+            if (relatedmodule2 == "") {
+                alert(alert_arr.RELATEDMODULE1_ISNULL);
+                return false;
+            }
+        }
+        return true;
+    }
+    function checkImportExport(form) {
+        if (form.product.checked == true) {
+            form.importexport.disabled = true;
+            form.warehouse.disabled = false;
+            form.delivery.disabled = false;
+        } else {
+            form.importexport.disabled = false;
+            form.warehouse.disabled = true;
+            form.delivery.disabled = true;
+        }
+    }
+    function checkInventory(form) {
+        if (form.warehouse.checked == true) {
+            form.delivery.disabled = true;
+        } else {
+            form.delivery.disabled = false;
+        }
+
+        if (form.delivery.checked == true) {
+            form.warehouse.disabled = true;
+        } else {
+            form.warehouse.disabled = false;
+        }
+    }
+
+    function setProdFieldView(setype, theelement) {
+        Jquery("#status").css('display', 'block');
+        var classmethods = $$('.tab-chan-link');
+        for (var i = 0; i < classmethods.length; i++) {
+            classmethods[i].className = 'tab-chan-link';
+        }
+        Jquery(theelement).attr('class', 'tab-chan-link tab-chan-link-on');
+
+        document.getElementById("prodview").value = setype;
+        var mode = document.DetailForm.mode.value
+        new Ajax.Request(
+		'index.php',
+		{ queue: { lposition: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Settings&action=SettingsAjax&file=CustomModuleList&prodview=' + setype + '&ajax=true',
+		    onComplete: function (response) {
+		        Jquery("#status").css('display', 'none');
+		        var rest = response.responseText;
+		        $("cfList").innerHTML = rest;
+		    }
+		}
+	);
+    }
+
+    function callShowModelEdit(tabid, module, tablelabel) {
+        var tagName = document.getElementById('crmModellistdiv');
+        document.EditForm.tabid.value = tabid;
+        document.EditForm.newModelName.value = tablelabel;
+        document.EditForm.tableModule.value = module;
+
+        var obj = document.getElementById("img_" + tabid);
+
+        if (typeof (tagName) == 'undefined') {
+            return;
+        }
+        var leftSide = findPosX(obj);
+        var topSide = findPosY(obj);
+        leftSide = leftSide - 360;
+        var maxW = tagName.style.width;
+        var widthM = maxW.substring(0, maxW.length - 2);
+        var getVal = eval(leftSide) + eval(widthM);
+        if (getVal > document.body.clientWidth) {
+            leftSide = eval(leftSide) - eval(widthM);
+            tagName.style.left = leftSide + 34 + 'px';
+        }
+        else
+            tagName.style.left = leftSide + 'px';
+        tagName.style.top = topSide + 'px';
+
+        ShowLockDiv('crmModellistdiv');
+
+    }
+
+    function CallSaveModuleNameForm() {
+        var newName = removeHTMLTag(document.EditForm.newModelName.value);
+        document.EditForm.newModelName.value = newName;
+        if (!emptyCheck('newModelName', '中文名称', 'text')) return;
+        document.EditForm.submit();
+    }
+
+
+</script>
+<br>
+			<!-- DISPLAY -->
+						<b><font color=red> </font></b>
+						
+				<table class="settingsSelUITopLine" border="0" cellpadding="5" cellspacing="0" width="100%">
+				<tbody><tr>
+					<td rowspan="2" valign="top" width="50"><img src="themes/softed/images/modulelist.gif" alt="Users" title="Users" border="0" height="48" width="48"></td>
+					<td class="heading2" valign="bottom"><b><a href="index.php?module=Settings&action=index&parenttab=Settings">控制面板</a> &gt; 模块开发</b></td>
+				</tr>
+
+				<tr>
+					<td class="small" valign="top">管理员根据自身需求开发新模块。如需共享自己开发的模块，可导出完成的模块共享。</td>
+				</tr>
+				</tbody></table>
+				<table border="0" cellpadding="10" cellspacing="0" width="100%">
+				<tbody>
+					<tr height="1"><td colspan="4"> </td> </tr>
+					<tr>
+					<!-- 	<td> 
+							<ul id="countrytabs" class="shadetabs" >
+								<li> 
+									<a  href="javascript:;" onclick="setProdFieldView('prodviewuli1',this);" style="font-family: 宋体;font-size: 14px;" class="tablink tab-chan-link-on">
+										 新增模块 
+									</a>
+								</li>
+								<li> 
+									<a  href="javascript:;" onclick="setProdFieldView('prodviewuli2',this);" style="font-family: 宋体;font-size: 14px;" class="tablink ">
+                                        模块列表
+									</a>
+								</li>
+
+							</ul>
+
+						 </td> -->
+						 <td align="center" class="tab-chan-link tab-chan-link-on" onclick="setProdFieldView('prodviewuli1',this);" style="width:font-family: 宋体;font-size: 14px;width:60px;height:28px;">
+						 	新增模块 
+						 </td>
+						 <td class="dvtTabCache" style="width:1px" nowrap> &nbsp;</td>
+						 <td align="center"  class="tab-chan-link " onclick="setProdFieldView('prodviewuli2',this);" style="font-family: 宋体;font-size: 14px;width:60px;height:28px;">
+						 	模块列表
+						 </td>
+						 <td class="dvtTabCache" style="" nowrap>&nbsp; </td>
+					</tr>
+
+			    <tr>
+				<td colspan="4">
+						<!-- <form action="index.php" method="post" name="DetailForm">
+						<input type="hidden" name="module" value="Settings">
+						<input type="hidden" name="mode">
+						<table border="0" cellpadding="5" cellspacing="0" width="100%">
+						<tr>
+							<td class="small">&nbsp;</td>
+							<td class="small" align="right">&nbsp;&nbsp;
+								<button class="pure-button pure-button-success" 
+									title="新增模块"
+										onClick="getCreateCustomModuleForm('');return false;">
+									<i class="icon-plus"></i> 新增模块 
+								</button>&nbsp;
+						</tr>
+						</table>
+
+						<table style="background-color: rgb(234, 234, 234);" class="small" width="100%" border="0" cellpadding="3" cellspacing="1">
+							<tr height="28px" class="windLayerHead">
+								<td width="3%" align=center nowra>#</td>
+								<td>英文名称</td>
+								<td>显示名称</td>
+								<td>主菜单</td>
+								<td>客户字段</td>
+								<td>联系人字段</td>
+								<td>显示顺序</td>
+								<td>模块状态</td>
+								<td>工具</td>
+							</tr>
+							
+														<tr height="25px;" class="lvtColData">
+																											<td nowrap align=center>1&nbsp;</td>	
+																																				<td nowrap>bbbbb&nbsp;</td>
+																																				<td nowrap>测试&nbsp;</td>
+																																				<td nowrap>工作台&nbsp;</td>
+																																				<td nowrap>是&nbsp;</td>
+																																				<td nowrap>是&nbsp;</td>
+																																				<td nowrap>456&nbsp;</td>
+																																				<td nowrap>安装&nbsp;</td>
+																																				<td nowrap><a href="#" onClick="deleteCustomModule(11)">删除</a>&nbsp;|&nbsp;安装&nbsp;|&nbsp;<a href="#" onClick="uninstallCustomModule(11)">卸载</a>&nbsp;|&nbsp;<a href="#" onClick="exportCustomModule(11)">导出</a>&nbsp;</td>
+																								</tr>
+														<tr height="25px;" class="lvtColData">
+																											<td nowrap align=center>2&nbsp;</td>	
+																																				<td nowrap>qqqqqqqq&nbsp;</td>
+																																				<td nowrap>1&nbsp;</td>
+																																				<td nowrap>工作台&nbsp;</td>
+																																				<td nowrap>是&nbsp;</td>
+																																				<td nowrap>是&nbsp;</td>
+																																				<td nowrap>123&nbsp;</td>
+																																				<td nowrap>安装&nbsp;</td>
+																																				<td nowrap><a href="#" onClick="deleteCustomModule(8)">删除</a>&nbsp;|&nbsp;安装&nbsp;|&nbsp;<a href="#" onClick="uninstallCustomModule(8)">卸载</a>&nbsp;|&nbsp;<a href="#" onClick="exportCustomModule(8)">导出</a>&nbsp;</td>
+																								</tr>
+													</table>
+				
+						<table border="0" cellpadding="5" cellspacing="0" width="100%">
+						<tr><td align="center"><img src="include/images/builder_flow.jpg" border="0"></td></tr>
+						<tr>
+
+					  	<td class="small" align="right" nowrap="nowrap"><a href="#top">[上]</a></td>
+						</tr>
+						</table>
+				    </form>	 -->
+
+				    <div id="cfList">
+
+				    	
+	<form action="index.php" method="post" name="DetailForm">
+		<input type="hidden" name="module" value="Settings">
+		<input type="hidden" id="prodview" name="prodview" value="prodviewuli1">
+		<input type="hidden" name="mode" value="">
+		<input type="hidden" name="action" value="CustomModuleList">
+			<table border="0" cellpadding="5" cellspacing="0" width="100%">
+			<tr>
+			<td class="small">&nbsp;</td>
+			<td class="small" align="right">&nbsp;&nbsp;
+			<button class="pure-button pure-button-success" 
+			title="新增模块"
+			onClick="getCreateCustomModuleForm('');return false;">
+			<i class="icon-plus"></i> 新增模块 
+			</button>&nbsp;
+			</tr>
+			</table>
+
+			<table class="crm-table" width="100%" border="0" cellpadding="3" cellspacing="1">
+			<tr height="28px" class="windLayerHead">
+				<td width="3%" align=center nowra>#</td>
+				<td>英文名称</td>
+				<td>显示名称</td>
+				<td>主菜单</td>
+				<td>客户字段</td>
+				<td>联系人字段</td>
+				<td>显示顺序</td>
+				<td>模块状态</td>
+				<td>工具</td>
+			</tr>
+
+												<tr id="row_">
+													<td nowrap align=center>1&nbsp;</td>	
+												<td nowrap>bbbbb&nbsp;</td>
+												<td nowrap>测试&nbsp;</td>
+												<td nowrap>工作台&nbsp;</td>
+												<td nowrap>是&nbsp;</td>
+												<td nowrap>是&nbsp;</td>
+												<td nowrap>456&nbsp;</td>
+												<td nowrap>安装&nbsp;</td>
+												<td nowrap><a href="#" onClick="deleteCustomModule(11)">删除</a>&nbsp;|&nbsp;安装&nbsp;|&nbsp;<a href="#" onClick="uninstallCustomModule(11)">卸载</a>&nbsp;|&nbsp;<a href="#" onClick="exportCustomModule(11)">导出</a>&nbsp;</td>
+									</tr>
+												<tr id="row_" class="crm-table-plural">
+													<td nowrap align=center>2&nbsp;</td>	
+												<td nowrap>qqqqqqqq&nbsp;</td>
+												<td nowrap>1&nbsp;</td>
+												<td nowrap>工作台&nbsp;</td>
+												<td nowrap>是&nbsp;</td>
+												<td nowrap>是&nbsp;</td>
+												<td nowrap>123&nbsp;</td>
+												<td nowrap>安装&nbsp;</td>
+												<td nowrap><a href="#" onClick="deleteCustomModule(8)">删除</a>&nbsp;|&nbsp;安装&nbsp;|&nbsp;<a href="#" onClick="uninstallCustomModule(8)">卸载</a>&nbsp;|&nbsp;<a href="#" onClick="exportCustomModule(8)">导出</a>&nbsp;</td>
+									</tr>
+						</table>
+
+			<table border="0" cellpadding="5" cellspacing="0" width="100%">
+			<tr><td align="center"><img src="include/images/builder_flow.jpg" border="0"></td></tr>
+			<tr>
+
+			<td class="small" align="right" nowrap="nowrap"><a href="#top">[上]</a></td>
+			</tr>
+			</table>
+	</form>
+	
+
+				    </div>
+
+			    </td>
+			</tr>
+			</table>
+		<!-- End of Display -->
+		
+		</td>
+        </tr>
+        </table>
+        </td>
+        </tr>
+        </table>
+
+
+<div id="createmodule" class="windLayerDiv" style="display:none;width:600px; left:500px;top:150px;z-index:100002;">
+<table width="100%" border="0" cellpadding="3" cellspacing="0" class="windLayerHeadingULine">
+<tr class="windLayerHeadingTr">
+	<td class="windLayerHeading" align="left" width="80%" style="cursor:move">&nbsp;&nbsp;新增模块</td>
+	<td>&nbsp;</td>
+	<td align="right">
+		<input class="windLayerBtclose" type="button" title="关闭" 
+			onClick="CloseLockDiv('createmodule');">&nbsp;
+	</td>
+</tr>
+</table>
+<table border=0 cellspacing=0 cellpadding=5 width=95% align=center> 
+	<tr>
+		<td class=small>
+            <!-- popup specific content fill in starts -->
+			<div id="createmoduleContent"></div>
+		</td>
+	</tr>
+</table>
+<br>
+<script>
+    WindLayerDrag("createmodule", 'windLayerHeading');
+</script>
+</div>
+
+
+		<div id="crmModellistdiv" class="windLayerDiv" style="display:none;width:300px;left:320px;top:220px;overflow-x:auto;overflow-y:auto;z-index:100002;">
+		<table width="100%" border="0" cellpadding="3" cellspacing="0" class="windLayerHeadingULine">
+		<tr class="windLayerHeadingTr">
+		<td class="windLayerHeading" align="left" width="80%" style="cursor:move" id="shlisttitle">编辑</td>
+		<td>&nbsp;</td>
+		<td align="right">
+			<input class="windLayerBtclose" type="button" title="关闭" 
+				onClick="CloseLockDiv('crmModellistdiv');">&nbsp;
+		</td>
+		</tr>
+		</table>
+		<table border=0 cellspacing=0 cellpadding=5 width=100% align=center> 
+		<tr>
+			<td class=small>
+		        <!-- popup specific content fill in starts -->
+		        <div id='serialinfodiv'>
+		        	<form action="index.php" method="post" name="EditForm">
+						<input type="hidden" name="module" value="Settings">
+						<input type="hidden" name="action" value="SettingsAjax">
+						<input type="hidden" name="file" value="SaveModuleName">
+						<input type="hidden" name="tabid"  value="">
+						<input type="hidden" name="tableModule" value="">
+					    <table  class="small" width="100%" border="0" cellpadding="3" cellspacing="1">
+				              <tr>
+				              	<td align="right">
+				              		中文名称
+				              	</td>
+
+				              		<td>
+				              			<input type="text" name="newModelName" id="newModelName" value="" style="font-size:14px;">
+
+				         	          </td>
+
+				              </tr>
+				         <tr >
+				         	<td colspan="2" align="center">
+
+
+				              			<button type="button" class="pure-button pure-button-success"
+											title="保存" onClick="CallSaveModuleNameForm();return false;">
+											<i  class="icon-ok"></i> 保存 
+											</button>&nbsp;
+
+											<button type="button" class="pure-button pure-button-cancel"
+											title="关闭" onclick="CloseLockDiv('crmModellistdiv');return false;">
+											<i  class="icon-off"></i> 关闭 
+											</button>&nbsp;
+
+
+
+				         	</td>
+
+				          </tr>
+
+				      </table>
+
+
+
+
+
+				   </form>
+
+
+		        </div>
+			</td>
+		</tr>
+		</table>
+		</form>
+		<br>
+		<script>
+		    WindLayerDrag("crmModellistdiv", 'windLayerHeading');
+		</script>
+		</div>					&nbsp;
+				</div>
+			</td></tr>
+		</table>
+	</td>
+  </tr>
+</table>
+<!--	/ Setting List	-->
+</table></td></tr>
+</table></td></tr></table>
+</td></tr></table><script language = 'JavaScript' type='text/javascript' src = 'include/js/popup.js'></script><br><br><br><table border=0 cellspacing=0 cellpadding=5 width=100% class=settingsSelectedUI ><tr><td class=small align=left><a href='http://www.c3crm.com' target='_blank'>E-CRM7.0.28</a> </td><td class=small align=right>
+				Powered by <a href='http://www.c3crm.com' target='_blank'>&nbsp;<img src='themes/softed/images/crm-logo-red.png'  width='60' border=0></a>
+					&nbsp;&nbsp;
+					咨询热线: 400 680 5898 &nbsp;&nbsp; 
+				
+				<a href='http://www.c3crm.com/cpjs/298.html' target='_blank'>
+					<i class='icon-mobile-phone icon-large'></i> 手机登陆
+				</a>
+			</td></tr></table><script type='text/javascript'>			                      if (typeof (ActivityReminderCallback) != 'undefined') ActivityReminderCallback();</script><!--end body panes-->
+</td></tr>
+<tr><td colspan="2" align="center">
+</td></tr></table>
+</body>
+</html>
+

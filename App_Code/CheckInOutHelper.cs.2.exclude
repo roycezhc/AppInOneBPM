@@ -1,0 +1,1576 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using System.IO;
+using System.Data.SqlClient;
+using AgileFrame.Orm.PersistenceLayer.DBUtility;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using System.Web.UI;
+
+/// <summary>
+///CheckInOutHelper 的摘要说明
+/// </summary>
+public class CheckInOutHelper
+{
+    //
+
+	static CheckInOutHelper()
+	{
+	}
+
+    /// <summary>
+    /// 考勤方案保存目录
+    /// </summary>
+    static public string CheckOnWorkAttendanceFangAnPath = "/HR/CheckWork/CheckOnWorkAttendanceFangAn/";
+    /// <summary>
+    /// 获取一个空的方案
+    /// </summary>
+    /// <param name="name">方案名，不能为空,与现有的方案名不能重复，重复讲替换掉老的方案</param>
+    /// <returns></returns>
+    static public DataTable GetCheckOnWorkAttendanceFangAnTable(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+        DataTable fangan = new DataTable(name);
+        fangan.Columns.Add("*TableName");//表名
+        fangan.Columns.Add("UserId");//员工编号
+        fangan.Columns.Add("CheckOWA");//考勤类型，请假、年假、公休、病假等
+        fangan.Columns.Add("UnWorkStartTime");//抵消工作开始时间
+        fangan.Columns.Add("UnWorkEndTime");//抵消工作结束时间
+        fangan.Columns.Add("OnWorkStartTime");//工作时间开始时间
+        fangan.Columns.Add("OnWorkEndTime");//工作时间结束时间
+        return fangan;
+    }
+
+     /// <summary>
+    /// 保存方案,方案文件保存出错将可能抛出错误，请try catch，并提示方案保存失败
+    /// </summary>
+    /// <param name="fanganDataTable">一个填好的方案，Name不能为空</param>
+    static public void SaveCheckOnWorkAttendanceFangAn(DataTable fanganDataTable)
+    {
+        string path = HttpContext.Current.Server.MapPath("~" + CheckOnWorkAttendanceFangAnPath);
+        SaveCheckOnWorkAttendanceFangAn(fanganDataTable, path);
+    }
+    /// <summary>
+    /// 保存方案,方案文件保存出错将可能抛出错误，请try catch，并提示方案保存失败
+    /// </summary>
+    /// <param name="fanganDataTable">一个填好的方案，Name不能为空</param>
+    /// <param name="path"></param>
+    static public void SaveCheckOnWorkAttendanceFangAn(DataTable fanganDataTable, string path)
+    {
+        if (string.IsNullOrEmpty(path)
+            || fanganDataTable == null
+            || fanganDataTable.Columns.Count < 5
+            || fanganDataTable.Rows.Count < 1
+            || string.IsNullOrEmpty(fanganDataTable.TableName)
+            || !fanganDataTable.Columns.Contains("*TableName")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["*TableName"] == null ? "" : fanganDataTable.Rows[0]["*TableName"].ToString())
+            || !fanganDataTable.Columns.Contains("UserId")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UserId"] == null ? "" : fanganDataTable.Rows[0]["UserId"].ToString())
+            || !fanganDataTable.Columns.Contains("CheckOWA")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["CheckOWA"] == null ? "" : fanganDataTable.Rows[0]["CheckOWA"].ToString())
+            || (
+                   (!fanganDataTable.Columns.Contains("UnWorkStartTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UnWorkStartTime"] == null ? "" : fanganDataTable.Rows[0]["UnWorkStartTime"].ToString())
+                    || !fanganDataTable.Columns.Contains("UnWorkEndTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UnWorkEndTime"] == null ? "" : fanganDataTable.Rows[0]["UnWorkEndTime"].ToString())
+                   )
+                 && (!fanganDataTable.Columns.Contains("OnWorkStartTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["OnWorkStartTime"] == null ? "" : fanganDataTable.Rows[0]["OnWorkStartTime"].ToString())
+                    || !fanganDataTable.Columns.Contains("OnWorkEndTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["OnWorkEndTime"] == null ? "" : fanganDataTable.Rows[0]["OnWorkEndTime"].ToString())
+                   )
+              )
+            )
+        {
+            throw (new Exception("目录为空，或不是一个完整的方案！"
+                               + "请检查Table和TableName是否为空，如不为空，行数是否都大于1，"
+                               + "并且检查是否包含必须列：*TableName，UserId，CheckOWA，StartTime，EndTime，并且都已赋值"));
+        }
+
+
+        try
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string fileName = path + "\\" + fanganDataTable.TableName + ".xml";
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+            fanganDataTable.WriteXml(fileName);
+        }
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
+    }
+
+    /// <summary>
+    /// 获取方案列表
+    /// </summary>
+    /// <returns></returns>
+    static public DataTable[] GetAllCheckOnWorkAttendanceFangAn()
+    {
+        List<DataTable> fangAnTables = new List<DataTable>();
+        try
+        {
+            string path = HttpContext.Current.Server.MapPath("~" + CheckOnWorkAttendanceFangAnPath);
+            DirectoryInfo di = new DirectoryInfo(path);
+            if (di != null && di.Exists)
+            {
+                DataTable fangAnTable = new DataTable();
+                List<FileInfo> dbFileInfosNoSort = new List<FileInfo>(di.EnumerateFiles("*.xml", SearchOption.TopDirectoryOnly));
+                foreach (FileInfo file in dbFileInfosNoSort)
+                {
+                    if (!file.Exists)
+                        continue;
+                    try
+                    {
+                        fangAnTable = GetCheckOnWorkAttendanceFangAnTable(file.Name.Remove(file.Name.LastIndexOf('.')));
+                        fangAnTable.ReadXml(file.FullName);
+                        fangAnTables.Add(fangAnTable);
+                    }
+                    catch { }
+                }
+            }
+        }
+        catch { }
+        return fangAnTables.ToArray();
+    }
+
+    /// <summary>
+    /// 获取方案列表
+    /// </summary>
+    /// <param name="path">方案保存的路径</param>
+    /// <returns></returns>
+    static public DataTable GetOneCheckOnWorkAttendanceFangAn(string name)
+    {
+        string path = HttpContext.Current.Server.MapPath("~" + CheckOnWorkAttendanceFangAnPath);
+        DataTable fangAnTable = new DataTable();
+        try
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+            if (di != null && di.Exists)
+            {
+                
+                FileInfo file = new FileInfo(path + name + ".xml");
+                if (file.Exists)
+                {
+                    fangAnTable = GetCheckOnWorkAttendanceFangAnTable(file.Name.Remove(file.Name.LastIndexOf('.')));
+                    fangAnTable.ReadXml(file.FullName);
+                }
+                else {
+                    fangAnTable = GetCheckOnWorkAttendanceFangAnTable(name);
+                }
+            }
+        }
+        catch { }
+        return fangAnTable;
+    }
+    /// <summary>
+    /// 获取一个考勤数据表结构
+    /// </summary>
+    /// <returns></returns>
+    static private DataTable GetDefaultCheckOnWorkAttendanceDataDataTable()
+    {
+        DataTable fangan = GetCheckOnWorkAttendanceFangAnTable("Default");
+        DataTable defaultData = new DataTable();
+        foreach (DataColumn dc in fangan.Columns)
+        {
+            if (dc.ColumnName.IndexOf("*") == 0)
+                continue;
+            defaultData.Columns.Add(dc.ColumnName);
+        }
+        return defaultData;
+    }
+
+    /// <summary>
+    /// 根据方案表获取方案中的字段字典
+    /// </summary>
+    /// <param name="fanganDataTable">方案列数必须大于等于5</param>
+    /// <param name="userRecFields">用户字段与方案字段对应字典</param>
+    /// <returns></returns>
+    static private Dictionary<string, string> GetFieldsByFangAn(DataTable fanganDataTable, ref Dictionary<string, string> userRecFields)
+    {
+        DataTable faTab = fanganDataTable;
+        if (fanganDataTable == null 
+            || fanganDataTable.Columns.Count < 5
+            || fanganDataTable.Rows.Count < 1 
+            || string.IsNullOrEmpty(fanganDataTable.TableName)
+            || !fanganDataTable.Columns.Contains("*TableName")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["*TableName"] == null ? "" : fanganDataTable.Rows[0]["*TableName"].ToString())
+            || !fanganDataTable.Columns.Contains("UserId")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UserId"] == null ? "" : fanganDataTable.Rows[0]["UserId"].ToString())
+            || !fanganDataTable.Columns.Contains("CheckOWA")
+            || string.IsNullOrEmpty(fanganDataTable.Rows[0]["CheckOWA"] == null ? "" : fanganDataTable.Rows[0]["CheckOWA"].ToString())
+            || (
+                   (!fanganDataTable.Columns.Contains("UnWorkStartTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UnWorkStartTime"] == null ? "" : fanganDataTable.Rows[0]["UnWorkStartTime"].ToString())
+                    || !fanganDataTable.Columns.Contains("UnWorkEndTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["UnWorkEndTime"] == null ? "" : fanganDataTable.Rows[0]["UnWorkEndTime"].ToString())
+                   )
+                 && (!fanganDataTable.Columns.Contains("OnWorkStartTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["OnWorkStartTime"] == null ? "" : fanganDataTable.Rows[0]["OnWorkStartTime"].ToString())
+                    || !fanganDataTable.Columns.Contains("OnWorkEndTime")
+                    || string.IsNullOrEmpty(fanganDataTable.Rows[0]["OnWorkEndTime"] == null ? "" : fanganDataTable.Rows[0]["OnWorkEndTime"].ToString())
+                   )
+              )
+            )
+        {
+            return new Dictionary<string,string>();
+        }
+        else
+        {
+            userRecFields = new Dictionary<string, string>();
+            Dictionary<string, string> fields = new Dictionary<string, string>();
+            foreach (DataColumn dc in faTab.Columns)
+            {
+                string val = Convert.ToString(faTab.Rows[0][dc]);
+                fields.Add(dc.ColumnName, val);
+                if (!string.IsNullOrEmpty(val) && !userRecFields.ContainsKey(val))
+                    userRecFields.Add(val, dc.ColumnName);
+            }
+            return fields;
+        }
+    }
+
+    /// <summary>
+    /// 根据方案表获取指定时间内的考勤数据
+    /// </summary>
+    /// <param name="fangAns">方案列表</param>
+    /// <param name="sdate">起始日期</param>
+    /// <param name="edate">结束日期</param>
+    /// <param name="CheckOWAs">考勤类型名列表</param>
+    /// <returns></returns>
+    static public DataTable GetCheckOnWorkAttendanceDataByFangAn(DataTable[] fangAns, DateTime sdate, DateTime edate, ref List<string> CheckOWAs)
+    {
+        if (fangAns == null || fangAns.Length < 1)
+            return null;
+        if (sdate.Date > edate.Date)
+            return null;
+        DataTable cowaData = GetDefaultCheckOnWorkAttendanceDataDataTable();
+        DateTime dt = DateTime.Now;
+        DateTime stime = sdate.Date;
+        DateTime etime = edate.Date.AddMonths(1).AddSeconds(-1);//考虑到本月可以调休到上月的加班，所以连续查出当月和下月的考勤数据
+        foreach (DataTable fangan in fangAns)
+        {
+            try
+            {
+                Dictionary<string, string> userRecFields = new Dictionary<string, string>();
+                Dictionary<string, string> userFields = GetFieldsByFangAn(fangan, ref userRecFields);
+                if (userRecFields == null || userRecFields.Count < 1 || ((string.IsNullOrEmpty(userFields["UnWorkStartTime"]) || string.IsNullOrEmpty(userFields["UnWorkEndTime"])) && (string.IsNullOrEmpty(userFields["OnWorkStartTime"]) || string.IsNullOrEmpty(userFields["OnWorkEndTime"]))))
+                {
+                    continue;
+                }
+                string tableName = "";
+                string sql = "select ";
+                foreach (string field in userFields.Keys)
+                {
+                    if (field.Contains("*"))
+                    {
+                        tableName = userFields[field];
+                        continue;
+                    }
+                    if(string.IsNullOrEmpty(userFields[field]))
+                        continue;
+                    sql += " " + userFields[field] + ",";
+                }
+                sql = sql.TrimEnd(',',' ');
+                sql += " from " + userFields["*TableName"];
+                if ((!string.IsNullOrEmpty(userFields["UnWorkStartTime"]) && !string.IsNullOrEmpty(userFields["UnWorkEndTime"])) && !string.IsNullOrEmpty(userFields["OnWorkStartTime"]) && !string.IsNullOrEmpty(userFields["OnWorkEndTime"]))
+                {
+                    sql += " where " + userFields["UnWorkStartTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                    sql += " or " + userFields["UnWorkEndTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                    sql += " or " + userFields["OnWorkEndTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                    sql += " or " + userFields["OnWorkEndTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                }
+                else if (!string.IsNullOrEmpty(userFields["UnWorkStartTime"]) && !string.IsNullOrEmpty(userFields["UnWorkEndTime"]))
+                {
+                    sql += " where " + userFields["UnWorkStartTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                    sql += " or " + userFields["UnWorkEndTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                }
+                else
+                {
+                    sql += " where " + userFields["OnWorkStartTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                    sql += " or " + userFields["OnWorkEndTime"];
+                    sql += " between '" + stime + "' and '" + etime + "' ";
+                }
+
+                DataTable data = BLLTable.qDataTable(tableName, sql);//chx DoSqlHelper.ExecuteTable(CommandType.Text, sql);
+                if (data == null || data.Rows.Count < 1 || data.Columns.Count < 1)
+                    continue;
+                Dictionary<string, string> fields = new Dictionary<string, string>();
+                List<string> fildList = new List<string>(userFields.Keys);
+                foreach (string dc in fildList)
+                {
+                    string val = userFields[dc];
+                    if (val.Contains(" as "))
+                        val = val.Substring(val.ToLower().IndexOf(" as ") + 4);
+                    else if (val.Contains(" As "))
+                        val = val.Substring(val.ToLower().IndexOf(" As ") + 4);
+                    else if (val.Contains(" aS "))
+                        val = val.Substring(val.ToLower().IndexOf(" aS ") + 4);
+                    else if (val.Contains(" AS "))
+                        val = val.Substring(val.ToLower().IndexOf(" AS ") + 4);
+                    userFields[dc] = val.Replace(" ", "");
+                    if (!userRecFields.ContainsKey(userFields[dc]))
+                        userRecFields.Add(userFields[dc], dc);
+                }
+                foreach (DataRow dr in data.Rows)
+                {
+                    DataRow dataDr = cowaData.NewRow();
+                    foreach (DataColumn dc in data.Columns)
+                    {
+                        if (userRecFields.ContainsKey(dc.ColumnName) && cowaData.Columns.Contains(userRecFields[dc.ColumnName]))
+                        {
+                            object val = dr[dc.ColumnName];
+                            if (val == null || dr.IsNull(dc.ColumnName))
+                                dataDr[userRecFields[dc.ColumnName]] = "";
+                            else
+                            {
+                                dataDr[userRecFields[dc.ColumnName]] = dr[dc.ColumnName].ToString().Replace("\0", "");
+                            }
+                            if (userRecFields[dc.ColumnName] == "CheckOWA")
+                            {
+                                if (!CheckOWAs.Contains(dataDr[userRecFields[dc.ColumnName]].ToString()))
+                                    CheckOWAs.Add(dataDr[userRecFields[dc.ColumnName]].ToString());
+                            }
+                        }
+                    }
+                    cowaData.Rows.Add(dataDr);
+                }
+            }
+            catch { }
+        }
+        return cowaData;
+    }
+
+    /// <summary>
+    /// 获取AIO系统中的考勤数据
+    /// </summary>
+    /// <param name="cowaData"></param>
+    /// <param name="qingjiaOrChuchaiDic"></param>
+    /// <param name="tiaoxiuDic"></param>
+    /// <param name="jiabanDic"></param>
+    static private void GetAIOSch(DataTable cowaData, ref Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> qingjiaOrChuchaiDic, ref Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> tiaoxiuDic, ref Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> jiabanDic)
+    {
+        qingjiaOrChuchaiDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        tiaoxiuDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        jiabanDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        if (cowaData == null
+            || cowaData.Columns.Count < 6
+            || cowaData.Rows.Count < 1
+            || !cowaData.Columns.Contains("UserId")
+            || string.IsNullOrEmpty(cowaData.Rows[0]["UserId"] == null ? "" : cowaData.Rows[0]["UserId"].ToString())
+            || !cowaData.Columns.Contains("CheckOWA")
+            || string.IsNullOrEmpty(cowaData.Rows[0]["CheckOWA"] == null ? "" : cowaData.Rows[0]["CheckOWA"].ToString())
+            || (
+                   ((!cowaData.Columns.Contains("UnWorkStartTime")
+                    || string.IsNullOrEmpty(cowaData.Rows[0]["UnWorkStartTime"] == null ? "" : cowaData.Rows[0]["UnWorkStartTime"].ToString()))
+                    || ( !cowaData.Columns.Contains("UnWorkEndTime")
+                    || string.IsNullOrEmpty(cowaData.Rows[0]["UnWorkEndTime"] == null ? "" : cowaData.Rows[0]["UnWorkEndTime"].ToString()))
+                   )
+                 && ((!cowaData.Columns.Contains("OnWorkStartTime")
+                    || string.IsNullOrEmpty(cowaData.Rows[0]["OnWorkStartTime"] == null ? "" : cowaData.Rows[0]["OnWorkStartTime"].ToString()))
+                    || ( !cowaData.Columns.Contains("OnWorkEndTime")
+                    || string.IsNullOrEmpty(cowaData.Rows[0]["OnWorkEndTime"] == null ? "" : cowaData.Rows[0]["OnWorkEndTime"].ToString()))
+                   )
+              )
+            )
+        {
+            return;
+        }
+
+        foreach (DataRow dr in cowaData.Rows)
+        {
+            string userid = dr["UserId"].ToString();
+            DateTime dt = DateTime.MinValue;
+            DateTime UnWorkStartTime = DateTime.MinValue;
+            if (!dr.IsNull("UnWorkStartTime") && DateTime.TryParse(dr["UnWorkStartTime"].ToString(), out dt) && dt > new DateTime(2000, 1, 1))
+                UnWorkStartTime = dt;
+            dt = DateTime.MinValue;
+            DateTime UnWorkEndTime = DateTime.MinValue;
+            if (!dr.IsNull("UnWorkEndTime") && DateTime.TryParse(dr["UnWorkEndTime"].ToString(), out dt) && dt > new DateTime(2000, 1, 1))
+                UnWorkEndTime = dt;
+            dt = DateTime.MinValue;
+            DateTime OnWorkStartTime = DateTime.MinValue;
+            if (!dr.IsNull("OnWorkStartTime") && DateTime.TryParse(dr["OnWorkStartTime"].ToString(), out dt) && dt > new DateTime(2000, 1, 1))
+                OnWorkStartTime = dt;
+            dt = DateTime.MinValue;
+            DateTime OnWorkEndTime = DateTime.MinValue;
+            if (!dr.IsNull("OnWorkEndTime") && DateTime.TryParse(dr["OnWorkEndTime"].ToString(), out dt) && dt > new DateTime(2000, 1, 1))
+                OnWorkEndTime = dt;
+            dt = new DateTime(2000, 1, 1);
+
+            if (UnWorkStartTime > dt && UnWorkEndTime > dt && OnWorkEndTime > dt && OnWorkStartTime > dt)//调休，上班时间和抵消时间都有
+            {
+                if (!tiaoxiuDic.ContainsKey(userid))
+                    tiaoxiuDic.Add(userid, new Dictionary<DateTime, List<MyWorkData>>());
+                DateTime sdt = UnWorkStartTime.Date;
+                while (sdt <= UnWorkEndTime.Date)
+                {
+                    if (!tiaoxiuDic[userid].ContainsKey(sdt))
+                        tiaoxiuDic[userid].Add(sdt, new List<MyWorkData>());
+                    MyWorkData md = PaseDataRowToWorkDate(dr);
+                    if (md != null)
+                    {
+                        tiaoxiuDic[userid][sdt].Add(md);
+                    }
+                    sdt = sdt.AddDays(1);
+                }
+            }
+            else if (UnWorkStartTime > dt && UnWorkEndTime > dt && OnWorkEndTime <= dt && OnWorkStartTime <= dt)//请假、出差，只有抵消时间
+            {
+                if (!qingjiaOrChuchaiDic.ContainsKey(userid))
+                    qingjiaOrChuchaiDic.Add(userid, new Dictionary<DateTime, List<MyWorkData>>());
+                DateTime sdt = UnWorkStartTime.Date;
+                while (sdt <= UnWorkEndTime.Date)
+                {
+                    if (!qingjiaOrChuchaiDic[userid].ContainsKey(sdt))
+                        qingjiaOrChuchaiDic[userid].Add(sdt, new List<MyWorkData>());
+                    MyWorkData md = PaseDataRowToWorkDate(dr);
+                    if (md != null)
+                    {
+                        qingjiaOrChuchaiDic[userid][sdt].Add(md);
+                    }
+                    sdt = sdt.AddDays(1);
+                }
+            }
+            else if (UnWorkStartTime <= dt && UnWorkEndTime <= dt && OnWorkEndTime > dt && OnWorkStartTime > dt)//加班，只有上班时间
+            {
+                if (!jiabanDic.ContainsKey(userid))
+                    jiabanDic.Add(userid, new Dictionary<DateTime, List<MyWorkData>>());
+                DateTime sdt = OnWorkEndTime.Date;
+                while (sdt <= OnWorkStartTime.Date)
+                {
+                    if (!jiabanDic[userid].ContainsKey(sdt))
+                        jiabanDic[userid].Add(sdt, new List<MyWorkData>());
+                    MyWorkData md = PaseDataRowToWorkDate(dr);
+                    if (md != null)
+                    {
+                        jiabanDic[userid][sdt].Add(md);
+                    }
+                    sdt = sdt.AddDays(1);
+                }
+            }
+        }
+    }
+
+    static private MyWorkData PaseDataRowToWorkDate(DataRow dr)
+    {
+        try
+        {
+            MyWorkData md = new MyWorkData();
+            md.CheckOWA = Convert.ToString(dr["CheckOWA"].ToString());
+            md.UserId = Convert.ToString(dr["UserId"].ToString());
+            //if (!string.IsNullOrEmpty(dr["OnWorkEndTime"].ToString()))
+            //    md.OnWorkEndTime = Convert.ToDateTime(dr["OnWorkEndTime"].ToString());
+            //if (!string.IsNullOrEmpty(dr["OnWorkStartTime"].ToString()))
+            //    md.OnWorkStartTime = Convert.ToDateTime(dr["OnWorkStartTime"].ToString());
+            //if (!string.IsNullOrEmpty(dr["UnWorkEndTime"].ToString()))
+            //    md.UnWorkEndTime = Convert.ToDateTime(dr["UnWorkEndTime"].ToString());
+            //if (!string.IsNullOrEmpty(dr["UnWorkStartTime"].ToString()))
+            //    md.UnWorkStartTime = Convert.ToDateTime(dr["UnWorkStartTime"].ToString());
+
+            DateTime.TryParse(dr["OnWorkEndTime"].ToString(), out md.OnWorkEndTime);
+            DateTime.TryParse(dr["OnWorkStartTime"].ToString(), out md.OnWorkStartTime);
+            DateTime.TryParse(dr["UnWorkEndTime"].ToString(), out md.UnWorkEndTime);
+            DateTime.TryParse(dr["UnWorkStartTime"].ToString(), out md.UnWorkStartTime);
+            return md;
+        }
+        catch { return null; }
+    }
+
+    /// <summary>
+    /// 获取用于显示考勤信息的表头
+    /// </summary>
+    /// <param name="sdate">起始日期</param>
+    /// <param name="edate">结束日期</param>
+    /// <param name="CheckOWAs">考勤类型名列表</param>
+    /// <returns></returns>
+    static private DataTable GetContrastDefaultTable(DateTime sdate, DateTime edate, List<string> CheckOWAs)
+    {
+        if (sdate.Date > edate.Date)
+            return null;
+        DataTable contrastTable = new DataTable(sdate.Date.ToString("yyyy-MM-dd") + "至" + edate.Date.ToString("yyyy-MM-dd") + "的考勤信息表");
+        contrastTable.Columns.Add("序号");
+        contrastTable.Columns.Add("工号");
+        contrastTable.Columns.Add("姓名");
+        contrastTable.Columns.Add("考勤姓名");
+        contrastTable.Columns.Add("部门");
+        contrastTable.Columns.Add("全勤");
+        contrastTable.Columns.Add("实际出勤");
+        while (sdate.Date <= edate.Date)
+        {
+            contrastTable.Columns.Add(sdate.ToString("yyyy-MM-dd"));
+            sdate = sdate.Date.AddDays(1);
+        }
+        contrastTable.Columns.Add("迟到");
+        contrastTable.Columns.Add("早退");
+        contrastTable.Columns.Add("旷工");
+        if (CheckOWAs != null)
+        {
+            foreach (string ck in CheckOWAs)
+            {
+                contrastTable.Columns.Add(ck);
+            }
+        }
+        contrastTable.Columns.Add("公司休假");
+        contrastTable.Columns.Add("休息日");
+        contrastTable.Columns.Add("节假日");
+        return contrastTable;
+    }
+
+    /// <summary>
+    /// 获取打卡记录
+    /// </summary>
+    /// <param name="userCon">指定用户</param>
+    /// <param name="sdate">起始日期</param>
+    /// <param name="edate">结束日期</param>
+    /// <returns></returns>
+    static private Dictionary<string, Dictionary<DateTime, Dictionary<DateTime, V_USERCHECKINOUT>>> GetCheckInOutDic(decimal staffid, string deptid, DateTime sdate, DateTime edate)
+    {
+        if (sdate.Date > edate.Date)
+            return null;
+        DateTime dt = DateTime.Now;
+
+        V_USERCHECKINOUT val = new V_USERCHECKINOUT();
+        val.STAFF_ID = 0;
+        val._USERID = 0;
+        val._VERIFYCODE = 0;
+        val._CHECKTIME = DateTime.MinValue;
+        val._CHECKTYPE = "";
+        val._SENSORID = "";
+        V_USERCHECKINOUT con = new V_USERCHECKINOUT();
+        if (staffid > 0)
+            con.STAFF_ID = (int)staffid;
+        if (!string.IsNullOrEmpty(deptid) && deptid != "0")
+            con.Like(V_USERCHECKINOUT.Attribute.DEPT_ID, deptid);
+        con.Where(V_USERCHECKINOUT.Attribute.CHECKTIME, new Between(sdate.Date, edate.Date.AddDays(1).AddSeconds(-1)));
+        List<V_USERCHECKINOUT> checkList = BLLTable<V_USERCHECKINOUT>.Factory(conn).Select(val, con);
+
+        Dictionary<string, Dictionary<DateTime, Dictionary<DateTime, V_USERCHECKINOUT>>> checkDic = new Dictionary<string, Dictionary<DateTime, Dictionary<DateTime, V_USERCHECKINOUT>>>();
+        foreach (V_USERCHECKINOUT check in checkList)
+        {
+            string userid = check.STAFF_ID.ToString();
+            DateTime checktime = check.CHECKTIME;
+            if (!checkDic.ContainsKey(userid))
+                checkDic.Add(userid, new Dictionary<DateTime, Dictionary<DateTime, V_USERCHECKINOUT>>());
+            if (!checkDic[userid].ContainsKey(checktime.Date))
+                checkDic[userid].Add(checktime.Date, new Dictionary<DateTime, V_USERCHECKINOUT>());
+            if (!checkDic[userid][checktime.Date].ContainsKey(checktime))
+                checkDic[userid][checktime.Date].Add(checktime, check);
+        }
+
+        return checkDic;
+    }
+
+    /// <summary>
+    /// 获取值班表
+    /// </summary>
+    /// <param name="userCon">员工筛选条件</param>
+    /// <param name="startTime">开始时间</param>
+    /// <param name="endTime">结束时间</param>
+    /// <returns></returns>
+    static private Dictionary<string, Dictionary<DateTime, List<V_SchedulingSchClass>>> GetScheduling(decimal staffid, string deptid, DateTime startTime, DateTime endTime)
+    {
+        Dictionary<string, Dictionary<DateTime, List<V_SchedulingSchClass>>> vsDic = new Dictionary<string, Dictionary<DateTime, List<V_SchedulingSchClass>>>();
+
+        V_SchedulingSchClass con = new V_SchedulingSchClass();
+        if (staffid > 0)
+            con.STAFF_ID = (int)staffid;
+        if (!string.IsNullOrEmpty(deptid) && deptid != "0")
+            con.Like(V_SchedulingSchClass.Attribute.DEPT_ID, deptid);
+        string wher = " CAST(CAST({0} AS char(4)) + '-' + CAST({1} AS char(2)) + '-' + CAST({2} AS char(2)) as datetime) >= '{3}-{4}-{5}' and CAST(CAST({6} AS char(4)) + '-' + CAST({7} AS char(2)) + '-' + CAST({8} AS char(2)) as datetime) <= '{9}-{10}-{11}' ";
+        con.Where(wher, V_SchedulingSchClass.Attribute.SchYear, V_SchedulingSchClass.Attribute.SchMonth, V_SchedulingSchClass.Attribute.SchDay,
+                        startTime.Year, startTime.Month, startTime.Day,
+                        V_SchedulingSchClass.Attribute.SchYear, V_SchedulingSchClass.Attribute.SchMonth, V_SchedulingSchClass.Attribute.SchDay,
+                        endTime.Year, endTime.Month, endTime.Day);
+        List<V_SchedulingSchClass> vsList = BLLTable<V_SchedulingSchClass>.Factory(conn).Select(new V_SchedulingSchClass(), con);
+
+        foreach (V_SchedulingSchClass vs in vsList)
+        {
+            if (!vsDic.ContainsKey(vs.STAFF_ID.ToString()))
+                vsDic.Add(vs.STAFF_ID.ToString(), new Dictionary<DateTime, List<V_SchedulingSchClass>>());
+            DateTime date = new DateTime(vs.SchYear, vs.SchMonth, vs.SchDay);
+            if (!vsDic[vs.STAFF_ID.ToString()].ContainsKey(date))
+                vsDic[vs.STAFF_ID.ToString()].Add(date, new List<V_SchedulingSchClass>());
+            vsDic[vs.STAFF_ID.ToString()][date].Add(vs);
+        }
+
+        return vsDic;
+    }
+
+    /// <summary>
+    /// 根据条件查询用户信息
+    /// </summary>
+    /// <param name="userCon">包含查询条件信息</param>
+    /// <returns></returns>
+    static private Dictionary<string, V_HR_CK_USERINFO> GetUserInfo(decimal staffid, string deptid)
+    {
+        V_HR_CK_USERINFO val = new V_HR_CK_USERINFO();
+        val.STAFF_ID = 0;
+        val.STAFF_NO = "";
+        val.STAFF_NAME = "";
+        val.NAME = "";
+        val.DEPT_ID = "";
+        val.DEPT_NAME = "";
+        val.Dept_PATH = "";
+        val.Dept_PNAME = "";
+        val.Dept_RNAME = "";
+        val.Dept_SNAME = "";
+        V_HR_CK_USERINFO userCon = new V_HR_CK_USERINFO();
+        if (staffid > 0)
+            userCon.STAFF_ID = staffid;
+        if (!string.IsNullOrEmpty(deptid) && deptid != "0")
+            userCon.Like(V_HR_CK_USERINFO.Attribute.DEPT_ID, deptid);
+        userCon.OrderBy(V_HR_CK_USERINFO.Attribute.STAFF_ID, Order.Asc);
+        List<V_HR_CK_USERINFO> userList = BLLTable<V_HR_CK_USERINFO>.Factory(conn).Select(val, userCon);
+        Dictionary<string, V_HR_CK_USERINFO> userDic = new Dictionary<string, V_HR_CK_USERINFO>();
+        foreach (V_HR_CK_USERINFO user in userList)
+        {
+            if (user.STAFF_ID <= 0)
+                continue;
+            userDic.Add(user.STAFF_ID.ToString(), user);
+        }
+        return userDic;
+    }
+
+    /// <summary>
+    /// 时间比较
+    /// </summary>
+    /// <param name="dt1"></param>
+    /// <param name="dt2"></param>
+    /// <returns></returns>
+    static public int ComparisonTime(DateTime dt1, DateTime dt2)
+    {
+        return (int)Math.Round((dt2 - dt1).TotalSeconds);
+    }
+
+    /// <summary>
+    /// 考勤对比并返回对比结果
+    /// </summary>
+    /// <param name="staffid">员工编号</param>
+    /// <param name="deptid">部门编号</param>
+    /// <param name="sdate">起始日期</param>
+    /// <param name="edate">结束日期</param>
+    /// <param name="tableNode">表格说明</param>
+    /// <returns></returns>
+    static public DataTable ContrastAndReceiveTable(decimal staffid, string deptid, DateTime sdate, DateTime edate, ref string tableNode)
+    {
+        if (sdate.Date > edate.Date)
+            return null;
+        DateTime dt = DateTime.Now;
+        DateTime stime = sdate.Date;
+        DateTime etime = edate.Date.AddDays(1).AddSeconds(-1);
+
+        List<string> CheckOWAs = new List<string>();
+        //获取系统流程中的考勤数据
+        DataTable checkOnWorkAttendanceData = GetCheckOnWorkAttendanceDataByFangAn(GetAllCheckOnWorkAttendanceFangAn(), sdate, edate, ref CheckOWAs);
+
+        //获取一张用于显示出来的考勤信息表
+        DataTable contrastTable = GetContrastDefaultTable(sdate, edate, CheckOWAs);
+
+        if (checkOnWorkAttendanceData == null)
+            return contrastTable;
+
+        //获取用户信息
+        Dictionary<string, V_HR_CK_USERINFO> userDic = GetUserInfo(staffid, deptid);
+        if (userDic == null || userDic.Count < 1)
+            return contrastTable;
+
+        //获取值班表
+        Dictionary<string, Dictionary<DateTime, List<V_SchedulingSchClass>>> vssDic = GetScheduling(staffid, deptid, sdate.Date, edate.Date);
+        if (vssDic == null || vssDic.Count < 1)
+            return contrastTable;
+
+        Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> qingjiaOrChuchaiDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> tiaoxiuDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        Dictionary<string, Dictionary<DateTime, List<MyWorkData>>> jiabanDic = new Dictionary<string, Dictionary<DateTime, List<MyWorkData>>>();
+        GetAIOSch(checkOnWorkAttendanceData, ref qingjiaOrChuchaiDic, ref tiaoxiuDic, ref jiabanDic);
+
+        //获取打卡记录
+        Dictionary<string, Dictionary<DateTime, Dictionary<DateTime, V_USERCHECKINOUT>>> checkInOutDic = GetCheckInOutDic(staffid, deptid, sdate, edate);
+        if (checkInOutDic == null)
+            return contrastTable;
+
+        foreach (string userid in userDic.Keys)
+        {
+            DataRow dr = contrastTable.NewRow();
+            Dictionary<string, Dictionary<string, double>> jiabanmingxiDic = new Dictionary<string, Dictionary<string, double>>();
+            double quanqin = 0;
+            double gongsixiujia = 0;
+            double jiejiari = 0;
+            double xiuxiri = 0;
+            double shijichuqin = 0;
+            int chidao = 0;
+            int zaotui = 0;
+            double kuanggong = 0;
+
+            Dictionary<string, double> schValues = new Dictionary<string, double>();
+            foreach (string ck in CheckOWAs)
+            {
+                schValues.Add(ck, 0.0);
+            }
+
+            if (vssDic.ContainsKey(userid))
+            {
+                foreach (DateTime date in vssDic[userid].Keys)
+                {
+                    OneDayWorkDetail odwd = new OneDayWorkDetail(date, userid);
+                    #region 统计执勤情况
+                    foreach (V_SchedulingSchClass vs in vssDic[userid][date])
+                    {
+                        #region 值班类型
+                        if (!vs.IsOverTime)
+                        {
+                            switch (vs.SchType)//{1:正常上班},{2:公司休假},{3:休息日},{4:节假日}
+                            {
+                                case 1:
+                                    quanqin += vs.SchNumber * vs.SchUnit;
+                                    break;
+                                case 2:
+                                    gongsixiujia += vs.SchNumber * vs.SchUnit;
+                                    break;
+                                case 3:
+                                    xiuxiri += vs.SchNumber * vs.SchUnit;
+                                    break;
+                                case 4:
+                                    jiejiari += vs.SchNumber * vs.SchUnit;
+                                    break;
+                                default: break;
+                            }
+                        }
+                        odwd.schType = vs.SchType; 
+                        #endregion
+                        if (checkInOutDic.ContainsKey(userid) && checkInOutDic[userid].ContainsKey(date))
+                        {
+                            List<DateTime> checkTimes = new List<DateTime>(checkInOutDic[userid][date].Keys);
+                            //checkTimes.Sort(new Comparison<DateTime>(CheckInOutHelper.ComparisonTime));
+                            foreach (DateTime checkTime in checkTimes)
+                            {
+                                if (!odwd.m_HR_CHECKINOUTs.ContainsKey(checkTime))
+                                    odwd.m_HR_CHECKINOUTs.Add(checkTime, checkInOutDic[userid][date][checkTime]);
+                            }
+                            //qingjiaOrChuchaiDic;
+                            //tiaoxiuDic;
+                            //jiabanDic
+                            MySSpanTime msst = null;
+                            double chidaomin = -1;
+                            double zaotuimin = -1;
+                            bool isCheckin = !vs.CheckIn;
+                            DateTime time1 = new DateTime(date.Year, date.Month, date.Day, vs._CheckInHour1, vs._CheckInMin1, 0);
+                            DateTime time2 = new DateTime(date.Year, date.Month, date.Day, vs._CheckInHour2, vs._CheckInMin2, 0);
+                            DateTime schCheckTime = DateTime.MinValue;
+                            if (time1 >= time2)
+                                time2 = time2.AddDays(1);
+                            if (vs.CheckIn)
+                            {
+                                msst = new MySSpanTime(time1, time2 - time1);
+                                isCheckin = msst.Contains(new List<DateTime>(checkInOutDic[userid][date].Keys), new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0), true, out schCheckTime, out chidaomin);
+                                if (isCheckin && !odwd.m_Schcheckin.ContainsKey(vs) && schCheckTime != DateTime.MinValue)
+                                    odwd.m_Schcheckin.Add(vs, schCheckTime);
+                            }
+                            bool isCheckout = !vs.CheckOut;
+                            time1 = new DateTime(date.Year, date.Month, date.Day, vs._CheckOutHour1, vs._CheckOutMin1, 0);
+                            time2 = new DateTime(date.Year, date.Month, date.Day, vs._CheckOutHour2, vs._CheckOutMin2, 0);
+                            schCheckTime = DateTime.MinValue;
+                            if (time1 >= time2)
+                                time2 = time2.AddDays(1);
+                            if (vs.CheckOut)
+                            {
+                                msst = new MySSpanTime(time1, time2 - time1);
+                                isCheckout = msst.Contains(new List<DateTime>(checkInOutDic[userid][date].Keys), new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0), false, out schCheckTime, out zaotuimin);
+                                if (isCheckout && !odwd.m_Schcheckout.ContainsKey(vs) && schCheckTime != DateTime.MinValue)
+                                    odwd.m_Schcheckout.Add(vs, schCheckTime);
+                            }
+
+                            bool isWork = true;
+                            if (isCheckin && isCheckout)
+                            {
+                                isWork = true;
+                                MyWorkData myWd = null;
+                                if (vs.IsOverTime || vs._SchType != 1)
+                                { //判断是否申请了加班，并校验申请加班的时间是否在班次上，如果没申请加班，则不算加班
+                                    isWork = false;
+                                    if (jiabanDic.ContainsKey(userid) && jiabanDic[userid].ContainsKey(date))
+                                    {
+                                        foreach (MyWorkData md in jiabanDic[userid][date])
+                                        {
+                                            if (md.OnWorkStartTime <= new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0) && md.OnWorkEndTime >= new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0))
+                                            {
+                                                isWork = true;//加班成功
+                                                myWd = md;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (isWork)//有效班次
+                                {
+                                    if (chidaomin <= (-1) * vs.LateMinutes)//迟到
+                                    {
+                                        chidao += (-1) * ((int)(chidaomin));
+                                        odwd.chidao += (-1) * ((int)(chidaomin));
+                                        if (!odwd.m_Schchidao.ContainsKey(vs))
+                                            odwd.m_Schchidao.Add(vs, (-1) * ((int)(chidaomin)));
+                                    }
+                                    if (zaotuimin >= vs.EarlyMinutes)//早退
+                                    {
+                                        zaotui += ((int)(zaotuimin));
+                                        odwd.zaotui += ((int)(zaotuimin));
+                                        if (!odwd.m_Schzaotui.ContainsKey(vs))
+                                            odwd.m_Schzaotui.Add(vs, ((int)(zaotuimin)));
+                                    }
+                                    if (vs.IsOverTime && myWd != null)//加班成功
+                                    {
+                                        if (!odwd.m_MyWorkDatas.ContainsKey(myWd.WorkDataTimeStruct))
+                                            odwd.m_MyWorkDatas.Add(myWd.WorkDataTimeStruct, myWd);
+                                        if (!schValues.ContainsKey(myWd.CheckOWA))
+                                            schValues.Add(myWd.CheckOWA, 0.0);
+                                        schValues[myWd.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                        if (!jiabanmingxiDic.ContainsKey(myWd.CheckOWA))
+                                            jiabanmingxiDic.Add(myWd.CheckOWA, new Dictionary<string, double>());
+                                        //odwd.m_MyWorkDatas[myWd.CheckOWA].Add(myWd);
+                                        switch (vs.SchType)//{1:正常上班},{2:公司休假},{3:休息日},{4:节假日}
+                                        {
+                                            case 1:
+                                            case 2:
+                                                //myWd.CheckOWA = "平时-" + myWd.CheckOWA;
+                                                if (!odwd.m_MyWorkDatas.ContainsKey(myWd.WorkDataTimeStruct))
+                                                    odwd.m_MyWorkDatas.Add(myWd.WorkDataTimeStruct, myWd);
+                                                if (!jiabanmingxiDic[myWd.CheckOWA].ContainsKey("平时-" + myWd.CheckOWA))
+                                                    jiabanmingxiDic[myWd.CheckOWA].Add("平时-" + myWd.CheckOWA, 0.0);
+                                                jiabanmingxiDic[myWd.CheckOWA]["平时-" + myWd.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                                //odwd.m_MyWorkDatas["平时-" + myWd.CheckOWA].Add(myWd);
+                                                break;
+                                            case 3:
+                                                //myWd.CheckOWA = "休息日-" + myWd.CheckOWA;
+                                                if (!odwd.m_MyWorkDatas.ContainsKey(myWd.WorkDataTimeStruct))
+                                                    odwd.m_MyWorkDatas.Add(myWd.WorkDataTimeStruct, myWd);
+                                                if (!jiabanmingxiDic[myWd.CheckOWA].ContainsKey("休息日-" + myWd.CheckOWA))
+                                                    jiabanmingxiDic[myWd.CheckOWA].Add("休息日-" + myWd.CheckOWA, 0.0);
+                                                jiabanmingxiDic[myWd.CheckOWA]["休息日-" + myWd.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                                //odwd.m_MyWorkDatas["休息日-" + myWd.CheckOWA].Add(myWd);
+                                                break;
+                                            case 4:
+                                                //myWd.CheckOWA = "节假日-" + myWd.CheckOWA;
+                                                if (!odwd.m_MyWorkDatas.ContainsKey(myWd.WorkDataTimeStruct))
+                                                    odwd.m_MyWorkDatas.Add(myWd.WorkDataTimeStruct, myWd);
+                                                if (!jiabanmingxiDic[myWd.CheckOWA].ContainsKey("节假日-" + myWd.CheckOWA))
+                                                    jiabanmingxiDic[myWd.CheckOWA].Add("节假日-" + myWd.CheckOWA, 0.0);
+                                                jiabanmingxiDic[myWd.CheckOWA]["节假日-" + myWd.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                                //odwd.m_MyWorkDatas["节假日-" + myWd.CheckOWA].Add(myWd);
+                                                break;
+                                            default: break;
+                                        }
+                                    }
+                                    shijichuqin += vs.SchNumber * vs.SchUnit;
+                                    odwd.m_V_SchedulingSchClasses.Add(vs);//班次有效
+                                }
+                            }
+                            else if (!vs.IsOverTime && vs._SchType == 1)
+                            {
+                                //判断这天是否有调休、出差、请假等
+                                isWork = false;
+                                if (tiaoxiuDic.ContainsKey(userid) && tiaoxiuDic[userid].ContainsKey(date))
+                                {
+                                    foreach (MyWorkData md in tiaoxiuDic[userid][date])
+                                    {
+                                        if (md.UnWorkStartTime <= new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0) && md.UnWorkEndTime >= new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0))
+                                        {
+                                            isWork = true;//调休
+                                            if (!odwd.m_MyWorkDatas.ContainsKey(md.WorkDataTimeStruct))
+                                                odwd.m_MyWorkDatas.Add(md.WorkDataTimeStruct, md);
+                                            if (!schValues.ContainsKey(md.CheckOWA))
+                                                schValues.Add(md.CheckOWA, 0.0);
+                                            schValues[md.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                            //odwd.m_MyWorkDatas[md.CheckOWA].Add(md);
+                                            odwd.m_V_SchedulingSchClasses.Add(vs);
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (qingjiaOrChuchaiDic.ContainsKey(userid) && qingjiaOrChuchaiDic[userid].ContainsKey(date))
+                                {
+                                    foreach (MyWorkData md in qingjiaOrChuchaiDic[userid][date])
+                                    {
+                                        if (md.UnWorkStartTime <= new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0) && md.UnWorkEndTime >= new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0))
+                                        {
+                                            isWork = true;//请假或出差
+                                            if (!odwd.m_MyWorkDatas.ContainsKey(md.WorkDataTimeStruct))
+                                                odwd.m_MyWorkDatas.Add(md.WorkDataTimeStruct, md);
+                                            if (!schValues.ContainsKey(md.CheckOWA))
+                                                schValues.Add(md.CheckOWA, 0.0);
+                                            schValues[md.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                            //odwd.m_MyWorkDatas[md.CheckOWA].Add(md);
+                                            odwd.m_V_SchedulingSchClasses.Add(vs);
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!isWork)//旷工
+                                {
+                                    kuanggong += vs.SchNumber * vs.SchUnit;
+                                }
+                            }
+                        }
+                        else if (vs._SchType == 1 && !vs._IsOverTime)//
+                        {
+                            //判断这天是否有调休、出差、请假等
+                            bool isWork = false;
+                            if (tiaoxiuDic.ContainsKey(userid) && tiaoxiuDic[userid].ContainsKey(date))
+                            {
+                                foreach (MyWorkData md in tiaoxiuDic[userid][date])
+                                {
+                                    if (md.UnWorkStartTime <= new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0) && md.UnWorkEndTime >= new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0))
+                                    {
+                                        isWork = true;//调休
+                                        if (!odwd.m_MyWorkDatas.ContainsKey(md.WorkDataTimeStruct))
+                                            odwd.m_MyWorkDatas.Add(md.WorkDataTimeStruct, md);
+                                        if (!schValues.ContainsKey(md.CheckOWA))
+                                            schValues.Add(md.CheckOWA, 0.0);
+                                        schValues[md.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                        //odwd.m_MyWorkDatas[md.CheckOWA].Add(md);
+                                        odwd.m_V_SchedulingSchClasses.Add(vs);
+                                        break;
+                                    }
+                                }
+                            }
+                            if (qingjiaOrChuchaiDic.ContainsKey(userid) && qingjiaOrChuchaiDic[userid].ContainsKey(date))
+                            {
+                                foreach (MyWorkData md in qingjiaOrChuchaiDic[userid][date])
+                                {
+                                    if (md.UnWorkStartTime <= new DateTime(date.Year, date.Month, date.Day, vs.StartHour, vs.StartMin, 0) && md.UnWorkEndTime >= new DateTime(date.Year, date.Month, date.Day, vs.EndHour, vs.EndMin, 0))
+                                    {
+                                        isWork = true;//请假或出差
+                                        if (!odwd.m_MyWorkDatas.ContainsKey(md.WorkDataTimeStruct))
+                                            odwd.m_MyWorkDatas.Add(md.WorkDataTimeStruct, md);
+                                        if (!schValues.ContainsKey(md.CheckOWA))
+                                            schValues.Add(md.CheckOWA, 0.0);
+                                        schValues[md.CheckOWA] += vs.SchNumber * vs.SchUnit;
+                                        //odwd.m_MyWorkDatas[md.CheckOWA].Add(md);
+                                        odwd.m_V_SchedulingSchClasses.Add(vs);
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!isWork)//旷工
+                            {
+                                kuanggong += vs.SchNumber * vs.SchUnit;
+                            }
+                        }
+                    }
+                    #endregion
+                    dr[date.ToString("yyyy-MM-dd")] = odwd;
+                }
+            }
+
+            dr["序号"] = (contrastTable.Rows.Count + 1).ToString();
+            dr["工号"] = userDic[userid].STAFF_NO;
+            dr["姓名"] = userDic[userid].STAFF_NAME.Replace("?粀", "").Replace("\0", "").Replace("?", "").Replace("粀", "");
+            dr["考勤姓名"] = userDic[userid].NAME.Replace("?粀", "").Replace("\0", "").Replace("?", "").Replace("粀", "");
+            dr["部门"] = userDic[userid].DEPT_NAME;
+            dr["全勤"] = quanqin;
+            dr["实际出勤"] = shijichuqin;
+
+            dr["迟到"] = chidao;
+            dr["早退"] = zaotui;
+            dr["旷工"] = kuanggong;
+            foreach (string ck in CheckOWAs)
+            {
+                dr[ck] = schValues[ck];
+                if (jiabanmingxiDic.ContainsKey(ck))
+                {
+                    string tit = "tag=\\'";
+                    foreach (string xx in jiabanmingxiDic[ck].Keys)
+                    {
+                        tit += "&nbsp;&nbsp;" + xx + ":" + jiabanmingxiDic[ck][xx] + "<br />";
+                    }
+                    tit += "\\'";
+                    dr[ck] = "<a " + tit + " onmouseover=\\'tip.start(this)\\'>" + schValues[ck] + "</a>";
+                }
+            }
+            dr["公司休假"] = gongsixiujia;
+            dr["休息日"] = xiuxiri;
+            dr["节假日"] = jiejiari;
+
+            contrastTable.Rows.Add(dr);
+        }
+
+        return contrastTable;
+    }
+
+    static public void GetResult(string userid, DateTime 打卡)
+    {
+        //今天打卡记录
+        //与公休对比，按月取得周六周日日期
+        
+        //流程、
+
+        //结果是 打勾 打星
+    }
+
+    static public string ChineseByEnWeek(DateTime dt)
+    {
+        switch (dt.DayOfWeek.ToString())
+        {
+            case "Monday": return "一";
+            case "Tuesday": return "二";
+            case "Wednesday": return "三";
+            case "Thursday": return "四";
+            case "Friday": return "五";
+            case "Saturday": return "六";
+            case "Sunday": return "日";
+            default: return "";
+        }
+    }
+
+    static public int IndexOfWeekByEnWeek(DateTime dt)
+    {
+        switch (dt.DayOfWeek.ToString())
+        {
+            case "Monday": return 1;
+            case "Tuesday": return 2;
+            case "Wednesday": return 3;
+            case "Thursday": return 4;
+            case "Friday": return 5;
+            case "Saturday": return 6;
+            case "Sunday": return 7;
+            default: return 0;
+        }
+    } 
+}
+
+/// <summary>
+/// 一天工作详情
+/// </summary>
+public class OneDayWorkDetail
+{
+    /// <summary>
+    /// 日期
+    /// </summary>
+    public DateTime Date = DateTime.MinValue;
+    /// <summary>
+    /// 用户名
+    /// </summary>
+    public string UserId = "";
+    /// <summary>
+    /// 初始化一天
+    /// </summary>
+    /// <param name="date">日期</param>
+    /// <param name="userid">用户id</param>
+    public OneDayWorkDetail(DateTime date, string userid)
+    {
+        Date = date;
+        UserId = userid;
+    }
+
+    /// <summary>
+    /// 根据V_SchedulingSchClass获取一个考勤例外
+    /// </summary>
+    /// <param name="vs"></param>
+    /// <returns></returns>
+    private MyWorkData GetMyWorkDataByV_SchedulingSchClass(V_SchedulingSchClass vs)
+    {
+        if(vs == null)
+            return null;
+        MyWorkData wd = null;
+        DateTime stime = new DateTime(Date.Year, Date.Month, Date.Day, vs.StartHour, vs.StartMin, 0);
+        DateTime etime = new DateTime(Date.Year, Date.Month, Date.Day, vs.EndHour, vs.EndMin, 0);
+        if (stime > etime)
+            etime = etime.AddDays(1);
+        foreach (WorkDataTimeStruct wdts in m_MyWorkDatas.Keys)
+        {
+            MySSpanTime ms = new MySSpanTime(wdts.UnWorkStartTime, wdts.UnWorkEndTime - wdts.UnWorkStartTime);
+            if (ms.Contains(stime) && ms.Contains(etime))
+                return m_MyWorkDatas[wdts];
+        }
+        return wd;
+    }
+    /// <summary>
+    /// 要现显示出来的内容，html代码格式
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        //要显示出来的格式，html代码
+        string html = "";
+        string divtag = "";
+
+        string clsadd = "";
+        string clsaddstr = "";
+        switch (schType)
+        {
+            case 1:
+                clsadd = "";
+                break;
+            case 2:
+                clsadd = " ui-ck-onechday";
+                clsaddstr = "-onechday";
+                break;
+            case 3:
+                clsadd = " ui-ck-onewkday";
+                clsaddstr = "-onewkday";
+                break;
+            case 4:
+                clsadd = " ui-ck-onehdday";
+                clsaddstr = "-onehdday";
+                break;
+            default: break;
+        }
+
+        if (m_HR_CHECKINOUTs != null && m_HR_CHECKINOUTs.Count > 0)
+        {
+            divtag += "&nbsp;&nbsp;打卡时间:<br />";
+            foreach (DateTime dt in m_HR_CHECKINOUTs.Keys)
+            {
+                divtag += "&nbsp;&nbsp;&nbsp;&nbsp;" + m_HR_CHECKINOUTs[dt].CHECKTIME.ToString("yyyy-MM-dd HH:mm:ss") + "<br />";
+            }
+            divtag += "";
+        }
+
+        DateTime nowDt = Date.Date;
+        if (m_V_SchedulingSchClasses != null && m_V_SchedulingSchClasses.Count > 0)
+        {
+            int rig = 0;
+            List<DateTime> checkTimes = new List<DateTime>(m_HR_CHECKINOUTs.Keys);
+            Dictionary<DateTime, V_SchedulingSchClass> schTimeDic = new Dictionary<DateTime, V_SchedulingSchClass>();
+            foreach (V_SchedulingSchClass vs in m_V_SchedulingSchClasses)
+            {
+                DateTime curDate = new DateTime(vs._SchYear, vs._SchMonth, vs._SchDay);
+                DateTime stime = new DateTime(nowDt.Year, nowDt.Month, nowDt.Day, vs.StartHour, vs.StartMin, 0);
+                if (!schTimeDic.ContainsKey(stime)) schTimeDic.Add(stime, vs);
+            }
+            List<DateTime> schTimeSort = new List<DateTime>(schTimeDic.Keys);
+            //schTimeSort.Sort(new Comparison<DateTime>(CheckInOutHelper.ComparisonTime));
+            DateTime lastTime = Date.Date;
+            foreach (DateTime dtsort in schTimeSort)
+            {
+                V_SchedulingSchClass vs = schTimeDic[dtsort];
+                DateTime curDate = new DateTime(vs._SchYear, vs._SchMonth, vs._SchDay);
+                //DateTime otime = new DateTime(nowDt.Year, nowDt.Month, nowDt.Day, 0, 0, 0);
+                DateTime stime = new DateTime(nowDt.Year, nowDt.Month, nowDt.Day, vs.StartHour, vs.StartMin, 0);
+                DateTime etime = new DateTime(nowDt.Year, nowDt.Month, nowDt.Day, vs.EndHour, vs.EndMin, 0);
+
+                int left = lastTime.Hour + (lastTime.Minute >= 30 ? 1 : 0);
+                int wid = ((int)((stime - lastTime).TotalHours + 0.5));
+                rig = left + wid;
+                string sty = "style=\\'width:" + wid + "px;\\'";
+                string tit = "tag=\\'";
+                tit += divtag + "\\'";
+                string a = "<a class=\\'od-bfwork" + clsaddstr + "\\' " + tit + " " + sty + " onmouseover=\\'tip.start(this)\\'></a>";
+                html += a;
+
+                MyWorkData md = GetMyWorkDataByV_SchedulingSchClass(vs);
+                left = stime.Hour + (stime.Minute >= 30 ? 1 : 0);
+                wid = ((int)((etime - stime).TotalHours + 0.5));
+                if (md == null)//正常上班
+                {
+                    sty = "style=\\'width:" + wid + "px;background-color:" + vs.Color + "\\'";
+                    tit = "tag=\\'";
+                    tit += "&nbsp;&nbsp;班次名称:" + vs.SchName + "<br />";
+                    tit += "&nbsp;&nbsp;时段:" + vs.StartHour.ToString().PadLeft(2, '0') + ":" + vs.StartMin.ToString().PadLeft(2, '0') + "-" + vs.EndHour.ToString().PadLeft(2, '0') + ":" + vs.EndMin.ToString().PadLeft(2,'0') + "<br />";
+                    tit += "&nbsp;&nbsp;计算量值:" + vs.SchNumber + "<br />";
+                    tit += "&nbsp;&nbsp;量值单位:" + new FormHelper().GetOptionText(HR_SchClass.Attribute.SchUnit, vs.SchUnit) + "<br />";
+                    tit += "&nbsp;&nbsp;是否计算为加班:" + (vs.IsOverTime ? "是" : "否") + "<br />";
+                    int min = -1;
+                    m_Schchidao.TryGetValue(vs, out min);
+                    //DateTime dt = GetOneCheckTime(checkTimes, new DateTime(Date.Year, Date.Month, Date.Day, vs.StartHour, vs.StartMin, 0), new DateTime(Date.Year, Date.Month, Date.Day, vs._CheckInHour1, vs._CheckInMin1, 0), new DateTime(Date.Year, Date.Month, Date.Day, vs._CheckInHour2, vs._CheckInMin2, 0), true, out min);
+                    DateTime dt = DateTime.MinValue;
+                    m_Schcheckin.TryGetValue(vs, out dt);
+                    tit += "&nbsp;&nbsp;签到时间:" + (!vs.CheckIn ? "不签到" : (dt != DateTime.MinValue ? dt.ToString("yyyy-MM-dd HH:mm:ss") : "--:--:--")) + (min > 0 ? ("[迟到" + min + "分钟]") : "").ToString() + "<br />";
+                    min = -1;
+                    m_Schzaotui.TryGetValue(vs, out min);
+                    //dt = GetOneCheckTime(checkTimes, new DateTime(Date.Year, Date.Month, Date.Day, vs.EndHour, vs.EndMin, 0), new DateTime(Date.Year, Date.Month, Date.Day, vs._CheckOutHour1, vs._CheckOutMin1, 0), new DateTime(Date.Year, Date.Month, Date.Day, vs._CheckOutHour2, vs._CheckOutMin2, 0), false, out min);
+                    dt = DateTime.MinValue;
+                    m_Schcheckout.TryGetValue(vs, out dt);
+                    tit += "&nbsp;&nbsp;签退时间:" + (!vs.CheckOut ? "不签退" : (dt != DateTime.MinValue ? dt.ToString("yyyy-MM-dd HH:mm:ss") : "--:--:--")) + (min > 0 ? ("[早退" + (min + "分钟]")) : "").ToString() + "<br />";
+                    tit += "&nbsp;&nbsp;计迟到/早退分钟数:" + vs.LateMinutes + "/" + vs.EarlyMinutes + "<br />";
+                    tit += "\\'";
+                    a = "<a class=\\'od-working\\'" + tit + " " + sty + " onmouseover=\\'tip.start(this)\\'></a>";
+                }
+                else//考勤例外
+                {
+                    sty = "style=\\'width:" + wid + "px;\\'";
+                    tit = "tag=\\'";
+                    tit += "&nbsp;&nbsp;班次名称:" + vs.SchName + "<br />";
+                    tit += "&nbsp;&nbsp;例外名称:" + md.CheckOWA + ":<br />";
+                    if (md.OnWorkStartTime != DateTime.MinValue && md.OnWorkEndTime != DateTime.MinValue)
+                    {
+                        tit += "&nbsp;&nbsp;&nbsp;&nbsp;考勤例外开始时间" + md.OnWorkStartTime.ToString("yyyy-MM-dd HH:mm:ss") + "<br />";
+                        tit += "&nbsp;&nbsp;&nbsp;&nbsp;考勤例外结束时间" + md.OnWorkEndTime.ToString("yyyy-MM-dd HH:mm:ss") + "<br />";
+                    }
+                    if (md.UnWorkStartTime != DateTime.MinValue && md.UnWorkEndTime != DateTime.MinValue)
+                    {
+                        tit += "&nbsp;&nbsp;&nbsp;&nbsp;抵消考勤例外开始时间" + md.UnWorkStartTime.ToString("yyyy-MM-dd HH:mm:ss") + "<br />";
+                        tit += "&nbsp;&nbsp;&nbsp;&nbsp;抵消考勤例外结束时间" + md.UnWorkEndTime.ToString("yyyy-MM-dd HH:mm:ss") + "<br />";
+                    }
+                    tit += "\\'";
+                    a = "<a class=\\'od-unworking" + clsaddstr + "\\'" + tit + " " + sty + " onmouseover=\\'tip.start(this)\\'></a>";
+                }
+                html += a;
+                lastTime = etime;
+                if (dtsort == schTimeSort[schTimeSort.Count - 1])//最后一个
+                {
+                    left = lastTime.Hour + (lastTime.Minute >= 30 ? 1 : 0);
+                    wid = 25 - left - 1;
+                    sty = "style=\\'width:" + wid + "px;\\'";
+                    tit = "tag=\\'";
+                    tit += divtag + "\\'";
+                    a = "<a class=\\'od-afwork" + clsaddstr + "\\' " + tit + " " + sty + " onmouseover=\\'tip.start(this)\\'></a>";
+                    html += a;
+                }
+            }
+        }
+        else if ((m_HR_CHECKINOUTs != null && m_HR_CHECKINOUTs.Count > 0))
+        {
+            int left = 0;
+            int wid = 25 - left;
+            string sty = "style=\\'width:" + wid + "px;\\'";
+            string tit = "tag=\\'";
+            tit += divtag + "\\'";
+            string a = "<a class=\\'od-invalidwork" + clsaddstr + "\\' " + tit + " " + sty + " onmouseover=\\'tip.start(this)\\'></a>";
+            html += a;
+        }
+
+        html = "<div class=\\'ui-ck-oneday" + clsadd + "\\'>" + html + "</div>";
+        return html;
+    }
+
+    /// <summary>
+    /// 获取一个签入或签出的打卡时间
+    /// </summary>
+    /// <param name="timeSourse">打卡时间列表</param>
+    /// <param name="cktime">打卡时间</param>
+    /// <param name="stime">签入\签出开始时间</param>
+    /// <param name="etime">签入\签出结束时间</param>
+    /// <param name="isCheckIn">是：签入，否：签出</param>
+    /// <param name="min">打卡时间与值班开始\结束时间差，分钟数</param>
+    /// <returns></returns>
+    private DateTime GetOneCheckTime(List<DateTime> timeSourse, DateTime cktime,  DateTime stime,DateTime etime, bool isCheckIn, out int min)
+    {
+        double dmin = -1;
+        min = 0;
+        DateTime dt = DateTime.MinValue;
+        if (timeSourse == null || timeSourse.Count < 1 || stime < etime)
+            return dt;
+        //timeSourse.Sort(new Comparison<DateTime>(CheckInOutHelper.ComparisonTime));
+        MySSpanTime mSpan = new MySSpanTime(stime, (etime - stime));
+        if (mSpan.Contains(timeSourse, cktime, isCheckIn, out dt, out dmin))
+        {
+            min = (int)(dmin + (dmin > 0 ? 0.5 : ((-1) * 0.5)));
+        }
+        return dt;
+    }
+
+    /// <summary>
+    /// 班次与签到时间字典
+    /// </summary>
+    public Dictionary<V_SchedulingSchClass, DateTime> m_Schcheckin = new Dictionary<V_SchedulingSchClass, DateTime>();
+    /// <summary>
+    /// 班次与签退时间字典
+    /// </summary>
+    public Dictionary<V_SchedulingSchClass, DateTime> m_Schcheckout = new Dictionary<V_SchedulingSchClass, DateTime>();
+
+    /// <summary>
+    /// 班次与迟到分钟数字典
+    /// </summary>
+    public Dictionary<V_SchedulingSchClass, int> m_Schchidao = new Dictionary<V_SchedulingSchClass, int>();
+    /// <summary>
+    /// 班次与早退分钟数字典
+    /// </summary>
+    public Dictionary<V_SchedulingSchClass, int> m_Schzaotui = new Dictionary<V_SchedulingSchClass, int>();
+
+    /// <summary>
+    /// 考勤类型与考勤数据列表字典
+    /// </summary>
+    public Dictionary<WorkDataTimeStruct, MyWorkData> m_MyWorkDatas = new Dictionary<WorkDataTimeStruct, MyWorkData>();
+    /// <summary>
+    /// 一天中有效班次列表
+    /// </summary>
+    public List<V_SchedulingSchClass> m_V_SchedulingSchClasses = new List<V_SchedulingSchClass>();
+    /// <summary>
+    /// 一天中的打卡时间
+    /// </summary>
+    public Dictionary<DateTime, V_USERCHECKINOUT> m_HR_CHECKINOUTs = new Dictionary<DateTime, V_USERCHECKINOUT>();
+
+    /// <summary>
+    /// 迟到
+    /// </summary>
+    public int chidao = 0;
+    /// <summary>
+    /// 早退
+    /// </summary>
+    public int zaotui = 0;
+
+    /// <summary>
+    /// 值班类型 1:正常上班},{2:公司休假},{3:休息日},{4:节假日
+    /// </summary>
+    public int schType = 1;
+}
+
+public struct WorkDataTimeStruct
+{
+    /// <summary>
+    /// 抵消工作开始时间
+    /// </summary>
+    public DateTime UnWorkStartTime;
+    /// <summary>
+    /// 抵消工作结束时间
+    /// </summary>
+    public DateTime UnWorkEndTime;
+    /// <summary>
+    /// 工作时间开始时间
+    /// </summary>
+    public DateTime OnWorkStartTime;
+    /// <summary>
+    /// 工作时间结束时间
+    /// </summary>
+    public DateTime OnWorkEndTime;
+}
+
+/// <summary>
+/// 考勤数据模型
+/// </summary>
+public class MyWorkData
+{
+    public MyWorkData() { }
+    public int type = -1;
+    /// <summary>
+    /// 员工编号
+    /// </summary>
+    public string UserId = "";//员工编号
+    /// <summary>
+    /// 考勤类型，请假、年假、公休、病假等
+    /// </summary>
+    public string CheckOWA = "";//考勤类型，请假、年假、公休、病假等
+    /// <summary>
+    /// 抵消工作开始时间
+    /// </summary>
+    public DateTime UnWorkStartTime = DateTime.MinValue;//抵消工作开始时间
+    /// <summary>
+    /// 抵消工作结束时间
+    /// </summary>
+    public DateTime UnWorkEndTime = DateTime.MinValue;//抵消工作结束时间
+    /// <summary>
+    /// 工作时间开始时间
+    /// </summary>
+    public DateTime OnWorkStartTime = DateTime.MinValue;//工作时间开始时间
+    /// <summary>
+    /// 工作时间结束时间
+    /// </summary>
+    public DateTime OnWorkEndTime = DateTime.MinValue;//工作时间结束时间
+
+    public WorkDataTimeStruct WorkDataTimeStruct
+    {
+        get 
+        {
+            WorkDataTimeStruct wdts = new WorkDataTimeStruct();
+            wdts.OnWorkEndTime = OnWorkEndTime;
+            wdts.OnWorkStartTime = OnWorkStartTime;
+            wdts.UnWorkEndTime = UnWorkEndTime;
+            wdts.UnWorkStartTime = UnWorkStartTime;
+            return wdts;
+        }
+    }
+}
+
+/// <summary>
+/// 有起始时间的时间区间类
+/// </summary>
+public class MySSpanTime
+{
+    private DateTime stime = DateTime.MinValue;
+
+    public DateTime Stime
+    {
+        get { return stime; }
+        //set { stime = value; }
+    }
+
+    private DateTime etime = DateTime.MinValue;
+
+    public DateTime Etime
+    {
+        get { return etime; }
+        //set { etime = value; }
+    }
+
+    public MySSpanTime(DateTime stime, TimeSpan ts)
+    {
+        DateTime dt1 = stime;
+        DateTime dt2 = stime.Add(ts);
+        this.stime = dt1 > dt2 ? dt2 : dt1;
+        this.etime = dt1 < dt2 ? dt2 : dt1;
+    }
+
+    public bool Contains(DateTime dt)
+    {
+        if (stime <= dt && etime >= dt)
+            return true;
+        else
+            return false;
+    }
+
+    public bool Contains(DateTime dt, DateTime dtcalc, out double min)
+    {
+        min = (dtcalc - dt).TotalMinutes;
+        if (stime <= dt && etime >= dt)
+            return true;
+        else
+            return false;
+    }
+
+    public bool Contains(List<DateTime> dts, DateTime dtcalc, bool isCheckIn, out double minMin)
+    {
+        minMin = (isCheckIn ? 1 : -1) * 24 * 60;
+        double min = (!isCheckIn ? 1 : -1) * 24 * 60;
+        bool isIn = false;
+        foreach (DateTime dt in dts)
+        {
+            if (stime <= dt && etime >= dt)
+            {
+                if (isCheckIn)
+                {
+                    if (dtcalc >= dt)
+                    {
+                        minMin = (dtcalc - dt).TotalMinutes < minMin ? (dtcalc - dt).TotalMinutes : minMin;
+                    }
+                    else
+                    {
+                        min = (dtcalc - dt).TotalMinutes > min ? (dtcalc - dt).TotalMinutes : min;
+                    }
+                }
+                else
+                {
+                    if (dtcalc <= dt)
+                    {
+                        minMin = (dtcalc - dt).TotalMinutes > minMin ? (dtcalc - dt).TotalMinutes : minMin;
+                    }
+                    else
+                    {
+                        min = (dtcalc - dt).TotalMinutes < min ? (dtcalc - dt).TotalMinutes : min;
+                    }
+                }
+                isIn = true;
+            }
+        }
+        if (isIn)
+        {
+            if (minMin == (isCheckIn ? 1 : -1) * 24 * 60)
+                minMin = min;
+        }
+        return isIn;
+    }
+
+    public bool Contains(List<DateTime> dts, DateTime dtcalc, bool isCheckIn, out DateTime dtcur, out double minMin)
+    {
+        minMin = (isCheckIn ? 1 : -1) * 24 * 60;
+        double min = (!isCheckIn ? 1 : -1) * 24 * 60;
+        bool isIn = false;
+        dtcur = isCheckIn ? DateTime.MaxValue : DateTime.MinValue;
+        DateTime mindt = !isCheckIn ? DateTime.MaxValue : DateTime.MinValue;
+        foreach (DateTime dt in dts)
+        {
+            if (stime <= dt && etime >= dt)
+            {
+                if (isCheckIn)
+                {
+                    if (dtcalc >= dt)
+                    {
+                        if ((dtcalc - dt).TotalMinutes <= minMin)
+                        {
+                            minMin = (dtcalc - dt).TotalMinutes;
+                            dtcur = dt;
+                        }
+                    }
+                    else
+                    {
+                        if ((dtcalc - dt).TotalMinutes >= min)
+                        {
+                            mindt = dt;
+                            min = (dtcalc - dt).TotalMinutes;
+                        }
+                    }
+                }
+                else
+                {
+                    if (dtcalc <= dt)
+                    {
+                        if ((dtcalc - dt).TotalMinutes >= minMin)
+                        {
+                            minMin = (dtcalc - dt).TotalMinutes;
+                            dtcur = dt;
+                        }
+                    }
+                    else
+                    {
+                        if ((dtcalc - dt).TotalMinutes <= min)
+                        {
+                            mindt = dt;
+                            min = (dtcalc - dt).TotalMinutes;
+                        }
+                    }
+                }
+                isIn = true;
+            }
+        }
+        if (isIn)
+        {
+            if (minMin == (isCheckIn ? 1 : -1) * 24 * 60)
+            {
+                dtcur = mindt;
+                minMin = min;
+            }
+        }
+        return isIn;
+    }
+
+    public bool DateContains(DateTime dt)
+    {
+        if (stime.Date <= dt.Date && etime.Date >= dt.Date)
+            return true;
+        else
+            return false;
+    }
+
+    public bool DateContains(DateTime dt, DateTime dtcalc, out double day)
+    {
+        day = (dtcalc - dt).TotalDays;
+        if (stime <= dt && etime >= dt)
+            return true;
+        else
+            return false;
+    }
+
+    public bool TimeContains(DateTime dt)
+    {
+        DateTime dt1 = new DateTime(dt.Year, dt.Month, dt.Day, stime.Hour, stime.Minute, stime.Second);
+        DateTime dt2 = new DateTime(dt.Year, dt.Month, dt.Day, stime.Hour, stime.Minute, stime.Second);
+        if (dt1 <= dt && dt2 >= dt)
+            return true;
+        else
+            return false;
+    }
+
+    public bool TimeContains(DateTime dt, DateTime dtcalc, out double min)
+    {
+        min = (dtcalc - dt).TotalMinutes;
+        if (stime <= dt && etime >= dt)
+            return true;
+        else
+            return false;
+    }
+}

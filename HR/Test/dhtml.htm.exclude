@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <script src="../../Lib/JQuery/jquery.min.js" type="text/javascript"></script>
+    <link href="../../Lib/DHX/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/dhtmlxgrid_skins.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../Lib/DHX/dhtmlxcommon.js" type="text/javascript"></script>
+   
+    <script src="../../Lib/DHX/dhtmlxgrid.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/dhtmlxgridcell.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/excells/dhtmlxgrid_excell_link.js" type="text/javascript"></script>
+    
+ 
+    <script type="text/javascript">        
+        dhtmlx.skin = "dhx_skyblue";
+       
+    </script>
+
+    <!--TL-->
+    
+
+    <script src="../../Lib/DHX/ext/dhtmlxgrid_start.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/tl-grid/trainquerycommon.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/tl-grid/dhtmlxgrid_splt.js" type="text/javascript"></script>
+    <!--TL-->
+    
+</head>
+<body>
+<div id="gridbox1"	style="text-align:left;background-color: white;width:700px;height:300px; overflow: hidden">
+</div>
+
+<hr />
+
+<div id="gridbox2"style="text-align:left;background-color: white;width:700px;height:300px; overflow: hidden">
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        createGrid1();
+        createGrid2();
+    }
+
+
+    function createGrid1() {
+        var mygrid = new dhtmlXGridObject('gridbox1');
+        mygrid.setImagePath("../../lib/DHX/grid_imgs/");
+        mygrid.setHeader("序号,车次,查询区间,#cspan,区间运行时刻,#cspan,#cspan,列车信息,#cspan,#cspan,#cspan,票价（元）,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan");
+        mygrid.attachHeader("#rspan,#rspan,发站,到站,发时,到时,历时,始发站,终到站,等级,空调,商务座,特等座,一等座,二等座,高级软卧上/下,软卧上/下,硬卧上/中/下,软座,硬座");
+        mygrid.setInitWidths("30,50,60,60,40,40,40,60,60,40,40,50,60,50,50,90,70,80,40,40");
+        mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+        mygrid.setColTypes("ro,link,link,link,ro,ro,ro,link,link,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+        mygrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,int,int,int,int,int,int,int,int,int");
+        mygrid.init(); 
+        //mygrid.or
+        //mygrid.load(
+        //mygrid.enableSmartRendering(true, 500);
+        //mygrid.enableAlterCss("even", "uneven");
+
+        mygrid.setSkin("light");
+        mygrid.splitAt(4);
+    }
+    function createGrid2() {
+        var mygrid2 = new dhtmlXGridObject('gridbox2');
+        mygrid2.setImagePath("../../lib/DHX/grid_imgs/");
+        mygrid2.setHeader("hhh1,hhh2,hhh3");
+        mygrid2.setInitWidths("80,80,80");
+        mygrid2.setColAlign("center,center,center");
+        mygrid2.setColTypes("ro,link,link");
+        mygrid2.setColSorting("int,str,str");
+        mygrid2.init();
+        mygrid2.setSkin("light");
+
+       mygrid2.loadXMLString("<rows><row id='1'><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell></row></rows>", function () { });
+
+
+   }
+
+  
+</script>
+<hr />
+<table id="tblToGrid" gridHeight="auto" style="width:400px" forceCellTypes="true" imgpath="../../lib/DHX/imgs/" border="1" lightnavigation="true">
+    <thead>
+     <tr>
+        <td type="ro" id="td_first">Column 1</td>
+        <td type="ro">Column 2</td>
+        <td type="ro">Column 3</td>
+        <td type="ro">Column 4</td>
+        <td type="ro">Column 5</td>
+        <td type="ro">Column 6</td>
+    </tr>
+    </thead>
+   <tbody>
+    <tr>
+        <td> 11</td>
+        <td> 22</td><td> 33</td>
+        <td> 44</td><td> 55</td>
+        <td> 66</td>
+    </tr>
+    <tr>
+        <td>value 21</td>
+        <td>value 22</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 31</td>
+        <td>value 32</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 41</td>
+        <td>value 42</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    <tr>
+        <td>value 51</td>
+        <td>value 52</td><td>value 11</td>
+        <td>value 12</td><td>value 11</td>
+        <td>value 12</td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function createGridFromTB() {
+        var mygrid = new dhtmlXGridFromTable('tblToGrid');
+
+        mygrid.setImagePath("../../lib/DHX/grid_imgs/");
+        //mygrid.setHeader("序号,车次,查询区间,#cspan,区间运行时刻,#cspan");
+        //mygrid.attachHeader("#rspan,#rspan,发站,到站,发时,到时,历时,始发站");
+        mygrid.setInitWidths("80,90,90,120,120,120");
+        //mygrid.setColAlign("center,center,center,center,center,center");
+        //mygrid.setColTypes("ro,link,link,link,ro,ro");
+        //mygrid.setColSorting("int,str,str,str,str,str");
+
+        //mygrid.sortRows(0);
+        //sort first column in grid by "str" type in "des" order
+        //mygrid.sortRows(0, "str", "des");
+        //mygrid.init();
+
+        mygrid.setSkin("dhx_skyblue");
+        mygrid.splitAt(2);
+    }
+
+    createGridFromTB();
+</script>
+</body>
+</html>

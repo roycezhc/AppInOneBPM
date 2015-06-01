@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<DocumentElement>
+  <WFTB_HR_QJSQ_MX>
+    <_x002A_TableName>WFTB_HR_QJSQ_MX</_x002A_TableName>
+    <UserId>STAFF_ID</UserId>
+    <CheckOWA>QJLX</CheckOWA>
+    <UnWorkStartTime>KSSJ</UnWorkStartTime>
+    <UnWorkEndTime>JSSJ</UnWorkEndTime>
+    <OnWorkStartTime />
+    <OnWorkEndTime />
+  </WFTB_HR_QJSQ_MX>
+</DocumentElement>

@@ -1,0 +1,136 @@
+<%@ Page Language="C#" MasterPageFile="~/Themes/Blank.master" AutoEventWireup="true" CodeFile="TJ_DEVICEEdit.aspx.cs" Inherits="TJ_DEVICEEdit" %>
+<%@ Import Namespace="AgileFrame.Core" %>
+<%@ Import Namespace="AgileFrame.Orm.PersistenceLayer.Model" %>
+<%@ Register src="../../../UCtrl/Sels/wucSelSub_Stru.ascx" tagname="wucSelSub_Stru" tagprefix="uc1" %>
+<%@ Register src="../../../UCtrl/Sels/wucSelPart.ascx" tagname="wucSelPart" tagprefix="uc2" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<base target="_self"/>
+ <script src="../../../Lib/JScript/formCheck2012.js" type="text/javascript"></script>
+ <script src="../../../Lib/MyDP/selDate.js" type="text/javascript"></script>
+ <script src="../../../Lib/Mdl/detail.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function addReal(me) {
+        var result = window.showModalDialog("../Role/RoleSel.aspx?modlg=" + Math.random(), "newwindow", "dialogHeight=600px; dialogWidth=600px;dialogLeft:;dialogTop:; status=no;");
+        if (result != undefined && result != "") {
+            var obj = eval(result);
+            var roles = window.frames["ifrReal"]._addOneAndReturn(obj.ID);
+            var url = window.frames["ifrReal"].location.pathname;//  window.frames["ifrReal"].document.URL;
+            window.frames["ifrReal"].location.href = url + "?mulids=" + roles;
+        }
+
+        return false;
+    }
+
+    function newReal(me) {
+
+        var result = window.showModalDialog("../Role/RoleEdit.aspx?modlg=" + Math.random(), "newwindow", "dialogHeight=600px; dialogWidth=600px;dialogLeft:;dialogTop:; status=no;");
+        if (result != undefined && result != "") {
+            var obj = eval(result);
+            var roles = window.frames["ifrReal"]._addOneAndReturn(obj.ROLE_ID);
+            var url = window.frames["ifrReal"].location.pathname; //
+            window.frames["ifrReal"].location.href = url + "?mulids=" + roles;
+        }
+
+        return false;
+    }
+
+    $(function () {
+        var keyid = $("input[id$='txtUser_ID']").val();
+        if (keyid != "" && keyid != undefined) {
+            var url = window.frames["ifrReal"].location.pathname;
+            window.frames["ifrReal"].location.href = url + "?oneid=" + keyid;
+        }
+
+        var checker = new formChecker({ formID: "divForm", btnIDS: 'btnOK' });
+
+
+    });
+
+//    function _myCheck() {
+//        var roleids = window.frames["ifrReal"]._getSelRealIDS();
+//        $("input[id$='hidSelReals']").val(roleids);
+//        return true;
+//    }
+   
+</script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" Runat="Server">
+<input id="hidSelReals" name="hidSelReals" type="hidden" runat="server" />
+<div class="main">
+    <div class="titnav">
+    <dl><dt><b><%=title %></b></dt></dl>
+   </div>
+   <div class="warn"><asp:Literal ID="litWarn" runat="server"></asp:Literal></div>
+    <div class="form" id="divForm">
+       <dl class="f-tit"><dt><em onclick="openMore(this);" class="opened"></em><a>基本信息</a></dt><dd><b id="bERR" runat="server"></b></dd></dl>
+       <div>
+        
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.D_NAME.ZhName %>：</dt><%--设备名称--%>
+               <dd>
+                
+                    <input id="txtD_NAME" type="text" runat="server" ck="{need:1,len:50,type:0}"/>
+               </dd>
+           </dl>
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.D_NO.ZhName %>：</dt><%--设备编码/条码--%>
+               <dd>
+                
+                    <input id="txtD_NO" type="text" runat="server" ck="{need:0,len:50,type:0}"/>
+               </dd>
+           </dl>
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.D_ID.ZhName %>：</dt><%--设备标识--%>
+               <dd>
+                
+                    <input id="txtD_ID" type="text" runat="server" ck="{need:0,len:50,type:0}"/>
+               </dd>
+           </dl>
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.METERID.ZhName %>：</dt><%--表号--%>
+               <dd>
+                
+                    <input id="txtMETERID" type="text" runat="server" ck="{need:0,len:2147483647,type:1}"/>
+               </dd>
+           </dl>
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.SUB_ID.ZhName %>：</dt><%--分项id--%>
+               <dd>
+               <uc1:wucSelSub_Stru ID="wucSelDept1" runat="server" />
+               </dd>
+               <%--<dd>
+                
+                    <input id="txtSUB_ID" type="text" runat="server" ck="{need:0,len:50,type:0}"/>
+               </dd>--%>
+           </dl>
+           <dl>
+               <dt><%=TJ_DEVICE.Attribute.PART_ID.ZhName %>：</dt><%--分区id--%>
+               <dd>
+               <uc2:wucselpart ID="wucSelPart1" runat="server" />
+               </dd>
+               <%--<dd>
+                
+                    <input id="txtPART_ID" type="text" runat="server" ck="{need:0,len:50,type:0}"/>
+               </dd>--%>
+           </dl>
+       </div>
+
+       <dl class="f-tit" style="display:none;"><dt><em onclick="openMore(this);"></em><a>我的关联信息</a></dt><dd>
+           <input id="btn_AddReal" type="button" value="添加" class="btn" onclick="addReal(this);" />
+           <input id="btn_NewReal" type="button" class="btn" onclick="newReal(this);" value="新建" />
+       </dd></dl>
+       <div class="hide">
+         <iframe name="ifrReal" id="ifrReal" src="TJ_DEVICEReal.aspx" frameborder="0" scrolling="auto" style="width:100%;"></iframe>
+       </div>
+       <dl class="f-btn"><dt></dt><dd>
+           <a href="#" class="btn"><span>
+              <asp:Button ID="btnOK" runat="server" lang="BtnOK" Text="确定" Width="51" 
+               onclick="btnOK_Click"/>
+           </span></a>
+           <a href="#" class="btn"><span><input onclick="window.close();" lang="close" value="关闭" type="button" /></span></a>
+       </dd></dl>
+    </div>
+
+</div>
+</asp:Content>

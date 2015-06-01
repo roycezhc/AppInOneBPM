@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<DocumentElement>
+  <WF_HR_JBSQ>
+    <_x002A_TableName>WF_HR_JBSQ</_x002A_TableName>
+    <UserId>STAFF_ID</UserId>
+    <CheckOWA>'加班' as CheckOWA</CheckOWA>
+    <UnWorkStartTime />
+    <UnWorkEndTime />
+    <OnWorkStartTime>KSSJ</OnWorkStartTime>
+    <OnWorkEndTime>JSSJ</OnWorkEndTime>
+  </WF_HR_JBSQ>
+</DocumentElement>

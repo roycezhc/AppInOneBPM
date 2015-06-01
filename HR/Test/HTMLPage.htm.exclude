@@ -1,0 +1,106 @@
+﻿ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="../../App_Themes/Default/global.css" type="text/css" rel="stylesheet" />
+<link href="../../App_Themes/Default/layout.css" type="text/css" rel="stylesheet" />
+<link href="../../App_Themes/Default/tree1.css" type="text/css" rel="stylesheet" />
+
+<title>
+ 
+</title> 
+
+    <script src="../../Lib/JQuery/jquery.min.js" type="text/javascript"></script>
+    <link href="../../Lib/codebase/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/codebase/dhtmlxgrid_skins.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/codebase/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet" type="text/css"/>
+ 
+    <script src="../../Lib/codebase/dhtmlxcommon.js" type="text/javascript"></script>
+    <script src="../../Lib/codebase/dhtmlxgrid.js" type="text/javascript"></script>
+ 
+    <script src="../../Lib/codebase/dhtmlxgridcell.js" type="text/javascript"></script>
+ 
+    <script src="../../Lib/codebase/excells/dhtmlxgrid_excell_link.js" type="text/javascript"></script>
+ 
+ 
+    <script type="text/javascript">
+        dhtmlx.skin = "dhx_skyblue";
+    
+    </script>
+ 
+ 
+    <!--TL-->
+    <script src="../../Lib/codebase/tl/trainquerycommon.js" type="text/javascript"></script>
+    <script src="../../Lib/codebase/tl/dhtmlxgrid_splt.js" type="text/javascript"></script>
+ 
+</head>
+<body>
+    <form method="post" action="wds2.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTY1NDU2MTA1Mg9kFgJmD2QWAgIBD2QWAgIEDxUBBi9TaXRlL2RkSsVOVX8n+h4Vxp7tNyGKo6Ofx0B+pev6ky7AKpecx08=" />
+</div>
+ 
+    
+<div id="gridbox1"	style="text-align:left;background-color: white;width:700px;height:300px; overflow: hidden">
+</div>
+ 
+<hr />
+ 
+<div id="gridbox2"style="text-align:left;background-color: white;width:700px;height:300px; overflow: hidden">
+</div>
+ 
+<script type="text/javascript">
+    window.onload = function () {
+        createGrid1();
+        createGrid2();
+    }
+
+
+    function createGrid1() {
+        var mygrid = new dhtmlXGridObject('gridbox1');
+        mygrid.setImagePath("../../lib/codebase/grid_imgs/");
+        mygrid.setHeader("序号,车次,查询区间,#cspan,区间运行时刻,#cspan,#cspan,列车信息,#cspan,#cspan,#cspan,票价（元）,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan");
+        mygrid.attachHeader("#rspan,#rspan,发站,到站,发时,到时,历时,始发站,终到站,等级,空调,商务座,特等座,一等座,二等座,高级软卧上/下,软卧上/下,硬卧上/中/下,软座,硬座");
+        mygrid.setInitWidths("30,50,60,60,40,40,40,60,60,40,40,50,60,50,50,90,70,80,40,40");
+        mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+        mygrid.setColTypes("ro,link,link,link,ro,ro,ro,link,link,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+        mygrid.setColSorting("int,str,str,str,str,str,str,str,str,str,str,int,int,int,int,int,int,int,int,int");
+        mygrid.init();
+        //mygrid.load(
+        //mygrid.enableSmartRendering(true, 500);
+        //mygrid.enableAlterCss("even", "uneven");
+
+        mygrid.setSkin("light");
+        mygrid.splitAt(4);
+    }
+    function createGrid2() {
+        var mygrid2 = new dhtmlXGridObject('gridbox2');
+        mygrid2.setImagePath("../../lib/codebase/grid_imgs/");
+        mygrid2.setHeader("hhh1,hhh2,hhh3");
+        mygrid2.setInitWidths("80,80,80");
+        mygrid2.setColAlign("center,center,center");
+        mygrid2.setColTypes("ro,link,link");
+        mygrid2.setColSorting("int,str,str");
+        mygrid2.init();
+        mygrid2.setSkin("light");
+
+        mygrid2.loadXMLString("<rows><row id='1'><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell><cell>11111111</cell></row></rows>", function () { });
+        ////      mygrid2.addRow("111", "aaaaaa,23432,34545,<input type='text' value='ssssss'/>,654645,85675", 6);
+        ////      mygrid2.addRow("222", "aaaaaa,23432,34545,<input type='text' value='ssssss'/>,654645,85675", 6);
+        ////      mygrid2.addRow("333", "aaaaaa,23432,34545,<input type='text' value='ssssss'/>,654645,85675", 6);
+
+        //        alert($("#Div1").html());
+
+        //        alert($("#Div1").find("table table tbody tr").length);
+        //        var tr = $($("#Div1").find("table table tbody tr")[5]);
+        //        tr.bind("click", tr, function (e) {
+        //            alert(e.data.html());
+        //        });
+    }
+</script>
+ 
+    </form>
+</body>
+</html>
+

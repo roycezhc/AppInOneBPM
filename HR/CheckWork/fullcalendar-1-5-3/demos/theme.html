@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='cupertino/theme.css' />
+<link rel='stylesheet' type='text/css' href='../fullcalendar/fullcalendar.css' />
+<link rel='stylesheet' type='text/css' href='../fullcalendar/fullcalendar.print.css' media='print' />
+<script type='text/javascript' src='../jquery/jquery-1.7.1.min.js'></script>
+<script type='text/javascript' src='../jquery/jquery-ui-1.8.17.custom.min.js'></script>
+<script type='text/javascript' src='../fullcalendar/fullcalendar.js'></script>
+<script type='text/javascript' charset="utf-8">
+    var eventUrl = "gcal.html";
+    $(document).ready(function () {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        var isEventDraging = false;
+
+        $('#external-events div.external-event').each(function () {
+            // create an Event Object
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+        });
+
+        $('#calendar').fullCalendar({
+            theme: true,
+            header: {
+                left: 'prevYear,prev,next,nextYear,refresh today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            editable: true,
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            drop: function (date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" 
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+            },
+            events: {
+                events: function (start, end, callback) {
+                    $.ajax({
+                        url: eventUrl,
+                        dataType: 'xml',
+                        data: {
+                            // our hypothetical feed requires UNIX timestamps
+                            start: Math.round(start.getTime() / 1000),
+                            end: Math.round(end.getTime() / 1000)
+                        },
+                        success: function (doc) {
+                            var events = [];
+                            alert(start);
+                            alert(end);
+                            $(doc).find('event').each(function () {
+                                events.push({
+                                    title: $(this).attr('title'),
+                                    start: $(this).attr('start') // will be parsed
+                                });
+                            });
+                            callback(events);
+                        },
+                        error: function (a, b, c) {
+                            alert(b);
+                        },
+                        complete: function (xht, sta) {
+                            alert(sta);
+                        }
+                    });
+                }
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                //单击日程事项出发事件
+                isEventDraging = false;
+            },
+            eventMouseover: function (event, jsEvent, view) {
+            },
+            eventDragStart: function (event, jsEvent, ui, view)
+            { },
+            eventDragStart: function (event, jsEvent, ui, view) {
+                isEventDraging = true;
+            },
+            eventDragStop: function (event, jsEvent, ui, view) {
+                isEventDraging = false;
+            },
+            eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+            }
+        });
+        $("#eventTrash").mouseenter(function (e) {
+            if (isEventDraging)
+                $(e)[0].currentTarget.style.backgroundColor = "red";
+        });
+        $("#eventTrash").mouseleave(function (e) {
+            $(e)[0].currentTarget.style.backgroundColor = "#eee";
+        });
+        $(".fc-button-prevYear").click(function () {
+            loadNewEvents();
+        });
+        $(".fc-button-prev").click(function () {
+            loadNewEvents();
+        });
+        $(".fc-button-nextYear").click(function () {
+            loadNewEvents();
+        });
+        $(".fc-button-next").click(function () {
+            loadNewEvents();
+        });
+        $(".fc-button-today").click(function () {
+            loadNewEvents();
+        });
+        $(".fc-button-refresh").click(function () {
+            loadNewEvents();
+        });
+    });
+
+    function loadNewEvents() {
+        var d = $('#calendar').fullCalendar('getDate');
+        $('#calendar').fullCalendar('addEventSource', {
+            events: function (start, end, callback) {
+                $.ajax({
+                    url: eventUrl,
+                    dataType: 'xml',
+                    data: {
+                        // our hypothetical feed requires UNIX timestamps
+                        start: Math.round(start.getTime() / 1000),
+                        end: Math.round(end.getTime() / 1000)
+                    },
+                    success: function (doc) {
+                        var events = [];
+                        alert(start);
+                        alert(end);
+                        $(doc).find('event').each(function () {
+                            events.push({
+                                title: $(this).attr('title'),
+                                start: $(this).attr('start') // will be parsed
+                            });
+                        });
+                        callback(events);
+                    },
+                    error: function (a, b, c) {
+                        alert(b);
+                    },
+                    complete: function (xht, sta) {
+                        alert(sta);
+                    }
+                });
+            }
+        });
+    }
+</script>
+<style type='text/css'>
+    body
+    {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 13px;
+        font-family: "Lucida Grande" ,Helvetica,Arial,Verdana,sans-serif;
+    }
+    #wrap
+    {
+        width: 955px;
+        margin: 0 auto;
+    }
+    
+    .left
+    {
+    	display:block;
+    	float:left;
+    	width: 130px;
+    	margin-right:5px;
+    }
+    
+    #external-events
+    {
+        width: 100%;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        margin-bottom:5px;
+        background: #eee;
+        text-align: left;
+    }
+    
+    #external-events h4
+    {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+    }
+    
+    .external-event
+    {
+        /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        background: #3366CC;
+        color: #fff;
+        font-size: .85em;
+        cursor: pointer;
+    }
+    
+    #external-events p
+    {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+    }
+    
+    #external-events p input
+    {
+        margin: 0;
+        vertical-align: middle;
+    }
+    
+    #eventTrash
+    {
+        height:200px;
+        width: 100%;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+        background: #eee;
+        text-align: left;
+        cursor:pointer;
+    }
+    
+    .eventTrashWorking
+    {
+    	background-color:Red;
+    }
+    
+     #eventTrash h4
+    {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+        padding-left:10px;
+    }
+    
+    #calendar
+    {
+        float: right;
+        width: 800px;
+        margin:0;
+    }
+</style>
+</head>
+
+<body>
+    <div id='wrap'>
+        <div class="left">
+            <div id='external-events'>
+                <h4>
+                    班次列表</h4>
+                <div class='external-event'>
+                    My Event 1</div>
+                <div class='external-event'>
+                    My Event 2</div>
+                <div class='external-event'>
+                    My Event 3</div>
+                <div class='external-event'>
+                    My Event 4</div>
+                <div class='external-event'>
+                    My Event 5</div>
+            </div>
+            <div id='eventTrash'><h4>班次黑洞</h4></div>
+        </div>
+        <div id='calendar'></div>
+        <div style='clear: both'></div>
+    </div>
+</body>
+</html>

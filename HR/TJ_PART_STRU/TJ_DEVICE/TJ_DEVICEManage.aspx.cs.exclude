@@ -1,0 +1,118 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+
+public partial class TJ_DEVICEManage : AgileFrame.AppInOne.Common.BasePage
+{
+    TJ_DEVICE valObj = new TJ_DEVICE();
+    TJ_DEVICE condObj = new TJ_DEVICE();
+    List<TJ_DEVICE> listObj = new List<TJ_DEVICE>();
+    int recount = -1;//查询总记录数
+    protected string title = "";
+    public string PARTIDStr = "";
+    private void BindList(TJ_DEVICE condObj, int curPage)
+    {
+        if (condObj.af_PageByAttributeItem == null)//如果不存在用户定义的分页排序属性，则用主键属性排序
+            condObj.af_PageBy(TJ_DEVICE.Attribute.D_NAME, Order.Desc);
+        listObj = BLLTable<TJ_DEVICE>.Factory(conn).SelectByPage(valObj, condObj, aspPager.PageSize, curPage, ref recount);        
+        repList.DataSource = listObj;
+        repList.DataBind();
+        aspPager.RecordCount = recount;
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {        
+        title = "设备" + "管理";
+        Page.Title = title;
+        if(!string.IsNullOrEmpty(Request["id"]))
+        {
+            condObj.PART_ID = Request["id"];
+            SubID.Value = Request["id"];
+            PARTIDStr = Request["id"];
+        }
+        if (!IsPostBack)
+        {
+            #region//默认属性初始化
+            aspPager.CurrentPageIndex = 1;
+            //aspPager.ShowInputBox = ZTYB.HZYF.WebCommon.WebCtrls.ShowInputBox.Auto;
+            txtPageNum.Value = "30";
+            aspPager.PageSize = 30;
+            
+            #endregion
+            #region//数据初始化
+            
+            #endregion
+            BindList(condObj, 1);
+        }
+    }
+
+    protected void aspPager_PageChanged(object sender, EventArgs e)
+    {
+        if (hidCondition.Value != "")
+        {
+            condObj = JsonServiceBase.FromJson<TJ_DEVICE>(hidCondition.Value);
+        }
+        BindList(condObj, aspPager.CurrentPageIndex);
+    }
+    protected void btnFind_Click(object sender, EventArgs e)
+    {                      
+        condObj = new TJ_DEVICE();
+
+        
+        
+        if(txtD_NAME.Value !="" )
+            condObj.Like(TJ_DEVICE.Attribute.D_NAME, Convert.ToString(txtD_NAME.Value));
+        
+        
+        if(txtD_NO.Value !="" )
+            condObj.Like(TJ_DEVICE.Attribute.D_NO, Convert.ToString(txtD_NO.Value));
+        
+        
+        if(txtD_ID.Value !="" )
+            condObj.Like(TJ_DEVICE.Attribute.D_ID, Convert.ToString(txtD_ID.Value));
+        
+        
+        if(txtMETERID.Value !="" )
+            condObj.Like(TJ_DEVICE.Attribute.METERID, Convert.ToDecimal(txtMETERID.Value));
+
+
+        if (!string.IsNullOrEmpty(wucSelSub_Stru1.DEPT_NAME))
+            condObj.Like(TJ_DEVICE.Attribute.SUB_ID, Convert.ToString(wucSelSub_Stru1.DEPT_ID));
+
+
+        if (!string.IsNullOrEmpty(wucSelPart1.DEPT_NAME))
+            condObj.Like(TJ_DEVICE.Attribute.PART_ID, Convert.ToString(wucSelPart1.DEPT_ID));
+
+        hidCondition.Value = condObj.ToJson(20);
+
+        BindList(condObj, 1);
+    }
+
+    protected void btnSetPageNum_Click(object sender, EventArgs e)
+    {
+        aspPager.PageSize = int.Parse(txtPageNum.Value);
+        if (hidCondition.Value != "")
+        {
+            condObj = JsonServiceBase.FromJson<TJ_DEVICE>(hidCondition.Value);
+        }
+        BindList(condObj, aspPager.CurrentPageIndex);
+    }
+
+    protected void repList_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        try
+        {
+        }
+        catch (Exception ex)
+        {
+           litWarn.Text = ex.Message;
+        }
+    }
+}

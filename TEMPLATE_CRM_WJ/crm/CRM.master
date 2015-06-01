@@ -1,0 +1,786 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="CRM.master.cs" Inherits="TEMPLATE_CRM_WJ_crm_CRM" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
+
+<!DOCTYPE HTML >
+<html>
+<head>
+	<title>admin - 工作台 - 工作台 - 易客CRM</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<style type="text/css">@import url("themes/softed/style.black.css");</style>
+		
+	<link rel="stylesheet" href="themes/softed/font-awesome/buttons-min.css">
+	<link rel="stylesheet" href="themes/softed/font-awesome/font-awesome.min.css">
+	
+	<!--[if IE 7]>
+	  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome-ie7.min.css">
+	<![endif]-->
+	
+
+	<!-- ActivityReminder customization for callback -->
+	
+	<style type="text/css">
+	#ActivityRemindercallback{position:fixed;right:0px;bottom:2px;display:block;padding:0px;z-index:10;font-weight:normal;width:205px;}
+        </style>
+	<!--[if lte IE 6]>
+	<style type="text/css">	
+	#ActivityRemindercallback {position: absolute;display:block;width:209px;
+	top:expression(eval(document.compatMode &&
+	document.compatMode=='CSS1Compat') ?
+	documentElement.scrollTop
+	+(documentElement.clientHeight-this.clientHeight)
+	: document.body.scrollTop
+	+(document.body.clientHeight-this.clientHeight));}
+	</style>
+	<![endif]-->
+	
+	<!-- End -->
+	<!-- header -->
+	<!-- header-crm name & RSS -->
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/jquery-1.10.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/jquery-ui-1.10.2.min.js"></script>
+	<script type="text/javascript">
+	    var Jquery = $;
+	</script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/prototype.min.js"></script>
+	<script language="javascript" type="text/javascript" src="include/scriptaculous/dom-drag.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/zh_cn.lang.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/general.js"></script>
+	<script language="JavaScript" type="text/javascript" src="include/js/json.js"></script>
+	
+	<script language="javascript">
+	    javaCalendarFirstDayOfWeek = 1;
+	    var userDateFormat = "yyyy-mm-dd";
+        </script>
+</head>
+	<body leftmargin=0 topmargin=0 marginheight=0 marginwidth=0 class=small>
+	<TABLE border=0 cellspacing=0 cellpadding=0 width=100% class="crm-head-tab">
+	<tr>
+		<td valign=top style="white-space:nowrap;padding-left:20px;">
+			<a href="http://www.crmone.cn" target="_blank" class="crm-one-link" style="font-size:14px;">
+				上海瑞策软件有限公司
+			</a>
+		</td>
+		<td width=100% align=center class="crm-tab-note">
+
+<script language="javascript" type="text/javascript">
+
+    var skip_module = "Home";
+    var skip_action = "index";
+    var skip_record = "";
+
+    function selectTheme(stylecss) {
+        if (stylecss != "") {
+            if (!skip_module) skip_module = "Home";
+            if (!skip_action) skip_action = "index";
+            if (skip_record && skip_record > 0) {
+                location.href = "index.php?module=" + skip_module + "&action=" + skip_action + "&record=" + skip_record + "" +
+												"&parenttab=Home&stylecss=" + stylecss;
+            } else {
+                location.href = "index.php?module=" + skip_module + "&action=" + skip_action + "" +
+												"&parenttab=Home&stylecss=" + stylecss;
+            }
+        }
+    }
+			    
+			</script>
+		</td>
+		<td class=small nowrap>
+			<table border=0 cellspacing=0 cellpadding=0 class="head-tool-tab">
+				<tr>
+					<td nowrap>
+						今天是03月20日，欢迎您 &nbsp;&nbsp; 
+						<a href="" onclick="ListBulkDownDrop(this,'headtooltabdiv');return false;">
+							管理员(总经理)
+						</a>
+						<i class="icon-angle-down">
+
+						<div id="headtooltabdiv" class="list-bulk-div" style="width:100px;margin-left:20px;" 
+							onMouseOut="ListBulkHideDrop('headtooltabdiv')" 
+							onMouseOver="ListBulkShowDrop('headtooltabdiv')">
+
+							<div onClick='location.href="index.php?module=Users&action=DetailView&record=1&modechk=prefview";'>
+								我的设置
+							</div>
+							<div onClick='window.open("index.php?module=ApproveStatus&action=PopupListView","test",
+											"width=800,height=450,resizable=1,scrollbars=1");'>
+								我的审批
+							</div>
+							<div class="list-bulk-link" onclick='window.open("index.php?module=Home&action=PopupCommentInfoCenter","Comment","width=750,height=450,resizable=1,scrollbars=1");'>
+								我的评论
+							</div>
+							<div onClick='window.open("index.php?module=CustomReminder&action=PopupReminders",
+											"test","width=700,height=602,resizable=1,scrollbars=1");'>
+								我的提醒
+							</div>
+							<div  onclick='window.open("index.php?module=Home&action=PopupPM","Chat","width=600,height=450,resizable=1,scrollbars=1");'>
+								我的消息
+							</div>
+							<div class="list-bulk-link"    onclick='window.open("index.php?module=Home&action=PopupAttementInfoCenter","ATT","width=750,height=450,resizable=1,scrollbars=1");'>
+								我的附件
+							</div>
+							<div onClick='location.href="index.php?module=Users&action=Logout";'>
+								安全退出
+							</div>
+						</div>
+					</td>
+					
+					<!-- <td nowrap>
+
+						<i class="icon-plus-sign-alt">
+						<a href="" onclick="ListBulkDownDrop(this,'addfirsrtabdiv');return false;">
+							快捷菜单
+						</a>
+
+						<div id="addfirsrtabdiv" class="list-bulk-div" style="width:110px;" 
+							onMouseOut="ListBulkHideDrop('addfirsrtabdiv')" 
+							onMouseOver="ListBulkShowDrop('addfirsrtabdiv')">
+							<div class="" onClick="window.location.href='index.php?module=Accounts&action=EditView';">
+								新增客户
+							</div>
+							<div class="" onClick="window.location.href='index.php?module=Contacts&action=EditView';">
+								新增联系人
+							</div>
+							<div class="list-bulk-link" onClick="window.location.href='index.php?module=Notes&action=EditView';">
+								新增联系记录
+							</div>
+							<div class="" onClick="window.location.href='index.php?module=Potentials&action=EditView';">
+								新增销售机会
+							</div>
+							<div class="list-bulk-link" onClick="window.location.href='index.php?module=Quotes&action=EditView';">
+								新增报价单
+							</div>
+							<div class="" onClick="window.location.href='index.php?module=SalesOrder&action=EditView';">
+								新增合同订单
+							</div>
+							<div class="list-bulk-link" onClick="window.location.href='index.php?module=PurchaseOrder&action=EditView';">
+								新增进货单
+							</div>
+
+
+						</div>
+
+
+					</td> -->							<!-- <div class="list-bulk-link" onClick="window.location.href='index.php?module=Performances&action=index';">
+								员工绩效
+							</div> -->
+					<!-- <td id="sms" nowrap>
+						<i class="icon-phone">
+						<a onclick='window.open("index.php?module=Home&action=PopupSms","test",
+							"width=700,height=602,resizable=1,scrollbars=1");' 
+								href="JavaScript:;;">手机短信</a>
+					</td> -->
+					<td nowrap>
+						<i class="icon-info">&nbsp;
+						<a href="http://www.c3crm.com/forum/" target="_blank">我要提问</a>
+					</td>
+					<td nowrap>
+													<a href="" onclick="ListBulkDownDrop(this,'switchstylediv');return false;">
+								默认
+							</a>
+							<i class="icon-angle-down">
+
+							<div id="switchstylediv" class="list-bulk-div" style="width:70px;margin-left:50px;" 
+								onMouseOut="ListBulkHideDrop('switchstylediv')" 
+								onMouseOver="ListBulkShowDrop('switchstylediv')">
+																	<div onclick="selectTheme('black');">
+										默认
+									</div>
+																	<div onclick="selectTheme('green');">
+										绿色
+									</div>
+																	<div onclick="selectTheme('red');">
+										红色
+									</div>
+																	<div onclick="selectTheme('blue');">
+										蓝色
+									</div>
+															</div>
+											</td>
+				</tr>
+		</table>
+	</td></tr>
+	</TABLE>
+
+<!-- header - master tabs -->
+<TABLE border=0 cellspacing=0 cellpadding=0 width=100% class="crm-head-tab" height=33px style="margin-bottom:-1px;">
+<tr>
+	<td style="width:20px" class=small>&nbsp;</td>
+	<td class=small nowrap> 
+		<table border=0 cellspacing=0 cellpadding=0 height=27px>
+			<tr>
+																																			  <td class="crm-head-link-on"  onmouseover="fnDropDown(this,'Home_sub');" onMouseOut="fnHideDrop('Home_sub');" align="center" nowrap><a href="index.php?module=Home&action=index&parenttab=Home"><i class=icon-home> 工作台</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Marketing_sub');" onMouseOut="fnHideDrop('Marketing_sub');" align="center" nowrap><a href="index.php?module=Campaigns&action=index&parenttab=Marketing">营销</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'salessfa_sub');" onMouseOut="fnHideDrop('salessfa_sub');" align="center" nowrap><a href="index.php?module=SfaDesktops&action=index&parenttab=salessfa">销售自动化</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Customer_sub');" onMouseOut="fnHideDrop('Customer_sub');" align="center" nowrap><a href="index.php?module=Accounts&action=index&parenttab=Customer">客户</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'po_sub');" onMouseOut="fnHideDrop('po_sub');" align="center" nowrap><a href="index.php?module=Home&action=index&parenttab=po">破碎</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Product_sub');" onMouseOut="fnHideDrop('Product_sub');" align="center" nowrap><a href="index.php?module=Products&action=index&parenttab=Product">产品</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Sales_sub');" onMouseOut="fnHideDrop('Sales_sub');" align="center" nowrap><a href="index.php?module=Ssteps&action=index&parenttab=Sales">销售</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Buy_sub');" onMouseOut="fnHideDrop('Buy_sub');" align="center" nowrap><a href="index.php?module=Bsteps&action=index&parenttab=Buy">采购</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Support_sub');" onMouseOut="fnHideDrop('Support_sub');" align="center" nowrap><a href="index.php?module=Inboundsearchs&action=index&parenttab=Support">售后</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Inventory_sub');" onMouseOut="fnHideDrop('Inventory_sub');" align="center" nowrap><a href="index.php?module=Isteps&action=index&parenttab=Inventory">库存</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Accounting_sub');" onMouseOut="fnHideDrop('Accounting_sub');" align="center" nowrap><a href="index.php?module=Fsteps&action=index&parenttab=Accounting">财务</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Analytics_sub');" onMouseOut="fnHideDrop('Analytics_sub');" align="center" nowrap><a href="index.php?module=Integradedreports&action=index&parenttab=Analytics">报表</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+																								  <td class="crm-head-link"  onmouseover="fnDropDown(this,'Settings_sub');" onMouseOut="fnHideDrop('Settings_sub');" align="center" nowrap><a href="index.php?module=Settings&action=index&parenttab=Settings">控制面板</a></td>
+					  
+										<!--[if IE]>
+					<td style="width:1px" class=small>&nbsp;</td>
+					<![endif]-->
+							</tr>
+		</table>
+	</td>
+	<td align=right style="padding-right:10px" >
+		<table border=0 cellspacing=0 cellpadding=0 id="search" style="border:1px solid #999999;background-color:white">
+		   <tr>
+			<form name="UnifiedSearch" method="post" action="index.php" style="margin:0px">
+			<td style="height:19px;background-color:#ffffef" >
+				<input type="hidden" name="action" value="UnifiedSearch" style="margin:0px"><!--AccountSearch-->
+				<input type="hidden" name="module" value="Home" style="margin:0px">
+				<input type="text" name="query_string" id="query_string" value="支持拼音字头..." class="searchBox" onFocus="this.value=''" >
+			</td>
+			<td style="background-color:#cccccc">
+				<input type="submit" class="searchBtn" value="客户查找" alt="客户查询支持客户名称、拼音字头、完整的客户编号、手机号码、电话号码、传真号码、Email和QQ" title="客户查询支持客户名称、拼音字头、完整的客户编号、手机号码、电话号码、传真号码、Email和QQ">
+			</td>
+			</form>
+		   </tr>
+		</table>
+	</td>
+</td>
+</tr>
+</TABLE>
+<!-- - level 2 tabs starts-->
+<TABLE border=0 cellspacing=0 cellpadding=2 width=100% class="crm-head-level">
+<tr>
+	<td >
+		<table border=0 cellspacing=0 cellpadding=0>
+		<tr>
+			<td style="width:20px" class=small>&nbsp;</td>
+																									<td class="crm-head-level-tab crm-head-level-tab-on" nowrap><a href="index.php?module=Home&action=index&parenttab=Home">工作台</a></td>
+							
+																		<td class="crm-head-level-tab" nowrap> <a href="index.php?module=Knowledgebases&action=index&parenttab=Home">公司平台</a> </td>
+							
+																		<td class="crm-head-level-tab" nowrap> <a href="index.php?module=Calendar&action=index&parenttab=Home">日程安排</a> </td>
+							
+																		<td class="crm-head-level-tab" nowrap> <a href="index.php?module=Announcements&action=index&parenttab=Home">公告</a> </td>
+							
+																		<td class="crm-head-level-tab" nowrap> <a href="index.php?module=Xingmknews&action=index&parenttab=Home">xingmkname</a> </td>
+							
+																																																																																																		</tr>
+		</table>
+	</td>
+</tr>
+</TABLE>		
+<!-- Drop Down Menu in the Main Tab -->
+<div class="crm-head-dropmnu" id="Home_sub" onMouseOut="fnHideDrop('Home_sub')" onMouseOver="fnShowDrop('Home_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Home&action=index&parenttab=Home">工作台</a></td></tr>
+				<tr><td><a href="index.php?module=Knowledgebases&action=index&parenttab=Home">公司平台</a></td></tr>
+				<tr><td><a href="index.php?module=Calendar&action=index&parenttab=Home">日程安排</a></td></tr>
+				<tr><td><a href="index.php?module=Announcements&action=index&parenttab=Home">公告</a></td></tr>
+				<tr><td><a href="index.php?module=Xingmknews&action=index&parenttab=Home">xingmkname</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Marketing_sub" onMouseOut="fnHideDrop('Marketing_sub')" onMouseOver="fnShowDrop('Marketing_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Campaigns&action=index&parenttab=Marketing">营销活动</a></td></tr>
+				<tr><td><a href="index.php?module=Qunfas&action=index&parenttab=Marketing">群发短信</a></td></tr>
+				<tr><td><a href="index.php?module=Maillists&action=index&parenttab=Marketing">群发邮件</a></td></tr>
+				<tr><td><a href="index.php?module=Qunfatmps&action=index&parenttab=Marketing">短信模板</a></td></tr>
+				<tr><td><a href="index.php?module=Maillisttmps&action=index&parenttab=Marketing">邮件模板</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="salessfa_sub" onMouseOut="fnHideDrop('salessfa_sub')" onMouseOver="fnShowDrop('salessfa_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=SfaDesktops&action=index&parenttab=salessfa">SFA工作台</a></td></tr>
+				<tr><td><a href="index.php?module=Aboutsfas&action=index&parenttab=salessfa">关于SFA</a></td></tr>
+				<tr><td><a href="index.php?module=Sfalists&action=index&parenttab=salessfa">SFA序列</a></td></tr>
+				<tr><td><a href="index.php?module=Sfalogs&action=index&parenttab=salessfa">执行日志</a></td></tr>
+				<tr><td><a href="index.php?module=Sfasettings&action=index&parenttab=salessfa">方案设置</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Customer_sub" onMouseOut="fnHideDrop('Customer_sub')" onMouseOver="fnShowDrop('Customer_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Accounts&action=index&parenttab=Customer">客户</a></td></tr>
+				<tr><td><a href="index.php?module=Contacts&action=index&parenttab=Customer">联系人</a></td></tr>
+				<tr><td><a href="index.php?module=Cares&action=index&parenttab=Customer">客户关怀</a></td></tr>
+				<tr><td><a href="index.php?module=Notes&action=index&parenttab=Customer">联系记录</a></td></tr>
+				<tr><td><a href="index.php?module=Noteplans&action=index&parenttab=Customer">客户任务计划</a></td></tr>
+				<tr><td><a href="index.php?module=Normaltasks&action=index&parenttab=Customer">客户任务</a></td></tr>
+				<tr><td><a href="index.php?module=Pools&action=index&parenttab=Customer">客户池</a></td></tr>
+				<tr><td><a href="index.php?module=Memdays&action=index&parenttab=Customer">纪念日</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="po_sub" onMouseOut="fnHideDrop('po_sub')" onMouseOver="fnShowDrop('po_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Home&action=index&parenttab=po">工作台</a></td></tr>
+				<tr><td><a href="index.php?module=Potentials&action=index&parenttab=po">销售机会</a></td></tr>
+				<tr><td><a href="index.php?module=HelpDesk&action=index&parenttab=po">报修单</a></td></tr>
+				<tr><td><a href="index.php?module=Accounts&action=index&parenttab=po">客户</a></td></tr>
+				<tr><td><a href="index.php?module=Contacts&action=index&parenttab=po">联系人</a></td></tr>
+				<tr><td><a href="index.php?module=Products&action=index&parenttab=po">产品</a></td></tr>
+				<tr><td><a href="index.php?module=Faq&action=index&parenttab=po">常见问题</a></td></tr>
+				<tr><td><a href="index.php?module=PurchaseOrder&action=index&parenttab=po">进货单</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Product_sub" onMouseOut="fnHideDrop('Product_sub')" onMouseOver="fnShowDrop('Product_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Products&action=index&parenttab=Product">产品</a></td></tr>
+				<tr><td><a href="index.php?module=Catalogs&action=index&parenttab=Product">产品分类</a></td></tr>
+				<tr><td><a href="index.php?module=Serialnumbers&action=index&parenttab=Product">产品序列号</a></td></tr>
+				<tr><td><a href="index.php?module=PriceBooks&action=index&parenttab=Product">价目表</a></td></tr>
+				<tr><td><a href="index.php?module=Productspecs&action=index&parenttab=Product">产品规格</a></td></tr>
+				<tr><td><a href="index.php?module=Prodlocations&action=index&parenttab=Product">库位管理</a></td></tr>
+				<tr><td><a href="index.php?module=Packsetups&action=index&parenttab=Product">装配方案</a></td></tr>
+				<tr><td><a href="index.php?module=Packorders&action=index&parenttab=Product">装配出入库单</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Sales_sub" onMouseOut="fnHideDrop('Sales_sub')" onMouseOver="fnShowDrop('Sales_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Ssteps&action=index&parenttab=Sales">销售导航</a></td></tr>
+				<tr><td><a href="index.php?module=WorkMaps&action=index&parenttab=Sales">逍遥行</a></td></tr>
+				<tr><td><a href="index.php?module=Potentials&action=index&parenttab=Sales">销售机会</a></td></tr>
+				<tr><td><a href="index.php?module=Funnels&action=index&parenttab=Sales">销售漏斗</a></td></tr>
+				<tr><td><a href="index.php?module=Quotes&action=index&parenttab=Sales">报价单</a></td></tr>
+				<tr><td><a href="index.php?module=Duishous&action=index&parenttab=Sales">竞争对手</a></td></tr>
+				<tr><td><a href="index.php?module=SalesOrder&action=index&parenttab=Sales">合同订单</a></td></tr>
+				<tr><td><a href="index.php?module=Invoice&action=index&parenttab=Sales">发货单</a></td></tr>
+				<tr><td><a href="index.php?module=Tuihuos&action=index&parenttab=Sales">销售退货单</a></td></tr>
+				<tr><td><a href="index.php?module=Performances&action=index&parenttab=Sales">员工绩效</a></td></tr>
+				<tr><td><a href="index.php?module=Salesobjects&action=index&parenttab=Sales">销售目标</a></td></tr>
+				<tr><td><a href="index.php?module=Xingmks&action=index&parenttab=Sales">新模块</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Buy_sub" onMouseOut="fnHideDrop('Buy_sub')" onMouseOver="fnShowDrop('Buy_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Bsteps&action=index&parenttab=Buy">采购导航</a></td></tr>
+				<tr><td><a href="index.php?module=PurchaseOrder&action=index&parenttab=Buy">进货单</a></td></tr>
+				<tr><td><a href="index.php?module=Vendors&action=index&parenttab=Buy">供应商</a></td></tr>
+				<tr><td><a href="index.php?module=Vnotes&action=index&parenttab=Buy">供应商联系记录</a></td></tr>
+				<tr><td><a href="index.php?module=Vcontacts&action=index&parenttab=Buy">供应商联系人</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Support_sub" onMouseOut="fnHideDrop('Support_sub')" onMouseOver="fnShowDrop('Support_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Inboundsearchs&action=index&parenttab=Support">客服控制台</a></td></tr>
+				<tr><td><a href="index.php?module=Accountrecordss&action=index&parenttab=Support">客户服务</a></td></tr>
+				<tr><td><a href="index.php?module=Complaints&action=index&parenttab=Support">客户投诉</a></td></tr>
+				<tr><td><a href="index.php?module=Faq&action=index&parenttab=Support">常见问题</a></td></tr>
+				<tr><td><a href="index.php?module=Faqcategorys&action=index&parenttab=Support">常见问题分类</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Inventory_sub" onMouseOut="fnHideDrop('Inventory_sub')" onMouseOver="fnShowDrop('Inventory_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Isteps&action=index&parenttab=Inventory">库存导航</a></td></tr>
+				<tr><td><a href="index.php?module=Warehouses&action=index&parenttab=Inventory">入库单</a></td></tr>
+				<tr><td><a href="index.php?module=Deliverys&action=index&parenttab=Inventory">出库单</a></td></tr>
+				<tr><td><a href="index.php?module=Checks&action=index&parenttab=Inventory">盘点</a></td></tr>
+				<tr><td><a href="index.php?module=Balances&action=index&parenttab=Inventory">库存余额</a></td></tr>
+				<tr><td><a href="index.php?module=Prdtnums&action=index&parenttab=Inventory">初始化库存</a></td></tr>
+				<tr><td><a href="index.php?module=Warehousetransfers&action=index&parenttab=Inventory">库间调拨</a></td></tr>
+				<tr><td><a href="index.php?module=Wareledgers&action=index&parenttab=Inventory">库存流水账</a></td></tr>
+				<tr><td><a href="index.php?module=Inventoryledgers&action=index&parenttab=Inventory">库存台账</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Accounting_sub" onMouseOut="fnHideDrop('Accounting_sub')" onMouseOver="fnShowDrop('Accounting_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Fsteps&action=index&parenttab=Accounting">财务导航</a></td></tr>
+				<tr><td><a href="index.php?module=Gathers&action=index&parenttab=Accounting">应收款</a></td></tr>
+				<tr><td><a href="index.php?module=Charges&action=index&parenttab=Accounting">应付款</a></td></tr>
+				<tr><td><a href="index.php?module=Gathersrecords&action=index&parenttab=Accounting">收款单</a></td></tr>
+				<tr><td><a href="index.php?module=Chargesrecords&action=index&parenttab=Accounting">付款单</a></td></tr>
+				<tr><td><a href="index.php?module=Forthamounts&action=index&parenttab=Accounting">往来账</a></td></tr>
+				<tr><td><a href="index.php?module=Openingbalancess&action=index&parenttab=Accounting">期初余额</a></td></tr>
+				<tr><td><a href="index.php?module=Expenses&action=index&parenttab=Accounting">费用报销</a></td></tr>
+				<tr><td><a href="index.php?module=Billings&action=index&parenttab=Accounting">发票管理</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Analytics_sub" onMouseOut="fnHideDrop('Analytics_sub')" onMouseOver="fnShowDrop('Analytics_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Integradedreports&action=index&parenttab=Analytics">综合报表</a></td></tr>
+				<tr><td><a href="index.php?module=Ureports&action=index&parenttab=Analytics">常用报表</a></td></tr>
+				<tr><td><a href="index.php?module=Companyacctreports&action=index&parenttab=Analytics">公司账户统计</a></td></tr>
+				<tr><td><a href="index.php?module=Salesreports&action=index&parenttab=Analytics">年终销售报表</a></td></tr>
+			</table>
+</div>
+<div class="crm-head-dropmnu" id="Settings_sub" onMouseOut="fnHideDrop('Settings_sub')" onMouseOver="fnShowDrop('Settings_sub')">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr><td><a href="index.php?module=Settings&action=index&parenttab=Settings">控制面板</a></td></tr>
+				<tr><td><a href="index.php?module=Caches&action=index&parenttab=Settings">清除缓存</a></td></tr>
+				<tr><td><a href="index.php?module=Workflows&action=index&parenttab=Settings">业务规则</a></td></tr>
+				<tr><td><a href="index.php?module=Recyclebin&action=index&parenttab=Settings">回收站</a></td></tr>
+			</table>
+</div>
+<div id="status" style="position:absolute;display:none;left:930px;top:95px;height:27px;white-space:nowrap;"><img src="themes/softed/images/status.gif"></div>
+<!-- ActivityReminder Customization for callback -->
+<div class="detail-panel-div" id="ActivityRemindercallback" align="left">
+</div>
+<div id="SelCustomer_popview" class="windLayerDiv" style="position:absolute;z-index:60;display:none;">
+</div><script type="text/javascript" src="include/highchart/highcharts.js"></script>
+<script type="text/javascript" src="include/highchart/funnel.js"></script>
+
+<script language="javascript" type="text/javascript" src="modules/Home/Homestuff.js"></script>
+<style type="text/css">
+.stuffsortab-div{overflow-y:auto;overflow-x:hidden;height:280px;width:28%;float:left;}
+</style>
+
+<TABLE border=0 cellspacing=0 cellpadding=0 width=100% class=small>
+<tr>
+	<td style="padding-left:10px;padding-right:50px" class="moduleName" nowrap>工作台 > <a class="hdrLink" href="index.php?action=ListView&module=Home&parenttab=Home">工作台</a></td>
+	<td width=100% nowrap>
+	
+		<table border="0" cellspacing="0" cellpadding="0" width=100%>
+		<tr>
+		<td class="sep1" style="width:1px;"></td>
+		<td class=small >
+			<table border=0 cellspacing=0 cellpadding=0>
+			<tr>
+			<td>
+				<table border=0 cellspacing=0 cellpadding=5>
+				<tr>
+					<td style="padding-right:0px;padding-left:10px;">
+						<span style="cursor:not-allowed;"
+							title="创建 ...">
+						  <i class="icon-plus icon-2x pull-left icon-border crm-bu-style-error"></i>
+						</span>
+					</td>
+					<td style="padding-right:0px;padding-left:10px;">
+						<span style="cursor:not-allowed;"
+								title="查找 工作台...">
+							 <i class="icon-search icon-2x pull-left icon-border crm-bu-style-error"></i>
+						</span>
+					</td>
+					
+					<td style="padding-right:0px;padding-left:10px;">
+						<span style="cursor:not-allowed;"
+								title="*导入 工作台">
+							<i class="icon-upload-alt icon-2x pull-left icon-border crm-bu-style-error"></i>
+						</span>
+					</td>
+					<td style="padding-right:0px;padding-left:10px;">
+						<span style="cursor:not-allowed;"
+								title="*导出 工作台">
+						  <i class="icon-download-alt icon-2x pull-left icon-border crm-bu-style-error"></i>
+						</span>
+					</td>
+											<td class="small">
+							<table border=0 cellspacing=0 >
+							<tr>
+								<td style="padding-right:0px;padding-left:10px;">                    
+										<span style="cursor:pointer;" onclick='fnAddhometemplates();return false;'>
+									  <i class="icon-wrench icon-2x pull-left icon-border crm-bu-style"></i>
+									</span>
+								</td>	
+								<td style="padding-right:5px"><div id="hometemplates_info" style="display:none;"><img src="themes/softed/images/status.gif" border="0"></div>
+								</td>
+							</tr>
+							</table>	
+						</td>
+										
+				</tr>
+				</table>
+			</td>
+			</tr>
+			</table>
+		
+		<td class=small align=right>
+			<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td style="padding-left:10px" onclick="ShowMoreActionsList(this,'addfirsrtabdiv');return false;">
+			<span style="cursor:pointer;"
+				title="快速创建">
+			  <i class="icon-plus-sign icon-2x pull-left icon-border crm-bu-style"></i>&nbsp;
+			</span>			
+			<div id="addfirsrtabdiv" class="list-bulk-div" style="width:110px;" 
+				onMouseOut="ListBulkHideDrop('addfirsrtabdiv')" 
+				onMouseOver="ListBulkShowDrop('addfirsrtabdiv')">
+				<div class="" onClick="window.location.href='index.php?module=Accounts&action=EditView';">
+					新增客户
+				</div>
+				<div class="" onClick="window.location.href='index.php?module=Contacts&action=EditView';">
+					新增联系人
+				</div>
+				<div class="list-bulk-link" onClick="window.location.href='index.php?module=Notes&action=EditView';">
+					新增联系记录
+				</div>
+				<div class="" onClick="window.location.href='index.php?module=Potentials&action=EditView';">
+					新增销售机会
+				</div>
+				<div class="list-bulk-link" onClick="window.location.href='index.php?module=Quotes&action=EditView';">
+					新增报价单
+				</div>
+				<div class="" onClick="window.location.href='index.php?module=SalesOrder&action=EditView';">
+					新增合同订单
+				</div>
+				<div class="list-bulk-link" onClick="window.location.href='index.php?module=PurchaseOrder&action=EditView';">
+					新增进货单
+				</div>
+
+				<!-- <div class="list-bulk-link" onClick="window.location.href='index.php?module=Performances&action=index';">
+					员工绩效
+				</div> -->
+			</div>
+		</td>
+
+		<td style="padding-left:10px">
+			<span style="cursor:pointer;"
+				title="短消息..." 
+				onclick='window.open("index.php?module=Home&action=PopupPM","Chat","width=600,height=450,resizable=1,scrollbars=1");return false;'>
+			  <i class="icon-comment icon-2x pull-left icon-border crm-bu-style"></i>
+			</span>
+		</td>
+		<td style="padding-left:10px">
+			<span style="cursor:pointer;"
+				title="手机短信" 
+				onclick='window.open("index.php?module=Home&action=PopupSms","test",
+				"width=700,height=602,resizable=1,scrollbars=1");return false;'>
+			  <i class="icon-envelope-alt icon-2x pull-left icon-border crm-bu-style"></i>
+			</span>
+		</td>
+		
+		<td style="padding-left:10px">&nbsp;</td>
+	</tr>
+</table>		</td>
+
+		</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+
+<tr><td colspan="2" align="center">
+<div id='createConfigBlockDiv' style='display:none;width:80%'></div>
+</td></tr>
+
+</TABLE>
+
+
+<div id="vtbusy_homeinfo" style="display:none;"><img src="themes/softed/images/vtbusy.gif" border="0"></div>
+<div id="seqSettings" style="position:absolute;width:250px;height:20px;top:2px;left:360px;z-index:6000000;display:none;"></div>
+<script>
+    var is_admin = "on";
+    var showhomeid = "";
+
+
+    function initHomePage() {
+        var list = Jquery("#MainMatrix");
+        list.sortable({
+            opacity: 0.6,
+            revert: true,
+            cursor: 'move',
+            handle: '.home-stuff-heading',
+            update: function () {
+                var inputels = $$('.portlet_stufftype_value');
+                var inputelval = '';
+                var searchobj = {}
+                searchobj['saveportlet'] = '1';
+                for (var i = 1; i <= inputels.length; i++) {
+                    var inputel = inputels[i - 1];
+                    inputelval = $F(inputel);
+                    searchobj["portlet_stuffid_" + i] = document.getElementById("portlet_stuffid_" + inputelval).value;
+                    searchobj["portlet_stufftype_" + i] = document.getElementById("portlet_stufftype_" + inputelval).value;
+                }
+                searchobj['for_i'] = i;
+                BlockSorting(searchobj);
+            }
+        });
+    }
+
+    if (is_admin == 'on') {
+        initHomePage();
+    }
+
+    function BlockSorting(searchobj) {
+        //var sequence = matrixseqarr.join("_");
+        var findstr = "&" + $H(searchobj).toQueryString();
+        new Ajax.Request('index.php',
+		{ queue: { position: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Home&action=HomeAjax&file=HomestuffAjax' + findstr,
+		    onComplete: function (response) {
+		        $('seqSettings').innerHTML = response.responseText;
+		        LocateObj($('seqSettings'))
+		        //Effect.Appear('seqSettings');
+		        setTimeout(hideSeqSettings, 3000);
+		    }
+		}
+	);
+    }
+    function fnAddWindow(obj, CurrObj) {
+        new Ajax.Request(
+			'index.php',
+			{ queue: { position: 'end', scope: 'command' },
+			    method: 'post',
+			    postBody: 'module=Home&action=HomeAjax&file=ConfigBlock&setype=configblock',
+			    onComplete: function (response) {
+			        $("createConfigBlockDiv").innerHTML = response.responseText;
+			        //eval($("addDefaultPlan").innerHTML);
+			        document.getElementById("createConfigBlockDiv").style.display = "block";
+			        //Drag.init(document.getElementById("block_div_title"), document.getElementById("blockLay"));
+			    }
+			}
+	);
+    }
+
+    function fnAddhometemplates() {
+        var blokdiv = document.getElementById("createConfigBlockDiv");
+        if (blokdiv.style.display == 'block') {
+            blokdiv.style.display = 'none';
+        } else {
+            showblockdiv();
+        }
+    }
+
+    function showblockdiv() {
+        new Ajax.Request(
+		'index.php',
+		{ queue: { position: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Home&action=HomeAjax&file=ConfigBlock&setype=hometemplates',
+		    onComplete: function (response) {
+		        $("createConfigBlockDiv").innerHTML = response.responseText;
+		        document.getElementById("createConfigBlockDiv").style.display = "block";
+		    }
+		}
+	);
+    }
+
+    function setloadinfo(hometemplatesid) {
+        showhometemplate_click(hometemplatesid)
+    }
+
+    function getListViewEntries_js(module, pagestr) {
+        var ajaxfilearr = Array();
+        var ajaxfile = 'ConfigBlock';
+        var searchobj = {}
+        searchobj['setype'] = 'hometemplates';
+        var findstr = "&" + $H(searchobj).toQueryString() + "&" + pagestr;
+        $("status").style.display = "inline";
+        new Ajax.Request(
+		'index.php',
+		{ queue: { position: 'end', scope: 'command' },
+		    method: 'post',
+		    postBody: 'module=Home&action=HomeAjax&file=' + ajaxfile + '' + findstr,
+		    onComplete: function (response) {
+		        $("status").style.display = "none";
+		        $("createConfigBlockDiv").innerHTML = response.responseText;
+		        document.getElementById("createConfigBlockDiv").style.display = "block";
+		    }
+		});
+    }
+    function getListViewWithPageSize(module, obj) {
+        var pagestr = "listmaxpage=" + obj.value;
+        //location.href="index.php?module="+module+"&action=ListView&"+pagestr;
+        getListViewEntries_js(module, pagestr);
+    }
+
+    function addhometemplate_click() {
+        var smswin = window.open('index.php?module=Home&action=Popup_addhometemplate&setype=created',
+							 'test', 'width=700,height=602,resizable=1,scrollbars=1');
+    }
+    function updatehometemplate_click(record) {
+        var smswin = window.open('index.php?module=Home&action=Popup_addhometemplate&setype=edit&record=' + record,
+							 'test', 'width=700,height=602,resizable=1,scrollbars=1');
+    }
+    function delhometemplate_click(record) {
+        if (confirm(alert_arr.SURE_TO_DELETE)) {
+            var smswin = window.open('index.php?module=Home&action=Popup_addhometemplate&setype=deleted&record=' + record,
+								 'test', 'width=700,height=602,resizable=1,scrollbars=1');
+        }
+    }
+    function showhometemplate_click(record) {
+        window.location.href = 'index.php?module=Home&action=index&showhomeid=' + record + '';
+    }
+
+    function stuffrefresh_display(strs) {
+        if (strs != '' && Jquery("#stuffrefresh" + strs)) {
+            if (Jquery("#stuffrefresh" + strs).css("display") == 'none') {
+                Jquery("#stuffrefresh" + strs).css("display", '');
+            } else {
+                Jquery("#stuffrefresh" + strs).css("display", 'none');
+            }
+        }
+    }
+	
+</script><script language = 'JavaScript' type='text/javascript' src = 'include/js/popup.js'></script><br><br><br><table border=0 cellspacing=0 cellpadding=5 width=100% class=settingsSelectedUI ><tr><td class=small align=left><a href='http://www.c3crm.com' target='_blank'>E-CRM7.0.28</a> </td><td class=small align=right>
+				Powered by <a href='http://www.c3crm.com' target='_blank'>&nbsp;<img src='themes/softed/images/crm-logo-red.png'  width='60' border=0></a>
+					&nbsp;&nbsp;
+					咨询热线: 400 680 5898 &nbsp;&nbsp; 
+				
+				<a href='http://www.c3crm.com/cpjs/298.html' target='_blank'>
+					<i class='icon-mobile-phone icon-large'></i> 手机登陆
+				</a>
+			</td></tr></table><script type='text/javascript'>			                      if (typeof (ActivityReminderCallback) != 'undefined') ActivityReminderCallback();</script>
+</td></tr>
+<tr><td colspan="2" align="center">
+</td></tr></table>
+</body>
+</html>
+
+
+<!DOCTYPE HTML >
+

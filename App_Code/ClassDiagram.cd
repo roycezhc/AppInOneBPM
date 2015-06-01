@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AChannel" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQIAAAAEAAIIABCAAAACAAAAAAAiCAAAA=</HashCode>
+      <FileName>App_Code\AChannel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChannelSerial" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAACAAACAAISAAAABAIAgBAAACAAAAAAAEAAScAAA=</HashCode>
+      <FileName>App_Code\ChannelSerial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnCodingPDU" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAIAACAA=</HashCode>
+      <FileName>App_Code\EnCodingPDU.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IManage" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAIAACABAAiBAIAACCAgAAAyABgAAAAAAACBgAgA=</HashCode>
+      <FileName>App_Code\IManage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMS" Collapsed="true">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAEACQgAABgAAAAAGAAAAGACQAIAAAAAAAAAgCAAAA=</HashCode>
+      <FileName>App_Code\SMS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Core.Gengerate" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEgABAAAIAAAEAAIQgABAAAASAAAAAAgAAwIAAUAAA=</HashCode>
+      <FileName>App_Code\Gengerate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.SYS_DATASOURCE" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAgAMQMikgABIAAERAAAAAgAAAQAAAAACQCUABA=</HashCode>
+      <FileName>App_Code\SYS_DataSource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.A8Account" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAIAMANAE4UBIAIEAADIAABQAgACAIABIQE6ABI=</HashCode>
+      <FileName>App_Code\SysAcount\A8Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.A8OnlineUserConstr" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAEEAAAMAMAEhBBIAAACAAAAAAABAAAAAAAAQASEBA=</HashCode>
+      <FileName>App_Code\SysAcount\A8OnlineUserConstr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.A8Sys_LoginUser_Online" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>O7yE0jYFNBsAUsBJsiPUzYCYChCAJoIwkBCXQQR+Bhg=</HashCode>
+      <FileName>App_Code\SysAcount\A8Sys_LoginUser_Online.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.AutoBackUpPath" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABEAAABMAcAkgIBIQAACACAAAIQAAQBAAAAIWCWAhA=</HashCode>
+      <FileName>App_Code\SysAcount\AutoBackUpPath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.ClientInfo" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAOIAAMMAMwEgABICQAAABQQgAIAQVEAwkAiwCUjBo=</HashCode>
+      <FileName>App_Code\SysAcount\ClientInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.ITableTree" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAABgAAAAQQAGCAAAAAQAAYAAAAAAAAAAEA=</HashCode>
+      <FileName>App_Code\SysAcount\ITableTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.RWXsysadmin" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABEAIEBMANBHkIBIAJAAYDIEAAAAAFCiAMAAQAxEhE=</HashCode>
+      <FileName>App_Code\SysAcount\RWXsysadmin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Orm.PersistenceLayer.Model.V_SYS_BILL_COL_SYN" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>q9me2NlfPouodnO5L9URMMBENX82fv6C7WPr7w+bJfM=</HashCode>
+      <FileName>App_Code\V_SYS_BILL_COL_SYN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Common.RelationFactory" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAQAAAABAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\TF_TABLEHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgileFrame.Common.TF_TABLEHelper" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgACAEAAAAJIAAIAAQAAAIAARAAAAgAEAAQAAACAA=</HashCode>
+      <FileName>App_Code\TF_TABLEHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="StringReceive_Handler" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\AChannel.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="ByteReceive_Handler" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Code\AChannel.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="宋体" Size="9" />
+</ClassDiagram>

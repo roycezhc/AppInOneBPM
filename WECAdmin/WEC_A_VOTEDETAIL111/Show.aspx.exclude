@@ -1,0 +1,37 @@
+<%@ Page Language="C#" MasterPageFile="~/Themes/Blank.master" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Show" %>
+<%@ Import Namespace="AgileFrame.Core" %>
+<%@ Import Namespace="AgileFrame.Orm.PersistenceLayer.Model" %>
+<%@ Import Namespace="AgileFrame.Core.WebSystem"%>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<base target="_self"/>
+<script type="text/javascript">
+    $(function () {
+        $("#base").click(function () {
+            $(".baseInfo").toggleClass("hide");
+            $("#baseImg").toggleClass("showUp"); 
+        });
+    });
+</script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" Runat="Server">
+<div class="main" id="divC" runat="server">
+    <div class="titnav">
+    <dl><dt><b><%=title %></b></dt></dl>
+   </div>
+
+   <div id="base" class="showTitle">
+   <span id ="baseInfoTitle">基础信息</span><span id="baseImg" class="showImg"></span>
+   </div>
+    <div class="baseInfo">
+        <%=getInput() %>
+    </div>
+  <div class="clear"></div>
+        <%=getSubForm()%>
+
+   <div class="bottomtool">
+      <ul>
+    <li><span class="btn"><input onclick="window.close();" lang="CloseWin" value="关闭" type="button" /></span></li>
+</ul>
+   </div>
+</div>
+</asp:Content>

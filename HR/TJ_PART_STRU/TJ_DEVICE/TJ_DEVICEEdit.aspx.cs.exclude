@@ -1,0 +1,145 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Core;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+
+public partial class TJ_DEVICEEdit : AgileFrame.AppInOne.Common.BasePage
+{
+    TJ_DEVICE valObj =new TJ_DEVICE();
+    int count = 0;
+    string keyid = "";
+    protected string title = "";
+    int editFlag = 0;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        title = "设备信息" + "编辑";
+        Page.Title = title;
+        if (!string.IsNullOrEmpty(Request["PART_ID"]))
+        {
+            keyid = Request["PART_ID"];
+            wucSelPart1.DEPT_ID = Request["PART_ID"];
+        }
+        editFlag = Convert.ToInt32(Request["edit"]);
+        if (!IsPostBack)
+        {
+            //this.txtSUB_ID.Attributes["readonly"] = "readonly";
+            //this.txtSUB_ID.Attributes["disabled"] = "disabled";
+            //this.txtSUB_ID.Style["background-color"] = "Silver";
+            try
+            {
+                if (editFlag == 1)
+                {
+                    valObj = BLLTable<TJ_DEVICE>.Factory(conn).GetRowData(TJ_DEVICE.Attribute.D_ID, Request["KeyID"]);
+                    if (valObj == null) return;
+
+
+                    txtD_NAME.Value = Convert.ToString(valObj.D_NAME);//Convert.ToString                
+
+                    txtD_NO.Value = Convert.ToString(valObj.D_NO);//Convert.ToString                
+
+                    txtD_ID.Value = Convert.ToString(valObj.D_ID);//Convert.ToString   
+
+                    this.txtD_ID.Attributes["readonly"] = "readonly";
+                    this.txtD_ID.Attributes["disabled"] = "disabled";
+                    this.txtD_ID.Style["background-color"] = "Silver";
+
+                    txtMETERID.Value = Convert.ToString(valObj.METERID);//Convert.ToDecimal                
+
+                    wucSelDept1.DEPT_ID = Convert.ToString(valObj.SUB_ID);//Convert.ToString                
+
+                    wucSelPart1.DEPT_ID = Convert.ToString(valObj.PART_ID);//Convert.ToString
+                }
+                else
+                {
+                    TJ_DEVICE conObj = new TJ_DEVICE();
+                    conObj.OrderBy(TJ_DEVICE.Attribute.D_ID, Order.Desc);
+                    List<TJ_DEVICE> list = BLLTable<TJ_DEVICE>.Factory(conn).Select(new TJ_DEVICE(), conObj);
+                    int max = 0;
+                    if(list.Count>0)
+                        max = Convert.ToInt32(list[list.Count - 1].D_ID);
+                    txtD_ID.Value = Convert.ToString(max + 1);
+
+                    this.txtD_ID.Attributes["readonly"] = "readonly";
+                    this.txtD_ID.Attributes["disabled"] = "disabled";
+                    this.txtD_ID.Style["background-color"] = "Silver";
+                }
+            }
+            catch (Exception ex)
+            {
+                litWarn.Text = ex.Message;
+            }
+        }
+    }
+
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            TJ_DEVICE valObj = new TJ_DEVICE();
+            
+            
+            if(txtD_NAME.Value !="" )
+                valObj.D_NAME = Convert.ToString(txtD_NAME.Value);
+            
+            
+            if(txtD_NO.Value !="" )
+                valObj.D_NO = Convert.ToString(txtD_NO.Value);
+            
+            
+            if(txtD_ID.Value !="" )
+                valObj.D_ID = Convert.ToString(txtD_ID.Value);
+            
+            
+            if(txtMETERID.Value !="" )
+                valObj.METERID = Convert.ToDecimal(txtMETERID.Value);
+
+
+            valObj.SUB_ID = wucSelDept1.DEPT_ID;
+            
+            
+            valObj.PART_ID = wucSelPart1.DEPT_ID;
+
+            if (editFlag == 1)
+            {
+                //valObj.D_ID = Convert.ToString(keyid);
+                count = BLLTable<TJ_DEVICE>.Factory(conn).Update(valObj, TJ_DEVICE.Attribute.D_NAME);
+                if (count < 1)
+                {
+                    count = BLLTable<TJ_DEVICE>.Factory(conn).Insert(valObj);
+                }
+            }
+            else
+            {
+                count = BLLTable<TJ_DEVICE>.Factory(conn).Insert(valObj);
+                keyid = valObj.D_NAME.ToString();
+
+            }
+            if (count > 0)
+            {
+                StringBuilder sbData = new StringBuilder("({valObj:''");
+                List<AttributeItem> lstCol = valObj.af_AttributeItemList;
+                for (int i = 0; i < lstCol.Count; i++)
+                {
+                    object val = valObj.GetValue(lstCol[i]);
+                    if (val != null)
+                    {
+                        sbData.Append(",").Append(lstCol[i].FieldName).Append(":'").Append(val.ToString()).Append("'");
+                    }
+                }
+                sbData.Append("})");
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "goto", "window.returnValue=\"" + sbData.ToString() + "\";window.close();", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            litWarn.Text = ex.Message;
+        }
+    }
+
+}

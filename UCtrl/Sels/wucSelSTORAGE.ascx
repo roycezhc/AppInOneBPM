@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="UCtrl_wucSelSTORAGE" CodeFile="wucSelSTORAGE.ascx.cs" %>
+<span><input id="txtSTOR_NAME" readonly="readonly"  runat="server" type="text" style="width:70%;float:left;" /><input id="hidSTOR_ID" type="hidden"  runat="server"/><input id="btnSelSTOR" runat="server" class="sel" type="button" onclick="selSTORAGE(this);" value="" style="float:left;" /></span>

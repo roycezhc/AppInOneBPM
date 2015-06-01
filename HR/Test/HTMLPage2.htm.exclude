@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link href="../../Lib/DHX/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/dhtmlxgrid_skins.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/DHX/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../Lib/DHX/dhtmlxcommon.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/dhtmlxgrid.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/dhtmlxgridcell.js" type="text/javascript"></script>
+
+    <script src="../../Lib/DHX/excells/dhtmlxgrid_excell_link.js" type="text/javascript"></script>
+
+ 
+    <script type="text/javascript">
+
+        Date.prototype.getWeekName = function () {
+            var d = this.getDay();
+            var arr = ["日", "一", "二", "三", "四", "五", "六"];
+            return arr[d];
+        }
+    </script>
+
+
+    <!--TL-->
+   <script src="../../Lib/DHX/tl/trainquerycommon.js" type="text/javascript"></script>
+    <script src="../../Lib/DHX/tl/dhtmlxgrid_splt.js" type="text/javascript"></script>
+</head>
+<body>
+ <div id="gridbox1"	style="text-align:left;background-color: white;width:700px;height:300px; overflow: hidden">
+</div>
+      <script type="text/javascript">
+          function createGrid1() {
+              var mygrid = new dhtmlXGridObject('gridbox1');
+              mygrid.setImagePath("../../lib/dhtmlx/imgs/");
+              var head1 = "序号,姓名/日期,全勤,实际出勤";
+              var head2 = "#rspan,#rspan,#rspan,#rspan";
+              var widths = "40,80,40,70";
+              for (var i = 1; i <= 7; i++) {
+                  head1 += "," + i;
+                  var d = new Date(2012, 8, i);
+                  head2 += "," + d.getWeekName();
+                  widths += ",70";
+              }
+              head1 += ",出勤情况,#cspan,#cspan";
+              head2 += ",aaa,ccc,bbb";
+              widths += ",70,70,70";
+
+              mygrid.setHeader(head1);
+              mygrid.attachHeader(head2);
+              mygrid.setInitWidths(widths);
+
+              //mygrid.enableAutoHeigth(true);
+
+              mygrid.init();
+
+              mygrid.setSkin("dhx_skyblue");
+
+              mygrid.splitAt(4);
+              mygrid.loadXML("wdsback.aspx");
+
+
+          }
+
+          window.onload = function () {
+              createGrid1();
+          }
+        
+    
+    </script>
+</body>
+</html>

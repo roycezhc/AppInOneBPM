@@ -1,0 +1,56 @@
+﻿/*自定义构造的树形样式*/
+.divtree{text-align:left;height:auto;width:100%; overflow:visible;}
+.divtree ul{margin:0 0 0 0px;padding:0;text-align:left;width:auto;clear:both;}
+.divtree ul li{margin:0 0 0 0px;line-height:22px;padding:0;text-align:left;clear:both;width:100%;background:url(tree/li-line.gif) no-repeat 0 0;}
+
+.divtree ul li ul{margin:0 0 0 15px;font-size:0;}
+.divtree ul li div{height:22px;line-height:22px;margin:0 0 0 0px;background:url(tree/div-line.gif) no-repeat 5px center;width:100%;}
+
+.divtree ul li div b{background:url(tree/closed.gif) no-repeat 0 center;width:auto;float:left;height:22px;padding-left:16px;display:inline-block;}
+.divtree ul li div b em{background:url(tree/closed-em.gif) no-repeat 0 center;width:auto;height:22px;padding-left:16px;display:inline-block;border:none;}
+.divtree ul li div b.opened{background:url(tree/opened.gif) no-repeat 0 center;}
+.divtree ul li div b.opened em{background:url(tree/opened-em.gif) no-repeat 0 center;}
+.divtree ul li div b em input{border:none;width:13px;height:13px;margin-top:4px;display:block;}
+
+.divtree ul li div a{display:inline-block;width:auto;font-size:12px;margin:0 0 0 3px;color:#000; cursor:pointer;}
+.divtree ul li div a:hover{background:#579;color:#fff;}
+
+.divtree ul li div.root b em{background:url(tree/root.gif) no-repeat 0 center;}
+.divtree ul li div.root a{ margin:0 0 0 0;}
+
+.divtree ul li div.leaf b{background:url(tree/leaf.gif) no-repeat 0 center;}
+.divtree ul li div.leaf b em{background:url(tree/leaf-em.gif) no-repeat 0 center;}
+
+.divtree ul li.root-first{background:url(tree/li-line.gif) no-repeat 0 10px;}
+
+.divtree ul li.last{background:url(tree/li-line.gif) no-repeat 0 -980px;}
+
+.divtree ul li.root-last{background:url(tree/li-line.gif) no-repeat 0 -980px;}
+.divtree ul li.sel{background-color:#def;color:#333; z-index:0;}
+.divtree ul li.sel a.ac{background:#579;color:#fff;}
+
+.divtree ul li.sel div{}
+
+ul.org li div b em.org{background:url(skin/org1.png) no-repeat 0 center;}
+ul.org li div b.opened em.org{background:url(skin/org2.png) no-repeat 0 center;}
+
+ul.org li div b em.dept{background:url(skin/dept1.png) no-repeat 0 center;}
+ul.org li div b.opened em.dept{background:url(skin/dept2.png) no-repeat 0 center;}
+
+ul.org li div b em.man{background:url(skin/man1.png) no-repeat 0 center;}
+ul.org li div b.opened em.man{background:url(skin/man2.png) no-repeat 0 center;}
+
+ul.db li div b em.table{background:url(skin/table1.gif) no-repeat 0 center;}
+ul.db li div b.opened em.table{background:url(skin/table2.gif) no-repeat 0 center;}
+
+ul.db li div b em.field{background:url(skin/field1.gif) no-repeat 0 center;}
+
+ul.db li div b em.bill-mx{background:url(skin/table1.gif) no-repeat 0 center;}
+ul.db li div b.opened em.bill-mx{background:url(skin/table2.gif) no-repeat 0 center;}
+
+ul.db li div b em.col{background:url(skin/field1.gif) no-repeat 0 center;}
+ul.db li div b em.syncol{background:url(skin/list1.png) no-repeat 0 center;}
+
+.divtree-menu{ position:absolute; top:200px;left:400px;width:100px;height:auto;display:none;border:solid 1px #999;}
+.divtree-menu input{width:100%;height:22px;line-height:22px; text-align:center;border:solid 1px #eee; background:#def;color:#333;}
+.divtree-menu input:hover{ background:#678;color:#fff;} 

@@ -1,0 +1,253 @@
+using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Text;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using AgileFrame.Core;
+using AgileFrame.Core.WebSystem;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.AppInOne.Common;
+using AgileFrame.AppInOne.HR;
+using System.Collections.Generic;
+
+public partial class DEPT_DeptInfoEdit : AgileFrame.AppInOne.Common.BasePage
+{
+    string keyid = "";
+    string pid = "";
+    string ntype = "";
+    protected string title = LanguageService.GetLanguageString("SystemMenuEdit", "部门编辑");
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Request["ntype"]))
+        {
+            ntype = Request["ntype"];
+        }
+        if (!string.IsNullOrEmpty(Request["KeyID"]))
+        {
+            keyid = Request["KeyID"];
+        }
+        if (!string.IsNullOrEmpty(Request["id"]))
+        {
+            if (Request["toEdit"] != null)
+            {
+                keyid = Request["id"];
+            }
+            else
+            {
+                //增加
+                title = "增设部门";
+                pid = Request["id"];
+            }
+        }
+        if (!IsPostBack)
+        {
+            if (keyid != "")
+            {
+                #region//修改时信息初始化
+                TJ_PART_STRU valObj = BLLTable<TJ_PART_STRU>.Factory(conn).GetRowData(TJ_PART_STRU.Attribute.PART_ID, keyid);
+                if (valObj == null)
+                {
+                    this.btnOK.Enabled = false;
+                }
+                else
+                {
+                    txtDeptName.Value = valObj.PART_NAME;
+                    txtSortNum.Value = valObj.SORT_NO.ToString();
+                    wucSelORG1.Enabled = false;
+                    wucSelORG1.ORG_ID = valObj.ORG_ID;
+
+                    wucSelPart1.DEPT_ID = valObj.P_PART_ID;
+                    wucSelPart1.Enabled = true;
+
+                    txtSNAME.Value = Convert.ToString(valObj.SNAME);//Convert.ToString                
+
+                    txtRNAME.Value = Convert.ToString(valObj.RNAME);//Convert.ToString                
+
+                    txtEXP1.Value = Convert.ToString(valObj.EXP1);//Convert.ToString                
+
+                    txtEXP2.Value = Convert.ToString(valObj.EXP2);//Convert.ToString                
+
+                    txtEXP3.Value = Convert.ToString(valObj.EXP3);//Convert.ToString
+                }
+
+                #endregion
+            }
+            else if (pid != "0")
+            {
+                if (ntype == "org")
+                {
+                    wucSelPart1.DEPT_ID = pid;
+                    TJ_PART_STRU conTJ = new TJ_PART_STRU();
+                    conTJ.PART_ID = pid;
+                    List<TJ_PART_STRU> list = BLLTable<TJ_PART_STRU>.Factory(conn).Select(new TJ_PART_STRU(), conTJ);
+                    if (list.Count > 0)
+                        wucSelORG1.ORG_ID = list[0].ORG_ID;
+                }
+                else
+                {
+                    wucSelPart1.DEPT_ID = pid;
+                    TJ_PART_STRU conTJ = new TJ_PART_STRU();
+                    conTJ.P_PART_ID = pid;
+                    List<TJ_PART_STRU> list = BLLTable<TJ_PART_STRU>.Factory(conn).Select(new TJ_PART_STRU(), conTJ);
+                    if (list.Count > 0)
+                        wucSelORG1.ORG_ID = list[0].ORG_ID;
+                    if (string.IsNullOrEmpty(pid))
+                    {
+                        string orgid = BLLTable<TJ_PART_STRU>.Factory(conn).GetRowData(TJ_PART_STRU.Attribute.PART_ID, pid).PART_ID;
+                        //HR_ORG orgVal = BLLTable<HR_ORG>.Factory(conn).GetRowData(HR_ORG.Attribute.ORG_ID, orgid);
+                        wucSelORG1.ORG_ID = orgid;
+                    }
+                }
+                wucSelORG1.Enabled = false;
+            }
+        }
+    }
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        #region//备用变量声明
+        string gotoUrl = "../../OK.aspx?p=0";
+        if (pid != "")
+        {
+            gotoUrl += "&PID=" + pid;
+        }
+        int re = 0;
+        string msg ="新增记录";
+        TJ_PART_STRU valObj = new TJ_PART_STRU();
+        #endregion
+
+        #region//实例对象赋值
+        valObj.PART_NAME = txtDeptName.Value;
+        valObj.SORT_NO =Convert.ToInt32(txtSortNum.Value);
+        valObj.ORG_ID = wucSelORG1.ORG_ID;
+
+        if (txtSNAME.Value != "")
+            valObj.SNAME = Convert.ToString(txtSNAME.Value);
+
+
+        if (txtRNAME.Value != "")
+            valObj.RNAME = Convert.ToString(txtRNAME.Value);
+
+        if (txtEXP1.Value != "")
+            valObj.EXP1 = Convert.ToString(txtEXP1.Value);
+
+
+        if (txtEXP2.Value != "")
+            valObj.EXP2 = Convert.ToString(txtEXP2.Value);
+
+
+        if (txtEXP3.Value != "")
+            valObj.EXP3 = Convert.ToString(txtEXP3.Value);
+        TJ_PART_STRU ConPath = new TJ_PART_STRU();
+        ConPath.PART_ID = wucSelPart1.DEPT_ID;
+        TJ_PART_STRU valPath = BLLTable<TJ_PART_STRU>.Factory(conn).GetRowData(TJ_PART_STRU.Attribute.PART_ID, ConPath.PART_ID);
+        if (valPath != null)
+        {
+            if (valPath.IDPATH != null)
+            {
+                valObj.IDPATH = valPath.IDPATH + ",";
+                valObj.PNAME = valPath.PNAME + "," + txtSNAME.Value;
+            }
+            else
+            {
+                valObj.IDPATH = wucSelORG1.ORG_ID + "," + wucSelPart1.DEPT_ID + ",";
+                valObj.PNAME = wucSelORG1.ORG_NAME + "," + wucSelPart1.DEPT_NAME + "," + txtSNAME.Value;
+            }
+        }
+        else
+        {
+            valObj.IDPATH = wucSelORG1.ORG_ID + "," + wucSelPart1.DEPT_ID + ",";
+            valObj.PNAME = wucSelORG1.ORG_NAME + "," + wucSelPart1.DEPT_NAME + "," + txtSNAME.Value;
+        }
+        #endregion
+
+        
+        #region//执行修改或新增
+        if (keyid !="")
+        {
+            valObj.P_PART_ID = wucSelPart1.DEPT_ID;
+            valObj.PART_ID = keyid;
+            //re = DeptHelper.EditDept(valObj);// BLLTable<TJ_PART_STRU>.Factory(conn).Update(valObj, TJ_PART_STRU.Attribute.DEPT_ID);
+            re = BLLTable<TJ_PART_STRU>.Factory(conn).Update(valObj, TJ_PART_STRU.Attribute.PART_ID);
+        }
+        else
+        {
+            if (ntype == "org")
+            {
+                valObj.P_PART_ID = "0";
+            }
+            else {
+                valObj.P_PART_ID = pid;
+            }
+            TJ_PART_STRU con=new TJ_PART_STRU();
+            TJ_PART_STRU obj=new TJ_PART_STRU();
+            List<TJ_PART_STRU> list = BLLTable<TJ_PART_STRU>.Factory(conn).Select(obj, con);
+            int max=0;
+            foreach (TJ_PART_STRU sub in list)
+            {
+                if (Convert.ToInt32(sub.PART_ID) > max)
+                    max = Convert.ToInt32(sub.PART_ID);
+            }
+            //keyid = DeptHelper.AddDept(valObj, valObj.P_SUB_ID);
+            valObj.PART_ID = (max + 1).ToString();
+            valObj.IDPATH += valObj.PART_ID;
+            valObj.P_PART_ID = pid;
+            keyid = BLLTable<TJ_PART_STRU>.Factory(conn).Insert(valObj).ToString();
+            if (Convert.ToInt32(keyid) > 0)
+            {
+                TJ_PART_STRU ConSub = new TJ_PART_STRU();
+                TJ_PART_STRU ConObj = new TJ_PART_STRU();
+                ConSub.P_PART_ID = valObj.P_PART_ID;
+                List<TJ_PART_STRU> listSUB = BLLTable<TJ_PART_STRU>.Factory(conn).Select(ConObj, ConSub);
+                ConObj = BLLTable<TJ_PART_STRU>.Factory(conn).GetRowData(TJ_PART_STRU.Attribute.PART_ID, ConSub.P_PART_ID);
+                if (ConObj != null && listSUB != null)
+                {
+                    ConObj.SUB_NUM = listSUB.Count;
+                    int count = BLLTable<TJ_PART_STRU>.Factory(conn).Update(ConObj, TJ_PART_STRU.Attribute.PART_ID);
+                }
+            }
+            re = keyid != "" ? 1 : 0;
+        }
+        #endregion
+
+        #region//执行结果处理
+        if (re > 0)
+        {
+
+            if (Request["tree"] != null)
+            {
+                StringBuilder sb = new StringBuilder("{");
+                sb.Append("rid:'").Append(pid).Append("',id:'");
+                sb.Append(valObj.PART_ID).Append("',pid:'").Append(pid).Append("',no:").Append(valObj.SORT_NO).Append(",sc:1,name:'");
+                sb.Append(valObj.PART_NAME).Append("',ntype:'dept'}");
+                if (Request["toEdit"] == null)
+                {
+
+                    AgileFrame.Core.ScriptHelper.ResponseScript(Page, "parent.addSubNodeForOprPage(\"" + sb.ToString() + "\");location.href='" + gotoUrl + "';", false);
+                }
+                else
+                {
+                    AgileFrame.Core.ScriptHelper.ResponseScript(Page, "parent.editNodeForOprPage(\"" + sb.ToString() + "\");location.href='" + gotoUrl + "';", false);
+                }
+            }
+            else
+            {
+                ScriptHelper.AlertAndGo(Page, msg + "成功！", gotoUrl);
+            }
+        }
+        else
+        {
+            ScriptHelper.AlertAndGo(Page, msg + "失败！", gotoUrl);
+        }
+        #endregion
+    }
+}
+

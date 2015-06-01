@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../JQuery/jquery.min.js" type="text/javascript"></script>
+    <script src="divTree.js" type="text/javascript"></script>
+    <script  type="text/javascript">
+     $(function () {
+        var tv = new TV.Tree("treemag", {
+            selNodeHandle: function (tn) {
+                //点击某个节点时可以执行此函数，根据需要编写自定义代码。
+            },
+            pageBack: 'BackSvr.aspx?look=1', //设置异步处理的后台页面地址
+            pageDefault: "TaskLookList.aspx?look=1",
+            checkBox: 0,//是否显示 选择框
+            skin: "org",//皮肤，基本不用
+            exdPath: '0,1,2'//默认展开的ID路径。
+        });
+
+        //添加一个弹出菜单，并编写单击事件方法体
+        tv.addMenu("btnLogShow", "查看汇报", function (tn) {
+            //tn=当前单击的节点对象
+            var objData = tn.getDataObj();
+            $("#ifrMain").attr("src", "LogList.aspx?id=" + objData.id + "&ntype=" + objData.ntype + "&preUel=&tree=" + Math.random());
+            return false;
+        });
+    });
+    </script>
+</head>
+<body>
+ <div class="divtree">
+    <ul id="treemag">
+       <li data="{id:'0',pid:'0',sc:0,name:'任务浏览',ntype:'root'}" ><div><b><em></em></b><a href='#'>任务浏览</a></div></li>
+    </ul>
+ </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿.firstTh {
+    width: 160px;
+    display: block;
+    height: 40px;
+}
+
+.mytable > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{
+    border:1px solid #000;
+}
+
+.mytable > thead > tr > th {
+    border-bottom: 0px;
+}
+
+.mytable > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
+    border-top: 1px solid #000;
+}
+
+.marginTop27 {
+    margin-top:27px;
+}

@@ -1,0 +1,40 @@
+﻿#divStepMap{  }
+#divStepMap .row{width:98%;height:52px;border-bottom:solid 1px #aaa; clear:both;}
+#divStepMap .over{ background:#efe;}
+#divStepMap div.step{float:left;margin:5px 0 0 0;top:0;margin-left:10px;width:100px;background:#eee;border:solid 1px #789;display:inline; z-index:999;text-align:center;}
+#divStepMap div.step h2{height:20px;line-height:20px;width:100%; text-align:center;padding:0;margin:0;font-size:12px; background:#465;color:#fff; cursor:pointer;}
+#divStepMap div.step h2 b{display:inline-block;width:100%;height:20px;}
+#divStepMap div.step h2 b input{border:none;height:16px;width:90%;}
+#divStepMap div.step p{height:20px;line-height:20px;padding:0;margin:0;}
+#divStepMap div.step p a{margin:0 3px 0 3px; cursor:pointer;}
+
+#divStepMap div.type-0{width:60px;}
+#divStepMap div.type-0 h2{ background:#990;color:#fff;}
+#divStepMap div.type-1{width:100px;}
+#divStepMap div.type-1 h2{ background:#060;color:#fff;}
+#divStepMap div.type-2{width:90px;}
+#divStepMap div.type-2 h2{ background:#aaa;color:#fff;}
+#divStepMap div.type-3{width:60px;}
+#divStepMap div.type-3 h2{background:#900;color:#fff;}
+
+
+#shapC h3{height:25px; background:#eee;line-height:25px;margin:0;padding:0;font-size:14px;}
+.shaps div{margin-top:10px;border:solid 2px #666;width:80px;height:25px; cursor:pointer; text-align:center;}
+.shaps div b{line-height:25px;}
+.shaps div.type-0{ background:#990;color:#fff;}
+.shaps div.type-1{ background:#060;color:#fff;}
+.shaps div.type-2{ background:#aaa;color:#fff;}
+.shaps div.type-3{ background:#900;color:#fff;}
+/**/
+#divMove{ background:eee;border:dashed 1px #000;line-height:25px;position:absolute;top:0;left:0; z-index:999; background:#eee; display:none; cursor:move;text-align:center;}
+
+.xian1{ position:absolute;top:130px;left:700px;width:240px;height:110px;font-size:0; z-index:0;padding-top:0;}
+/*.xian1 div{height:100%;background-image:url(../lib/jiantou.gif);background-position:0 top; background-repeat:no-repeat;}
+.xian1 div div{background-image:url(../lib/jiantou.gif);background-position:right bottom ; background-repeat:no-repeat;padding-top:2px;padding-bottom:2px; text-align:right;}
+.xian1 div div div{border-right:solid 2px #f00; background:#ddd;margin-bottom:2px;padding:0;width:20px;}*/
+.xian1 div{padding:0;height:100%; border:solid 2px #f00;border-left:none; text-align:left;}
+.xian1 div div{width:7px;height:8px;border:none;margin-top:-5px;background:url(../lib/arrow-l.gif) -1px center no-repeat;}
+.xian1 div span{ float:right;width:auto;height:20px;line-height:20px; background:#eee; position:absolute;top:5%;right:-30px;border:solid 1px #f99;}
+.xian1 div span a{margin:0 3px;color:#009; cursor:pointer;}
+.xian1 div span a:hover{color:#f00;}
+

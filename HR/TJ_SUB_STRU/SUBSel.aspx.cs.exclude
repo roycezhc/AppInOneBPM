@@ -1,0 +1,115 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Orm.PersistenceLayer.BLL;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.AppInOne.Common;
+public partial class Admin_Dept_Sel : AgileFrame.AppInOne.Common.BasePage
+{
+    protected string moreP = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            StringBuilder sb = new StringBuilder();
+
+
+            if (Request["SUB_ID"] != null)
+            {
+                TJ_SUB_STRU objVal = new TJ_SUB_STRU();
+                TJ_SUB_STRU objCond = new TJ_SUB_STRU();
+                //objCond.Where("ORG_ID like '" + Request["ORG_ID"] + "%'");
+                objCond.P_SUB_ID = "0";
+                objCond.SUB_ID = Request["SUB_ID"];
+                moreP = "?SUB_ID=" + Request["SUB_ID"];
+
+                objVal.OrderBy(TJ_SUB_STRU.Attribute.SUB_ID, Order.Asc);
+                List<TJ_SUB_STRU> lstChnl = BLLTable<TJ_SUB_STRU>.Factory(conn).Select(objVal, objCond);
+
+                if (lstChnl.Count > 0)
+                {
+                    sb.Append("<li id=\"root_0\" data=\"{rid:'0',id:'0',pid:'0',sc:0,name:'分支机构选择',ntype:''}\" class=\"root\" exp='2'><div class=\"opened root\"><b></b><em></em><a href=\"#\">分支机构选择</a></div>");
+                    sb.Append("<ul>");
+                    for (int i = 0; i < lstChnl.Count; i++)
+                    {
+                        StringBuilder sbData = new StringBuilder();
+                        string licls = "";
+                        if (i == lstChnl.Count - 1)
+                        {
+                            licls = "last";
+                        }
+                        int subcount = BLLTable<TJ_SUB_STRU>.Factory(conn).Select(TJ_SUB_STRU.Attribute.P_SUB_ID, lstChnl[i].SUB_ID).Count;
+
+                        if (subcount < 1)
+                        {
+                            if (licls != "") { licls += " "; }
+                            licls += "leaf";
+                        }
+                        if (licls != "") { licls = " class='" + licls + "'"; }
+
+                        sbData.Append("{rid:'0',id:'").Append(lstChnl[i].SUB_ID.ToString());
+                        sbData.Append("',pid:'").Append(lstChnl[i].P_SUB_ID).Append("',no:").Append(lstChnl[i].SUB_ID.ToString());
+                        sbData.Append(",sc:").Append(subcount.ToString());
+                        sbData.Append(",name:'").Append(lstChnl[i].SUB_NAME).Append("',ntype:'dept'}");
+
+                        sb.Append("<li " + licls + " id='node_" + lstChnl[i].SUB_ID + "' data=\"" + sbData.ToString() + "\"><div><b></b><em></em><a href='#'>" + lstChnl[i].SUB_NAME + "</a></div></li>");
+                    }
+                    sb.Append("</ul>");
+                    sb.Append("</li>");
+                }
+                else
+                {
+                    sb.Append("<li id=\"root_0\" data=\"{rid:'0',id:'0',pid:'0',sc:0,name:'分支机构选择',ntype:''}\" class=\"root\"><div class='root'><b></b><em></em><a href=\"#\">分支机构选择</a></div></li>");
+
+                }
+            }
+            else {
+                TJ_SUB_STRU objVal = new TJ_SUB_STRU();
+                TJ_SUB_STRU objCond = new TJ_SUB_STRU();
+                objCond.P_SUB_ID = "0";
+                objVal.OrderBy(TJ_SUB_STRU.Attribute.SUB_ID, Order.Asc);
+                List<TJ_SUB_STRU> lstChnl = BLLTable<TJ_SUB_STRU>.Factory(conn).Select(objVal, objCond);
+                if (lstChnl.Count > 0)
+                {
+                    sb.Append("<li id=\"root_0\" data=\"{id:'0',pid:'0',sc:0,name:'分支机构管理',ntype:''}\" class=\"root\" exp='2'><div class=\"opened root\"><b></b><em></em><a href=\"#\">分支机构管理</a><a href='SUBManage.aspx'>刷新</a></div>");
+                    sb.Append("<ul>");
+                    for (int i = 0; i < lstChnl.Count; i++)
+                    {
+                        StringBuilder sbData = new StringBuilder();
+                        string licls = "";
+                        if (i == lstChnl.Count - 1)
+                        {
+                            licls = "last";
+                        }
+                        decimal subcount = 1;// lstChnl[i].SUB_NUM;
+                        if (subcount == 0)
+                        {
+                            if (licls != "") { licls += " "; }
+                            licls += "leaf";
+                        }
+                        if (licls != "") { licls = " class='" + licls + "'"; }
+
+                        sbData.Append("{id:'").Append(lstChnl[i].SUB_ID.ToString());
+                        sbData.Append("',pid:'").Append(lstChnl[i].P_SUB_ID).Append("',no:").Append(lstChnl[i].SORT_NO.ToString());
+                        sbData.Append(",sc:").Append(subcount.ToString());
+                        sbData.Append(",name:'").Append(lstChnl[i].SUB_NAME).Append("',ntype:'org'}");
+
+                        sb.Append("<li " + licls + " id='node_" + lstChnl[i].SUB_ID + "' data=\"" + sbData.ToString() + "\"><div><b></b><em class='node_org'></em><a href='#'>" + lstChnl[i].SUB_NAME + "</a></div></li>");
+                    }
+                    sb.Append("</ul></li>");
+                }
+                else
+                {
+                    sb.Append("<li id=\"root_0\" data=\"{id:'0',pid:'0',sc:0,name:'分支机构管理',ntype:''}\" class=\"root\"><div class='root'><b></b><em></em><a href=\"#\">分支机构管理</a><a href='SUBManage.aspx'>刷新</a></div></li>");
+
+                }
+            }
+            litChnl.Text = sb.ToString();
+        }
+    }
+}

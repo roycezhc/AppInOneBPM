@@ -1,0 +1,1389 @@
+/************************************************************
+
+  Copyright (c) 2008，ybkj_zlg
+  Author:               Created Time: 2013-05-15 09:22:23
+  Description:    数据表ClientLog对应的业务逻辑层ClientLog
+  Version:         2.1.0.0
+ 
+ * 对此文件的更改可能会导致不正确的行为，并且如果
+     重新生成代码，这些更改将会丢失。您可以扩展该类
+ * 实现自己的 ClientLog_Entity:ClientLog
+ * 
+************************************************************/
+/************************************************************
+SQL代码：
+select Id,Type,DateTime,ClientDateTime,LoadElapsed,NetworkElapsed,ClientElapsed,ClientElapsedUI,LoadDataElapsed,ReceivePackageSize,SendPackageSize,Title,Url,Params,IpAddress,ProfileId,LoginUserId,RequestId,FormGuid,SlVersion from ClientLog
+delete from ClientLog
+INSERT INTO ClientLog (Id,Type,DateTime,ClientDateTime,LoadElapsed,NetworkElapsed,ClientElapsed,ClientElapsedUI,LoadDataElapsed,ReceivePackageSize,SendPackageSize,Title,Url,Params,IpAddress,ProfileId,LoginUserId,RequestId,FormGuid,SlVersion)
+     VALUES
+           ('','','','','','','','','','','','','','','','','','','','')
+UPDATE {首字母大写列名} SET ...
+变量赋值代码：
+        valObj.Id = "";
+        valObj.Type = "";
+        valObj.DateTime = "";
+        valObj.ClientDateTime = "";
+        valObj.LoadElapsed = "";
+        valObj.NetworkElapsed = "";
+        valObj.ClientElapsed = "";
+        valObj.ClientElapsedUI = "";
+        valObj.LoadDataElapsed = "";
+        valObj.ReceivePackageSize = "";
+        valObj.SendPackageSize = "";
+        valObj.Title = "";
+        valObj.Url = "";
+        valObj.Params = "";
+        valObj.IpAddress = "";
+        valObj.ProfileId = "";
+        valObj.LoginUserId = "";
+        valObj.RequestId = "";
+        valObj.FormGuid = "";
+        valObj.SlVersion = ""; 
+ * ************************************************************/
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Collections;
+using System.Reflection;
+using AgileFrame.Orm.PersistenceLayer.DAL.Base;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Core;
+
+namespace AgileFrame.Orm.PersistenceLayer.Model
+{
+    /// <summary>
+    /// <para>客户端日志</para>
+    /// <para>与ClientLog数据表对应的实体对象。</para>
+    /// <para>增加一个数据列的方法是：在"类字段"节增加一个bool标识位，与"Attribute"属性 </para>
+    /// </summary>    
+    [Serializable]
+    public class ClientLog : ITableImplement
+    {
+        /// <summary>客户端日志 工厂方法</summary>
+        public static ClientLog Factory()
+        {
+            return new ClientLog();
+        }
+		#region 类字段清单 列属性用于生成视图层时的一致性检查
+        #region 类字段清单1
+        
+        /// <summary> Id Attribute_IsPrimary_IsNotNull_IDENTITY </summary>
+        public int _Id
+        {            
+            get { return this.Id; }
+            set { this.Id = value; }
+        }
+        
+        /// <summary> Type Attribute_IsNotNull </summary>
+        public Byte _Type
+        {            
+            get { return this.Type; }
+            set { this.Type = value; }
+        }
+        
+        /// <summary> DateTime Attribute_IsNotNull </summary>
+        public DateTime _DateTime
+        {            
+            get { return this.DateTime; }
+            set { this.DateTime = value; }
+        }
+        
+        /// <summary> ClientDateTime Attribute_IsNotNull </summary>
+        public DateTime _ClientDateTime
+        {            
+            get { return this.ClientDateTime; }
+            set { this.ClientDateTime = value; }
+        }
+        
+        /// <summary> LoadElapsed Attribute_IsNotNull </summary>
+        public int _LoadElapsed
+        {            
+            get { return this.LoadElapsed; }
+            set { this.LoadElapsed = value; }
+        }
+        
+        /// <summary> NetworkElapsed Attribute_IsNotNull </summary>
+        public int _NetworkElapsed
+        {            
+            get { return this.NetworkElapsed; }
+            set { this.NetworkElapsed = value; }
+        }
+        
+        /// <summary> ClientElapsed Attribute_IsNotNull </summary>
+        public int _ClientElapsed
+        {            
+            get { return this.ClientElapsed; }
+            set { this.ClientElapsed = value; }
+        }
+        
+        /// <summary> ClientElapsedUI Attribute_IsNotNull </summary>
+        public int _ClientElapsedUI
+        {            
+            get { return this.ClientElapsedUI; }
+            set { this.ClientElapsedUI = value; }
+        }
+        
+        /// <summary> LoadDataElapsed Attribute_IsNotNull </summary>
+        public int _LoadDataElapsed
+        {            
+            get { return this.LoadDataElapsed; }
+            set { this.LoadDataElapsed = value; }
+        }
+        
+        /// <summary> ReceivePackageSize Attribute_IsNotNull </summary>
+        public int _ReceivePackageSize
+        {            
+            get { return this.ReceivePackageSize; }
+            set { this.ReceivePackageSize = value; }
+        }
+        
+        /// <summary> SendPackageSize Attribute_IsNotNull </summary>
+        public int _SendPackageSize
+        {            
+            get { return this.SendPackageSize; }
+            set { this.SendPackageSize = value; }
+        }
+        
+        /// <summary> Title Attribute_IsNotNull </summary>
+        public string _Title
+        {            
+            get { return this.Title; }
+            set { this.Title = value; }
+        }
+        
+        /// <summary> Url Attribute_IsNotNull </summary>
+        public string _Url
+        {            
+            get { return this.Url; }
+            set { this.Url = value; }
+        }
+        
+        /// <summary> Params Attribute_IsNotNull </summary>
+        public string _Params
+        {            
+            get { return this.Params; }
+            set { this.Params = value; }
+        }
+        
+        /// <summary> IpAddress Attribute </summary>
+        public string _IpAddress
+        {            
+            get { return this.IpAddress; }
+            set { this.IpAddress = value; }
+        }
+        
+        /// <summary> ProfileId Attribute </summary>
+        public string _ProfileId
+        {            
+            get { return this.ProfileId; }
+            set { this.ProfileId = value; }
+        }
+        
+        /// <summary> LoginUserId Attribute </summary>
+        public string _LoginUserId
+        {            
+            get { return this.LoginUserId; }
+            set { this.LoginUserId = value; }
+        }
+        
+        /// <summary> RequestId Attribute_IsNotNull </summary>
+        public long _RequestId
+        {            
+            get { return this.RequestId; }
+            set { this.RequestId = value; }
+        }
+        
+        /// <summary> FormGuid Attribute </summary>
+        public string _FormGuid
+        {            
+            get { return this.FormGuid; }
+            set { this.FormGuid = value; }
+        }
+        
+        /// <summary> SlVersion Attribute_IsNotNull </summary>
+        public string _SlVersion
+        {            
+            get { return this.SlVersion; }
+            set { this.SlVersion = value; }
+        }
+        #endregion
+        #region 类字段清单2
+        
+        /// <summary> Id，推荐使用 "_"符号开头 </summary>
+        public int Id
+        {
+            get { return this.m_id; }
+            set //private 
+            {
+                if (!id_initialized || m_id != value)
+                {
+                    this.m_id = value;
+                }
+                id_initialized = true;
+            }
+        }
+        
+        /// <summary> Type，推荐使用 "_"符号开头 </summary>
+        public Byte Type
+        {
+            get { return this.m_type; }
+            set //
+            {
+                if (!type_initialized || m_type != value)
+                {
+                    this.m_type = value;
+                }
+                type_initialized = true;
+            }
+        }
+        
+        /// <summary> DateTime，推荐使用 "_"符号开头 </summary>
+        public DateTime DateTime
+        {
+            get { return this.m_datetime; }
+            set //
+            {
+                if (!datetime_initialized || m_datetime != value)
+                {
+                    this.m_datetime = value;
+                }
+                datetime_initialized = true;
+            }
+        }
+        
+        /// <summary> ClientDateTime，推荐使用 "_"符号开头 </summary>
+        public DateTime ClientDateTime
+        {
+            get { return this.m_clientdatetime; }
+            set //
+            {
+                if (!clientdatetime_initialized || m_clientdatetime != value)
+                {
+                    this.m_clientdatetime = value;
+                }
+                clientdatetime_initialized = true;
+            }
+        }
+        
+        /// <summary> LoadElapsed，推荐使用 "_"符号开头 </summary>
+        public int LoadElapsed
+        {
+            get { return this.m_loadelapsed; }
+            set //
+            {
+                if (!loadelapsed_initialized || m_loadelapsed != value)
+                {
+                    this.m_loadelapsed = value;
+                }
+                loadelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> NetworkElapsed，推荐使用 "_"符号开头 </summary>
+        public int NetworkElapsed
+        {
+            get { return this.m_networkelapsed; }
+            set //
+            {
+                if (!networkelapsed_initialized || m_networkelapsed != value)
+                {
+                    this.m_networkelapsed = value;
+                }
+                networkelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> ClientElapsed，推荐使用 "_"符号开头 </summary>
+        public int ClientElapsed
+        {
+            get { return this.m_clientelapsed; }
+            set //
+            {
+                if (!clientelapsed_initialized || m_clientelapsed != value)
+                {
+                    this.m_clientelapsed = value;
+                }
+                clientelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> ClientElapsedUI，推荐使用 "_"符号开头 </summary>
+        public int ClientElapsedUI
+        {
+            get { return this.m_clientelapsedui; }
+            set //
+            {
+                if (!clientelapsedui_initialized || m_clientelapsedui != value)
+                {
+                    this.m_clientelapsedui = value;
+                }
+                clientelapsedui_initialized = true;
+            }
+        }
+        
+        /// <summary> LoadDataElapsed，推荐使用 "_"符号开头 </summary>
+        public int LoadDataElapsed
+        {
+            get { return this.m_loaddataelapsed; }
+            set //
+            {
+                if (!loaddataelapsed_initialized || m_loaddataelapsed != value)
+                {
+                    this.m_loaddataelapsed = value;
+                }
+                loaddataelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> ReceivePackageSize，推荐使用 "_"符号开头 </summary>
+        public int ReceivePackageSize
+        {
+            get { return this.m_receivepackagesize; }
+            set //
+            {
+                if (!receivepackagesize_initialized || m_receivepackagesize != value)
+                {
+                    this.m_receivepackagesize = value;
+                }
+                receivepackagesize_initialized = true;
+            }
+        }
+        
+        /// <summary> SendPackageSize，推荐使用 "_"符号开头 </summary>
+        public int SendPackageSize
+        {
+            get { return this.m_sendpackagesize; }
+            set //
+            {
+                if (!sendpackagesize_initialized || m_sendpackagesize != value)
+                {
+                    this.m_sendpackagesize = value;
+                }
+                sendpackagesize_initialized = true;
+            }
+        }
+        
+        /// <summary> Title，推荐使用 "_"符号开头 </summary>
+        public string Title
+        {
+            get { return this.m_title; }
+            set //
+            {
+                if (!title_initialized || m_title != value)
+                {
+                    this.m_title = value;
+                }
+                title_initialized = true;
+            }
+        }
+        
+        /// <summary> Url，推荐使用 "_"符号开头 </summary>
+        public string Url
+        {
+            get { return this.m_url; }
+            set //
+            {
+                if (!url_initialized || m_url != value)
+                {
+                    this.m_url = value;
+                }
+                url_initialized = true;
+            }
+        }
+        
+        /// <summary> Params，推荐使用 "_"符号开头 </summary>
+        public string Params
+        {
+            get { return this.m_params; }
+            set //
+            {
+                if (!params_initialized || m_params != value)
+                {
+                    this.m_params = value;
+                }
+                params_initialized = true;
+            }
+        }
+        
+        /// <summary> IpAddress，推荐使用 "_"符号开头 </summary>
+        public string IpAddress
+        {
+            get { return this.m_ipaddress; }
+            set //
+            {
+                if (!ipaddress_initialized || m_ipaddress != value)
+                {
+                    this.m_ipaddress = value;
+                }
+                ipaddress_initialized = true;
+            }
+        }
+        
+        /// <summary> ProfileId，推荐使用 "_"符号开头 </summary>
+        public string ProfileId
+        {
+            get { return this.m_profileid; }
+            set //
+            {
+                if (!profileid_initialized || m_profileid != value)
+                {
+                    this.m_profileid = value;
+                }
+                profileid_initialized = true;
+            }
+        }
+        
+        /// <summary> LoginUserId，推荐使用 "_"符号开头 </summary>
+        public string LoginUserId
+        {
+            get { return this.m_loginuserid; }
+            set //
+            {
+                if (!loginuserid_initialized || m_loginuserid != value)
+                {
+                    this.m_loginuserid = value;
+                }
+                loginuserid_initialized = true;
+            }
+        }
+        
+        /// <summary> RequestId，推荐使用 "_"符号开头 </summary>
+        public long RequestId
+        {
+            get { return this.m_requestid; }
+            set //
+            {
+                if (!requestid_initialized || m_requestid != value)
+                {
+                    this.m_requestid = value;
+                }
+                requestid_initialized = true;
+            }
+        }
+        
+        /// <summary> FormGuid，推荐使用 "_"符号开头 </summary>
+        public string FormGuid
+        {
+            get { return this.m_formguid; }
+            set //
+            {
+                if (!formguid_initialized || m_formguid != value)
+                {
+                    this.m_formguid = value;
+                }
+                formguid_initialized = true;
+            }
+        }
+        
+        /// <summary> SlVersion，推荐使用 "_"符号开头 </summary>
+        public string SlVersion
+        {
+            get { return this.m_slversion; }
+            set //
+            {
+                if (!slversion_initialized || m_slversion != value)
+                {
+                    this.m_slversion = value;
+                }
+                slversion_initialized = true;
+            }
+        }    
+        #endregion
+        #region Attribute清单 辅助设计
+        /// <summary>
+        /// {列属性-结构属性}
+        /// </summary>
+        public class Attribute
+        {
+            
+            /// <summary>Id</summary>
+            public static AttributeItem Id =  new AttributeItem("[ClientLog].[Id]", typeof(int), 2147483647);
+            
+            /// <summary>Type</summary>
+            public static AttributeItem Type =  new AttributeItem("[ClientLog].[Type]", typeof(Byte), 1);
+            
+            /// <summary>DateTime</summary>
+            public static AttributeItem DateTime =  new AttributeItem("[ClientLog].[DateTime]", typeof(DateTime), 100);
+            
+            /// <summary>ClientDateTime</summary>
+            public static AttributeItem ClientDateTime =  new AttributeItem("[ClientLog].[ClientDateTime]", typeof(DateTime), 100);
+            
+            /// <summary>LoadElapsed</summary>
+            public static AttributeItem LoadElapsed =  new AttributeItem("[ClientLog].[LoadElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>NetworkElapsed</summary>
+            public static AttributeItem NetworkElapsed =  new AttributeItem("[ClientLog].[NetworkElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>ClientElapsed</summary>
+            public static AttributeItem ClientElapsed =  new AttributeItem("[ClientLog].[ClientElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>ClientElapsedUI</summary>
+            public static AttributeItem ClientElapsedUI =  new AttributeItem("[ClientLog].[ClientElapsedUI]", typeof(int), 2147483647);
+            
+            /// <summary>LoadDataElapsed</summary>
+            public static AttributeItem LoadDataElapsed =  new AttributeItem("[ClientLog].[LoadDataElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>ReceivePackageSize</summary>
+            public static AttributeItem ReceivePackageSize =  new AttributeItem("[ClientLog].[ReceivePackageSize]", typeof(int), 2147483647);
+            
+            /// <summary>SendPackageSize</summary>
+            public static AttributeItem SendPackageSize =  new AttributeItem("[ClientLog].[SendPackageSize]", typeof(int), 2147483647);
+            
+            /// <summary>Title</summary>
+            public static AttributeItem Title =  new AttributeItem("[ClientLog].[Title]", typeof(string), 200);
+            
+            /// <summary>Url</summary>
+            public static AttributeItem Url =  new AttributeItem("[ClientLog].[Url]", typeof(string), 200);
+            
+            /// <summary>Params</summary>
+            public static AttributeItem Params =  new AttributeItem("[ClientLog].[Params]", typeof(string), 1000);
+            
+            /// <summary>IpAddress</summary>
+            public static AttributeItem IpAddress =  new AttributeItem("[ClientLog].[IpAddress]", typeof(string), 15);
+            
+            /// <summary>ProfileId</summary>
+            public static AttributeItem ProfileId =  new AttributeItem("[ClientLog].[ProfileId]", typeof(string), 100);
+            
+            /// <summary>LoginUserId</summary>
+            public static AttributeItem LoginUserId =  new AttributeItem("[ClientLog].[LoginUserId]", typeof(string), 100);
+            
+            /// <summary>RequestId</summary>
+            public static AttributeItem RequestId =  new AttributeItem("[ClientLog].[RequestId]", typeof(long), 2147483647);
+            
+            /// <summary>FormGuid</summary>
+            public static AttributeItem FormGuid =  new AttributeItem("[ClientLog].[FormGuid]", typeof(string), 50);
+            
+            /// <summary>SlVersion</summary>
+            public static AttributeItem SlVersion =  new AttributeItem("[ClientLog].[SlVersion]", typeof(string), 50);
+        }
+        #endregion
+        #region bool清单 辅助设计
+        
+        private int m_id;
+        /// <summary></summary>
+        protected bool id_initialized = false;
+        
+        private Byte m_type;
+        /// <summary></summary>
+        protected bool type_initialized = false;
+        
+        private DateTime m_datetime;
+        /// <summary></summary>
+        protected bool datetime_initialized = false;
+        
+        private DateTime m_clientdatetime;
+        /// <summary></summary>
+        protected bool clientdatetime_initialized = false;
+        
+        private int m_loadelapsed;
+        /// <summary></summary>
+        protected bool loadelapsed_initialized = false;
+        
+        private int m_networkelapsed;
+        /// <summary></summary>
+        protected bool networkelapsed_initialized = false;
+        
+        private int m_clientelapsed;
+        /// <summary></summary>
+        protected bool clientelapsed_initialized = false;
+        
+        private int m_clientelapsedui;
+        /// <summary></summary>
+        protected bool clientelapsedui_initialized = false;
+        
+        private int m_loaddataelapsed;
+        /// <summary></summary>
+        protected bool loaddataelapsed_initialized = false;
+        
+        private int m_receivepackagesize;
+        /// <summary></summary>
+        protected bool receivepackagesize_initialized = false;
+        
+        private int m_sendpackagesize;
+        /// <summary></summary>
+        protected bool sendpackagesize_initialized = false;
+        
+        private string m_title;
+        /// <summary></summary>
+        protected bool title_initialized = false;
+        
+        private string m_url;
+        /// <summary></summary>
+        protected bool url_initialized = false;
+        
+        private string m_params;
+        /// <summary></summary>
+        protected bool params_initialized = false;
+        
+        private string m_ipaddress;
+        /// <summary></summary>
+        protected bool ipaddress_initialized = false;
+        
+        private string m_profileid;
+        /// <summary></summary>
+        protected bool profileid_initialized = false;
+        
+        private string m_loginuserid;
+        /// <summary></summary>
+        protected bool loginuserid_initialized = false;
+        
+        private long m_requestid;
+        /// <summary></summary>
+        protected bool requestid_initialized = false;
+        
+        private string m_formguid;
+        /// <summary></summary>
+        protected bool formguid_initialized = false;
+        
+        private string m_slversion;
+        /// <summary></summary>
+        protected bool slversion_initialized = false;
+        #endregion
+
+        #endregion 类字段
+        
+		#region 获得与设置属性列与值，以及操作属性的部分方法
+
+        /// <summary>
+        /// 实体名 客户端日志
+        /// </summary>
+        /// <returns></returns>
+        public override string TableName()
+        {
+            return "ClientLog";
+        }
+        
+        /// <summary>
+        /// 设置自动载入所有列
+        /// </summary>
+        /// <returns></returns>
+        public override void LoadAllAttributes(bool IsLoadAllAttributes)
+        {
+            base.LoadAllAttributes(IsLoadAllAttributes);
+            this.id_initialized = IsLoadAllAttributes;this.type_initialized = IsLoadAllAttributes;this.datetime_initialized = IsLoadAllAttributes;this.clientdatetime_initialized = IsLoadAllAttributes;this.loadelapsed_initialized = IsLoadAllAttributes;this.networkelapsed_initialized = IsLoadAllAttributes;this.clientelapsed_initialized = IsLoadAllAttributes;this.clientelapsedui_initialized = IsLoadAllAttributes;this.loaddataelapsed_initialized = IsLoadAllAttributes;this.receivepackagesize_initialized = IsLoadAllAttributes;this.sendpackagesize_initialized = IsLoadAllAttributes;this.title_initialized = IsLoadAllAttributes;this.url_initialized = IsLoadAllAttributes;this.params_initialized = IsLoadAllAttributes;this.ipaddress_initialized = IsLoadAllAttributes;this.profileid_initialized = IsLoadAllAttributes;this.loginuserid_initialized = IsLoadAllAttributes;this.requestid_initialized = IsLoadAllAttributes;this.formguid_initialized = IsLoadAllAttributes;this.slversion_initialized = IsLoadAllAttributes;
+        }
+        /// <summary></summary>
+        public override ITable af_GetOptionValueSchema() 
+		{ 
+			ClientLog value = new ClientLog();
+			
+			
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Id"))
+				value.id_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Type"))
+				value.type_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"DateTime"))
+				value.datetime_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ClientDateTime"))
+				value.clientdatetime_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"LoadElapsed"))
+				value.loadelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"NetworkElapsed"))
+				value.networkelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ClientElapsed"))
+				value.clientelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ClientElapsedUI"))
+				value.clientelapsedui_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"LoadDataElapsed"))
+				value.loaddataelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ReceivePackageSize"))
+				value.receivepackagesize_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"SendPackageSize"))
+				value.sendpackagesize_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Title"))
+				value.title_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Url"))
+				value.url_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Params"))
+				value.params_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"IpAddress"))
+				value.ipaddress_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ProfileId"))
+				value.profileid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"LoginUserId"))
+				value.loginuserid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"RequestId"))
+				value.requestid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"FormGuid"))
+				value.formguid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"SlVersion"))
+				value.slversion_initialized = true;
+            
+			return value;
+		}
+        #endregion
+        
+        #region 实现ICloneable 成员
+        /// <summary>客户端日志</summary>
+        public new ClientLog Clone()
+        {
+            return (ClientLog)this.MemberwiseClone(); //浅复制
+        }
+        #endregion
+        
+        #region 构造函数 获得实例
+        /// <summary>客户端日志 构造函数</summary>
+        static ClientLog()
+        {
+            if (InitRunTime.IsInitRunTime) InitRunTime.IsInitRunTime = true;
+        }
+        /// <summary>客户端日志 构造函数</summary>
+        public ClientLog() { }
+        /// <summary>
+        /// 客户端日志 是否载入所有属性
+        /// </summary>
+        /// <param name="IsLoadAllAttributes">是否全部初始化为true</param>
+        public ClientLog(bool IsLoadAllAttributes):base(IsLoadAllAttributes) { }
+        /// <summary>客户端日志 实现分表功能，修改表名</summary>
+        //public ClientLog(string tableName):base(tableName) { }
+        /// <summary>客户端日志 实现分表功能，自定义实例的初始化</summary>
+        //public ClientLog(string tableName, params AttributeItem[] attrs) : base(tableName, attrs) { }
+        /// <summary>客户端日志 实现快捷功能</summary>
+        //public ClientLog(params AttributeItem[] attrs) : base(attrs) { }
+        
+        /// <summary>客户端日志 请注意，这里当表中仅存在一个字段的时候，将可能与构造函数 new Table(string tableName)冲突</summary>
+        public ClientLog(int id, Byte type, DateTime datetime, DateTime clientdatetime, int loadelapsed, int networkelapsed, int clientelapsed, int clientelapsedui, int loaddataelapsed, int receivepackagesize, int sendpackagesize, string title, string url, string params, string ipaddress, string profileid, string loginuserid, long requestid, string formguid, string slversion)
+        {
+            
+            this.Id = id;
+            
+            this.Type = type;
+            
+            this.DateTime = datetime;
+            
+            this.ClientDateTime = clientdatetime;
+            
+            this.LoadElapsed = loadelapsed;
+            
+            this.NetworkElapsed = networkelapsed;
+            
+            this.ClientElapsed = clientelapsed;
+            
+            this.ClientElapsedUI = clientelapsedui;
+            
+            this.LoadDataElapsed = loaddataelapsed;
+            
+            this.ReceivePackageSize = receivepackagesize;
+            
+            this.SendPackageSize = sendpackagesize;
+            
+            this.Title = title;
+            
+            this.Url = url;
+            
+            this.Params = params;
+            
+            this.IpAddress = ipaddress;
+            
+            this.ProfileId = profileid;
+            
+            this.LoginUserId = loginuserid;
+            
+            this.RequestId = requestid;
+            
+            this.FormGuid = formguid;
+            
+            this.SlVersion = slversion;
+        }
+        /// <summary>客户端日志 从视图（多表）内获取本表</summary>
+        public static ClientLog FromIView(IView view)
+        {
+            return (ClientLog)IView.GetITable(view, "ClientLog");
+        }
+        /// <summary>客户端日志 获得一个实例</summary>
+        public static ClientLog GetOneInstance()
+        {
+            ClientLog value = new ClientLog();
+            return value;
+        }
+        /// <summary>客户端日志 获取单一实例==BLLTable.GetRowData();</summary>
+        public ClientLog Retrieve()
+        {
+            BLLTable<ClientLog>.Factory(conn).GetRowData(this);
+            return this;
+        }
+        #endregion
+		
+        #region 2.2 新增的列属性操作方法
+
+        /// <summary>通过属性 获得字段值</summary>
+        public override object GetValue(AttributeItem AttributeName)
+        {	
+            switch(AttributeName.FieldName)
+			{				
+			    case "Id":
+			        return Id;
+			    			
+			    case "Type":
+			        return Type;
+			    			
+			    case "DateTime":
+			        return DateTime;
+			    			
+			    case "ClientDateTime":
+			        return ClientDateTime;
+			    			
+			    case "LoadElapsed":
+			        return LoadElapsed;
+			    			
+			    case "NetworkElapsed":
+			        return NetworkElapsed;
+			    			
+			    case "ClientElapsed":
+			        return ClientElapsed;
+			    			
+			    case "ClientElapsedUI":
+			        return ClientElapsedUI;
+			    			
+			    case "LoadDataElapsed":
+			        return LoadDataElapsed;
+			    			
+			    case "ReceivePackageSize":
+			        return ReceivePackageSize;
+			    			
+			    case "SendPackageSize":
+			        return SendPackageSize;
+			    			
+			    case "Title":
+			        return Title;
+			    			
+			    case "Url":
+			        return Url;
+			    			
+			    case "Params":
+			        return Params;
+			    			
+			    case "IpAddress":
+			        return IpAddress;
+			    			
+			    case "ProfileId":
+			        return ProfileId;
+			    			
+			    case "LoginUserId":
+			        return LoginUserId;
+			    			
+			    case "RequestId":
+			        return RequestId;
+			    			
+			    case "FormGuid":
+			        return FormGuid;
+			    			
+			    case "SlVersion":
+			        return SlVersion;
+			
+                default:
+                    return base.GetValue(AttributeName);
+			}
+        }
+        /// <summary>通过属性 设置字段值</summary>
+        public override bool SetValue(AttributeItem AttributeName,object AttributeValue)
+        {
+			switch(AttributeName.FieldName)
+			{				
+			    case "Id":
+			        this.Id = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "Type":
+			        this.Type = Convert.ToByte(AttributeValue);
+                    return true;
+			    			
+			    case "DateTime":
+			        this.DateTime = Convert.ToDateTime(AttributeValue);
+                    return true;
+			    			
+			    case "ClientDateTime":
+			        this.ClientDateTime = Convert.ToDateTime(AttributeValue);
+                    return true;
+			    			
+			    case "LoadElapsed":
+			        this.LoadElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "NetworkElapsed":
+			        this.NetworkElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "ClientElapsed":
+			        this.ClientElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "ClientElapsedUI":
+			        this.ClientElapsedUI = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "LoadDataElapsed":
+			        this.LoadDataElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "ReceivePackageSize":
+			        this.ReceivePackageSize = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "SendPackageSize":
+			        this.SendPackageSize = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "Title":
+			        this.Title = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "Url":
+			        this.Url = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "Params":
+			        this.Params = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "IpAddress":
+			        this.IpAddress = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "ProfileId":
+			        this.ProfileId = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "LoginUserId":
+			        this.LoginUserId = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "RequestId":
+			        this.RequestId = Convert.ToInt64(AttributeValue);
+                    return true;
+			    			
+			    case "FormGuid":
+			        this.FormGuid = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "SlVersion":
+			        this.SlVersion = Convert.ToString(AttributeValue);
+                    return true;
+			
+                default:
+                    return base.SetValue(AttributeName, AttributeValue);
+			}
+        }
+        
+        /// <summary>通过属性 获取该字段是否已被初始化</summary>
+        public override bool GetInitialized(AttributeItem AttributeName)
+        {
+			switch(AttributeName.FieldName)
+			{	
+				case "Id":
+					return id_initialized;
+				
+				case "Type":
+					return type_initialized;
+				
+				case "DateTime":
+					return datetime_initialized;
+				
+				case "ClientDateTime":
+					return clientdatetime_initialized;
+				
+				case "LoadElapsed":
+					return loadelapsed_initialized;
+				
+				case "NetworkElapsed":
+					return networkelapsed_initialized;
+				
+				case "ClientElapsed":
+					return clientelapsed_initialized;
+				
+				case "ClientElapsedUI":
+					return clientelapsedui_initialized;
+				
+				case "LoadDataElapsed":
+					return loaddataelapsed_initialized;
+				
+				case "ReceivePackageSize":
+					return receivepackagesize_initialized;
+				
+				case "SendPackageSize":
+					return sendpackagesize_initialized;
+				
+				case "Title":
+					return title_initialized;
+				
+				case "Url":
+					return url_initialized;
+				
+				case "Params":
+					return params_initialized;
+				
+				case "IpAddress":
+					return ipaddress_initialized;
+				
+				case "ProfileId":
+					return profileid_initialized;
+				
+				case "LoginUserId":
+					return loginuserid_initialized;
+				
+				case "RequestId":
+					return requestid_initialized;
+				
+				case "FormGuid":
+					return formguid_initialized;
+				
+				case "SlVersion":
+					return slversion_initialized;
+				
+                default:
+                    return base.GetInitialized(AttributeName);
+			}
+        }
+
+        /// <summary>通过属性 设置属性的初始化布尔值</summary>
+        public override bool SetInitialized(AttributeItem AttributeName, Boolean ret)
+        {
+			switch(AttributeName.FieldName)
+			{	
+				case "Id":
+					id_initialized = ret;
+					return true;
+				
+				case "Type":
+					type_initialized = ret;
+					return true;
+				
+				case "DateTime":
+					datetime_initialized = ret;
+					return true;
+				
+				case "ClientDateTime":
+					clientdatetime_initialized = ret;
+					return true;
+				
+				case "LoadElapsed":
+					loadelapsed_initialized = ret;
+					return true;
+				
+				case "NetworkElapsed":
+					networkelapsed_initialized = ret;
+					return true;
+				
+				case "ClientElapsed":
+					clientelapsed_initialized = ret;
+					return true;
+				
+				case "ClientElapsedUI":
+					clientelapsedui_initialized = ret;
+					return true;
+				
+				case "LoadDataElapsed":
+					loaddataelapsed_initialized = ret;
+					return true;
+				
+				case "ReceivePackageSize":
+					receivepackagesize_initialized = ret;
+					return true;
+				
+				case "SendPackageSize":
+					sendpackagesize_initialized = ret;
+					return true;
+				
+				case "Title":
+					title_initialized = ret;
+					return true;
+				
+				case "Url":
+					url_initialized = ret;
+					return true;
+				
+				case "Params":
+					params_initialized = ret;
+					return true;
+				
+				case "IpAddress":
+					ipaddress_initialized = ret;
+					return true;
+				
+				case "ProfileId":
+					profileid_initialized = ret;
+					return true;
+				
+				case "LoginUserId":
+					loginuserid_initialized = ret;
+					return true;
+				
+				case "RequestId":
+					requestid_initialized = ret;
+					return true;
+				
+				case "FormGuid":
+					formguid_initialized = ret;
+					return true;
+				
+				case "SlVersion":
+					slversion_initialized = ret;
+					return true;
+				
+                default:
+                    return base.SetInitialized(AttributeName, ret);
+			}
+        }
+        #endregion
+
+
+        #region 获取DataParameter PropertyInfo
+
+        /// <summary>
+        /// 获取所有被初始化过的值，获取AttributeItem
+        /// 目的为获取 System.Windows.Forms.DataGridViewTextBoxColumn[] 在中间数据层采用了 自定义的 MyDataGridViewTextBoxColumn (空类继承自 DataGridViewTextBoxColumn)
+        /// 这里采用了两次遍历的方法，是为了避免拆装过程，使用源代码模式的时候，不会依赖于windows.form.dll。
+        /// </summary>
+        /// <returns></returns>
+        public override AttributeItem[] af_GetAvailableAttributeItem(ref List<object> values)
+        {
+            List<AttributeItem> parametersList = new List<AttributeItem>();
+
+			
+			if (id_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.Id;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Id);
+                }
+			}
+			
+			if (type_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.Type;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Type);
+                }
+			}
+			
+			if (datetime_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.DateTime;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(DateTime);
+                }
+			}
+			
+			if (clientdatetime_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.ClientDateTime;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ClientDateTime);
+                }
+			}
+			
+			if (loadelapsed_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.LoadElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(LoadElapsed);
+                }
+			}
+			
+			if (networkelapsed_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.NetworkElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(NetworkElapsed);
+                }
+			}
+			
+			if (clientelapsed_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.ClientElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ClientElapsed);
+                }
+			}
+			
+			if (clientelapsedui_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.ClientElapsedUI;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ClientElapsedUI);
+                }
+			}
+			
+			if (loaddataelapsed_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.LoadDataElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(LoadDataElapsed);
+                }
+			}
+			
+			if (receivepackagesize_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.ReceivePackageSize;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ReceivePackageSize);
+                }
+			}
+			
+			if (sendpackagesize_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.SendPackageSize;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(SendPackageSize);
+                }
+			}
+			
+			if (title_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.Title;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Title);
+                }
+			}
+			
+			if (url_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.Url;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Url);
+                }
+			}
+			
+			if (params_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.Params;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Params);
+                }
+			}
+			
+			if (ipaddress_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.IpAddress;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(IpAddress);
+                }
+			}
+			
+			if (profileid_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.ProfileId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ProfileId);
+                }
+			}
+			
+			if (loginuserid_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.LoginUserId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(LoginUserId);
+                }
+			}
+			
+			if (requestid_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.RequestId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(RequestId);
+                }
+			}
+			
+			if (formguid_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.FormGuid;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(FormGuid);
+                }
+			}
+			
+			if (slversion_initialized)
+			{
+                AttributeItem attr = ClientLog.Attribute.SlVersion;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(SlVersion);
+                }
+			}
+			
+            
+			parametersList.AddRange(base.af_GetAvailableAttributeItem(ref values));
+            return parametersList.ToArray();
+        }
+        #endregion                
+    }
+}

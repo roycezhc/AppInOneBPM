@@ -1,0 +1,18 @@
+﻿/*自定义tabs选择样式*/
+.tabs{width:auto;margin:0;border:solid 1px #789;font-size:12px; position:relative;text-align:left; overflow:visible;}
+.tabs h3{padding:0;margin:0; text-align:center;font-size:12px;color:#fff;background:#0b9594;height:15px;line-height:15px;}
+.tabs .tab-btn{list-style:none;width:auto;margin:0 0 0 0;height:25px;padding:0 0 0 0; cursor:pointer; position:absolute;top:5px;left:0; text-align:left;}
+.tabs .tab-btn a{height:25px;width:auto;text-align:center;border:solid 1px #678;margin:0 0 0 2px;line-height:25px;display:inline-block; z-index:222; text-decoration:none;}
+.tabs .tab-btn a b{color:#111;text-decoration:none; cursor:pointer; font-weight:bold;padding:0 5px 0 5px;}
+.tabs .tab-btn a.show{background:#fff;font-weight:bold;margin-bottom:-1px;height:26px;border-bottom:none;}
+.tabs .tab-btn a.show b{color:#0b75b4;}
+.tabs .tab-btn a.hide{background:#cdf;}
+.tabs .tab-btn a.hide b{color:#666;}
+
+.tabs .tab-btn a.more{float:right;border:none;height:20px; background:none;}
+.tabs .tab-btn a.more b{color:#123;}
+.tabs .tab-panel{border-top:solid 1px #789;padding:5px;margin:31px 0 0 0;_margin-top:30px; list-style:none;clear:both; text-align:center;}
+.tabs .tab-panel div.hide{margin:0;background:#f9f9f9;min-height:150px;_min-height:150px;width:100%; vertical-align:top;text-align:left;display:none;}
+.tabs .tab-panel div.show{margin:0;background:#f9f9f9;min-height:150px;_min-height:150px;width:100%; vertical-align:top;text-align:left;display:block;}
+.tabs .tab-panel div .form{border:none;}
+.tabs .tab-panel iframe{height:99%;width:99%;margin:auto;}

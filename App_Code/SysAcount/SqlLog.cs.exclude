@@ -1,0 +1,1212 @@
+/************************************************************
+
+  Copyright (c) 2008，ybkj_zlg
+  Author:               Created Time: 2013-05-15 09:22:23
+  Description:    数据表SqlLog对应的业务逻辑层SqlLog
+  Version:         2.1.0.0
+ 
+ * 对此文件的更改可能会导致不正确的行为，并且如果
+     重新生成代码，这些更改将会丢失。您可以扩展该类
+ * 实现自己的 SqlLog_Entity:SqlLog
+ * 
+************************************************************/
+/************************************************************
+SQL代码：
+select Id,_sql,Type,DateTime,Elapsed,Url,Params,IpAddress,ProcedureName,ConnectElapsed,ExecuteElapsed,FetchElapsed,_rowCount,Error,RequestId,ProfileId,LoginUserId from SqlLog
+delete from SqlLog
+INSERT INTO SqlLog (Id,_sql,Type,DateTime,Elapsed,Url,Params,IpAddress,ProcedureName,ConnectElapsed,ExecuteElapsed,FetchElapsed,_rowCount,Error,RequestId,ProfileId,LoginUserId)
+     VALUES
+           ('','','','','','','','','','','','','','','','','')
+UPDATE {首字母大写列名} SET ...
+变量赋值代码：
+        valObj.Id = "";
+        valObj._sql = "";
+        valObj.Type = "";
+        valObj.DateTime = "";
+        valObj.Elapsed = "";
+        valObj.Url = "";
+        valObj.Params = "";
+        valObj.IpAddress = "";
+        valObj.ProcedureName = "";
+        valObj.ConnectElapsed = "";
+        valObj.ExecuteElapsed = "";
+        valObj.FetchElapsed = "";
+        valObj._rowCount = "";
+        valObj.Error = "";
+        valObj.RequestId = "";
+        valObj.ProfileId = "";
+        valObj.LoginUserId = ""; 
+ * ************************************************************/
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Collections;
+using System.Reflection;
+using AgileFrame.Orm.PersistenceLayer.DAL.Base;
+using AgileFrame.Orm.PersistenceLayer.BLL.Base;
+using AgileFrame.Orm.PersistenceLayer.Model;
+using AgileFrame.Core;
+
+namespace AgileFrame.Orm.PersistenceLayer.Model
+{
+    /// <summary>
+    /// <para>Sql日志</para>
+    /// <para>与SqlLog数据表对应的实体对象。</para>
+    /// <para>增加一个数据列的方法是：在"类字段"节增加一个bool标识位，与"Attribute"属性 </para>
+    /// </summary>    
+    [Serializable]
+    public class SqlLog : ITableImplement
+    {
+        /// <summary>Sql日志 工厂方法</summary>
+        public static SqlLog Factory()
+        {
+            return new SqlLog();
+        }
+		#region 类字段清单 列属性用于生成视图层时的一致性检查
+        #region 类字段清单1
+        
+        /// <summary> Id Attribute_IsPrimary_IsNotNull_IDENTITY </summary>
+        public int _Id
+        {            
+            get { return this.Id; }
+            set { this.Id = value; }
+        }
+        
+        /// <summary> _sql Attribute_IsNotNull </summary>
+        public string __sql
+        {            
+            get { return this._sql; }
+            set { this._sql = value; }
+        }
+        
+        /// <summary> Type Attribute_IsNotNull </summary>
+        public Byte _Type
+        {            
+            get { return this.Type; }
+            set { this.Type = value; }
+        }
+        
+        /// <summary> DateTime Attribute_IsNotNull </summary>
+        public DateTime _DateTime
+        {            
+            get { return this.DateTime; }
+            set { this.DateTime = value; }
+        }
+        
+        /// <summary> Elapsed Attribute_IsNotNull </summary>
+        public int _Elapsed
+        {            
+            get { return this.Elapsed; }
+            set { this.Elapsed = value; }
+        }
+        
+        /// <summary> Url Attribute_IsNotNull </summary>
+        public string _Url
+        {            
+            get { return this.Url; }
+            set { this.Url = value; }
+        }
+        
+        /// <summary> Params Attribute_IsNotNull </summary>
+        public string _Params
+        {            
+            get { return this.Params; }
+            set { this.Params = value; }
+        }
+        
+        /// <summary> IpAddress Attribute </summary>
+        public string _IpAddress
+        {            
+            get { return this.IpAddress; }
+            set { this.IpAddress = value; }
+        }
+        
+        /// <summary> ProcedureName Attribute </summary>
+        public string _ProcedureName
+        {            
+            get { return this.ProcedureName; }
+            set { this.ProcedureName = value; }
+        }
+        
+        /// <summary> ConnectElapsed Attribute_IsNotNull </summary>
+        public int _ConnectElapsed
+        {            
+            get { return this.ConnectElapsed; }
+            set { this.ConnectElapsed = value; }
+        }
+        
+        /// <summary> ExecuteElapsed Attribute_IsNotNull </summary>
+        public int _ExecuteElapsed
+        {            
+            get { return this.ExecuteElapsed; }
+            set { this.ExecuteElapsed = value; }
+        }
+        
+        /// <summary> FetchElapsed Attribute_IsNotNull </summary>
+        public int _FetchElapsed
+        {            
+            get { return this.FetchElapsed; }
+            set { this.FetchElapsed = value; }
+        }
+        
+        /// <summary> _rowCount Attribute_IsNotNull </summary>
+        public int __rowCount
+        {            
+            get { return this._rowCount; }
+            set { this._rowCount = value; }
+        }
+        
+        /// <summary> Error Attribute </summary>
+        public string _Error
+        {            
+            get { return this.Error; }
+            set { this.Error = value; }
+        }
+        
+        /// <summary> RequestId Attribute_IsNotNull </summary>
+        public long _RequestId
+        {            
+            get { return this.RequestId; }
+            set { this.RequestId = value; }
+        }
+        
+        /// <summary> ProfileId Attribute </summary>
+        public string _ProfileId
+        {            
+            get { return this.ProfileId; }
+            set { this.ProfileId = value; }
+        }
+        
+        /// <summary> LoginUserId Attribute </summary>
+        public string _LoginUserId
+        {            
+            get { return this.LoginUserId; }
+            set { this.LoginUserId = value; }
+        }
+        #endregion
+        #region 类字段清单2
+        
+        /// <summary> Id，推荐使用 "_"符号开头 </summary>
+        public int Id
+        {
+            get { return this.m_id; }
+            set //private 
+            {
+                if (!id_initialized || m_id != value)
+                {
+                    this.m_id = value;
+                }
+                id_initialized = true;
+            }
+        }
+        
+        /// <summary> _sql，推荐使用 "_"符号开头 </summary>
+        public string _sql
+        {
+            get { return this.m__sql; }
+            set //
+            {
+                if (!_sql_initialized || m__sql != value)
+                {
+                    this.m__sql = value;
+                }
+                _sql_initialized = true;
+            }
+        }
+        
+        /// <summary> Type，推荐使用 "_"符号开头 </summary>
+        public Byte Type
+        {
+            get { return this.m_type; }
+            set //
+            {
+                if (!type_initialized || m_type != value)
+                {
+                    this.m_type = value;
+                }
+                type_initialized = true;
+            }
+        }
+        
+        /// <summary> DateTime，推荐使用 "_"符号开头 </summary>
+        public DateTime DateTime
+        {
+            get { return this.m_datetime; }
+            set //
+            {
+                if (!datetime_initialized || m_datetime != value)
+                {
+                    this.m_datetime = value;
+                }
+                datetime_initialized = true;
+            }
+        }
+        
+        /// <summary> Elapsed，推荐使用 "_"符号开头 </summary>
+        public int Elapsed
+        {
+            get { return this.m_elapsed; }
+            set //
+            {
+                if (!elapsed_initialized || m_elapsed != value)
+                {
+                    this.m_elapsed = value;
+                }
+                elapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> Url，推荐使用 "_"符号开头 </summary>
+        public string Url
+        {
+            get { return this.m_url; }
+            set //
+            {
+                if (!url_initialized || m_url != value)
+                {
+                    this.m_url = value;
+                }
+                url_initialized = true;
+            }
+        }
+        
+        /// <summary> Params，推荐使用 "_"符号开头 </summary>
+        public string Params
+        {
+            get { return this.m_params; }
+            set //
+            {
+                if (!params_initialized || m_params != value)
+                {
+                    this.m_params = value;
+                }
+                params_initialized = true;
+            }
+        }
+        
+        /// <summary> IpAddress，推荐使用 "_"符号开头 </summary>
+        public string IpAddress
+        {
+            get { return this.m_ipaddress; }
+            set //
+            {
+                if (!ipaddress_initialized || m_ipaddress != value)
+                {
+                    this.m_ipaddress = value;
+                }
+                ipaddress_initialized = true;
+            }
+        }
+        
+        /// <summary> ProcedureName，推荐使用 "_"符号开头 </summary>
+        public string ProcedureName
+        {
+            get { return this.m_procedurename; }
+            set //
+            {
+                if (!procedurename_initialized || m_procedurename != value)
+                {
+                    this.m_procedurename = value;
+                }
+                procedurename_initialized = true;
+            }
+        }
+        
+        /// <summary> ConnectElapsed，推荐使用 "_"符号开头 </summary>
+        public int ConnectElapsed
+        {
+            get { return this.m_connectelapsed; }
+            set //
+            {
+                if (!connectelapsed_initialized || m_connectelapsed != value)
+                {
+                    this.m_connectelapsed = value;
+                }
+                connectelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> ExecuteElapsed，推荐使用 "_"符号开头 </summary>
+        public int ExecuteElapsed
+        {
+            get { return this.m_executeelapsed; }
+            set //
+            {
+                if (!executeelapsed_initialized || m_executeelapsed != value)
+                {
+                    this.m_executeelapsed = value;
+                }
+                executeelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> FetchElapsed，推荐使用 "_"符号开头 </summary>
+        public int FetchElapsed
+        {
+            get { return this.m_fetchelapsed; }
+            set //
+            {
+                if (!fetchelapsed_initialized || m_fetchelapsed != value)
+                {
+                    this.m_fetchelapsed = value;
+                }
+                fetchelapsed_initialized = true;
+            }
+        }
+        
+        /// <summary> _rowCount，推荐使用 "_"符号开头 </summary>
+        public int _rowCount
+        {
+            get { return this.m__rowcount; }
+            set //
+            {
+                if (!_rowcount_initialized || m__rowcount != value)
+                {
+                    this.m__rowcount = value;
+                }
+                _rowcount_initialized = true;
+            }
+        }
+        
+        /// <summary> Error，推荐使用 "_"符号开头 </summary>
+        public string Error
+        {
+            get { return this.m_error; }
+            set //
+            {
+                if (!error_initialized || m_error != value)
+                {
+                    this.m_error = value;
+                }
+                error_initialized = true;
+            }
+        }
+        
+        /// <summary> RequestId，推荐使用 "_"符号开头 </summary>
+        public long RequestId
+        {
+            get { return this.m_requestid; }
+            set //
+            {
+                if (!requestid_initialized || m_requestid != value)
+                {
+                    this.m_requestid = value;
+                }
+                requestid_initialized = true;
+            }
+        }
+        
+        /// <summary> ProfileId，推荐使用 "_"符号开头 </summary>
+        public string ProfileId
+        {
+            get { return this.m_profileid; }
+            set //
+            {
+                if (!profileid_initialized || m_profileid != value)
+                {
+                    this.m_profileid = value;
+                }
+                profileid_initialized = true;
+            }
+        }
+        
+        /// <summary> LoginUserId，推荐使用 "_"符号开头 </summary>
+        public string LoginUserId
+        {
+            get { return this.m_loginuserid; }
+            set //
+            {
+                if (!loginuserid_initialized || m_loginuserid != value)
+                {
+                    this.m_loginuserid = value;
+                }
+                loginuserid_initialized = true;
+            }
+        }    
+        #endregion
+        #region Attribute清单 辅助设计
+        /// <summary>
+        /// {列属性-结构属性}
+        /// </summary>
+        public class Attribute
+        {
+            
+            /// <summary>Id</summary>
+            public static AttributeItem Id =  new AttributeItem("[SqlLog].[Id]", typeof(int), 2147483647);
+            
+            /// <summary>_sql</summary>
+            public static AttributeItem _sql =  new AttributeItem("[SqlLog].[_sql]", typeof(string), 2000);
+            
+            /// <summary>Type</summary>
+            public static AttributeItem Type =  new AttributeItem("[SqlLog].[Type]", typeof(Byte), 1);
+            
+            /// <summary>DateTime</summary>
+            public static AttributeItem DateTime =  new AttributeItem("[SqlLog].[DateTime]", typeof(DateTime), 100);
+            
+            /// <summary>Elapsed</summary>
+            public static AttributeItem Elapsed =  new AttributeItem("[SqlLog].[Elapsed]", typeof(int), 2147483647);
+            
+            /// <summary>Url</summary>
+            public static AttributeItem Url =  new AttributeItem("[SqlLog].[Url]", typeof(string), 200);
+            
+            /// <summary>Params</summary>
+            public static AttributeItem Params =  new AttributeItem("[SqlLog].[Params]", typeof(string), 1000);
+            
+            /// <summary>IpAddress</summary>
+            public static AttributeItem IpAddress =  new AttributeItem("[SqlLog].[IpAddress]", typeof(string), 15);
+            
+            /// <summary>ProcedureName</summary>
+            public static AttributeItem ProcedureName =  new AttributeItem("[SqlLog].[ProcedureName]", typeof(string), 100);
+            
+            /// <summary>ConnectElapsed</summary>
+            public static AttributeItem ConnectElapsed =  new AttributeItem("[SqlLog].[ConnectElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>ExecuteElapsed</summary>
+            public static AttributeItem ExecuteElapsed =  new AttributeItem("[SqlLog].[ExecuteElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>FetchElapsed</summary>
+            public static AttributeItem FetchElapsed =  new AttributeItem("[SqlLog].[FetchElapsed]", typeof(int), 2147483647);
+            
+            /// <summary>_rowCount</summary>
+            public static AttributeItem _rowCount =  new AttributeItem("[SqlLog].[_rowCount]", typeof(int), 2147483647);
+            
+            /// <summary>Error</summary>
+            public static AttributeItem Error =  new AttributeItem("[SqlLog].[Error]", typeof(string), 400);
+            
+            /// <summary>RequestId</summary>
+            public static AttributeItem RequestId =  new AttributeItem("[SqlLog].[RequestId]", typeof(long), 2147483647);
+            
+            /// <summary>ProfileId</summary>
+            public static AttributeItem ProfileId =  new AttributeItem("[SqlLog].[ProfileId]", typeof(string), 100);
+            
+            /// <summary>LoginUserId</summary>
+            public static AttributeItem LoginUserId =  new AttributeItem("[SqlLog].[LoginUserId]", typeof(string), 100);
+        }
+        #endregion
+        #region bool清单 辅助设计
+        
+        private int m_id;
+        /// <summary></summary>
+        protected bool id_initialized = false;
+        
+        private string m__sql;
+        /// <summary></summary>
+        protected bool _sql_initialized = false;
+        
+        private Byte m_type;
+        /// <summary></summary>
+        protected bool type_initialized = false;
+        
+        private DateTime m_datetime;
+        /// <summary></summary>
+        protected bool datetime_initialized = false;
+        
+        private int m_elapsed;
+        /// <summary></summary>
+        protected bool elapsed_initialized = false;
+        
+        private string m_url;
+        /// <summary></summary>
+        protected bool url_initialized = false;
+        
+        private string m_params;
+        /// <summary></summary>
+        protected bool params_initialized = false;
+        
+        private string m_ipaddress;
+        /// <summary></summary>
+        protected bool ipaddress_initialized = false;
+        
+        private string m_procedurename;
+        /// <summary></summary>
+        protected bool procedurename_initialized = false;
+        
+        private int m_connectelapsed;
+        /// <summary></summary>
+        protected bool connectelapsed_initialized = false;
+        
+        private int m_executeelapsed;
+        /// <summary></summary>
+        protected bool executeelapsed_initialized = false;
+        
+        private int m_fetchelapsed;
+        /// <summary></summary>
+        protected bool fetchelapsed_initialized = false;
+        
+        private int m__rowcount;
+        /// <summary></summary>
+        protected bool _rowcount_initialized = false;
+        
+        private string m_error;
+        /// <summary></summary>
+        protected bool error_initialized = false;
+        
+        private long m_requestid;
+        /// <summary></summary>
+        protected bool requestid_initialized = false;
+        
+        private string m_profileid;
+        /// <summary></summary>
+        protected bool profileid_initialized = false;
+        
+        private string m_loginuserid;
+        /// <summary></summary>
+        protected bool loginuserid_initialized = false;
+        #endregion
+
+        #endregion 类字段
+        
+		#region 获得与设置属性列与值，以及操作属性的部分方法
+
+        /// <summary>
+        /// 实体名 Sql日志
+        /// </summary>
+        /// <returns></returns>
+        public override string TableName()
+        {
+            return "SqlLog";
+        }
+        
+        /// <summary>
+        /// 设置自动载入所有列
+        /// </summary>
+        /// <returns></returns>
+        public override void LoadAllAttributes(bool IsLoadAllAttributes)
+        {
+            base.LoadAllAttributes(IsLoadAllAttributes);
+            this.id_initialized = IsLoadAllAttributes;this._sql_initialized = IsLoadAllAttributes;this.type_initialized = IsLoadAllAttributes;this.datetime_initialized = IsLoadAllAttributes;this.elapsed_initialized = IsLoadAllAttributes;this.url_initialized = IsLoadAllAttributes;this.params_initialized = IsLoadAllAttributes;this.ipaddress_initialized = IsLoadAllAttributes;this.procedurename_initialized = IsLoadAllAttributes;this.connectelapsed_initialized = IsLoadAllAttributes;this.executeelapsed_initialized = IsLoadAllAttributes;this.fetchelapsed_initialized = IsLoadAllAttributes;this._rowcount_initialized = IsLoadAllAttributes;this.error_initialized = IsLoadAllAttributes;this.requestid_initialized = IsLoadAllAttributes;this.profileid_initialized = IsLoadAllAttributes;this.loginuserid_initialized = IsLoadAllAttributes;
+        }
+        /// <summary></summary>
+        public override ITable af_GetOptionValueSchema() 
+		{ 
+			SqlLog value = new SqlLog();
+			
+			
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Id"))
+				value.id_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"_sql"))
+				value._sql_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Type"))
+				value.type_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"DateTime"))
+				value.datetime_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Elapsed"))
+				value.elapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Url"))
+				value.url_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Params"))
+				value.params_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"IpAddress"))
+				value.ipaddress_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ProcedureName"))
+				value.procedurename_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ConnectElapsed"))
+				value.connectelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ExecuteElapsed"))
+				value.executeelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"FetchElapsed"))
+				value.fetchelapsed_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"_rowCount"))
+				value._rowcount_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"Error"))
+				value.error_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"RequestId"))
+				value.requestid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"ProfileId"))
+				value.profileid_initialized = true;
+            
+			if(BLLTable.IsExistOptionValue(this.TableName(),"LoginUserId"))
+				value.loginuserid_initialized = true;
+            
+			return value;
+		}
+        #endregion
+        
+        #region 实现ICloneable 成员
+        /// <summary>Sql日志</summary>
+        public new SqlLog Clone()
+        {
+            return (SqlLog)this.MemberwiseClone(); //浅复制
+        }
+        #endregion
+        
+        #region 构造函数 获得实例
+        /// <summary>Sql日志 构造函数</summary>
+        static SqlLog()
+        {
+            if (InitRunTime.IsInitRunTime) InitRunTime.IsInitRunTime = true;
+        }
+        /// <summary>Sql日志 构造函数</summary>
+        public SqlLog() { }
+        /// <summary>
+        /// Sql日志 是否载入所有属性
+        /// </summary>
+        /// <param name="IsLoadAllAttributes">是否全部初始化为true</param>
+        public SqlLog(bool IsLoadAllAttributes):base(IsLoadAllAttributes) { }
+        /// <summary>Sql日志 实现分表功能，修改表名</summary>
+        //public SqlLog(string tableName):base(tableName) { }
+        /// <summary>Sql日志 实现分表功能，自定义实例的初始化</summary>
+        //public SqlLog(string tableName, params AttributeItem[] attrs) : base(tableName, attrs) { }
+        /// <summary>Sql日志 实现快捷功能</summary>
+        //public SqlLog(params AttributeItem[] attrs) : base(attrs) { }
+        
+        /// <summary>Sql日志 请注意，这里当表中仅存在一个字段的时候，将可能与构造函数 new Table(string tableName)冲突</summary>
+        public SqlLog(int id, string _sql, Byte type, DateTime datetime, int elapsed, string url, string params, string ipaddress, string procedurename, int connectelapsed, int executeelapsed, int fetchelapsed, int _rowcount, string error, long requestid, string profileid, string loginuserid)
+        {
+            
+            this.Id = id;
+            
+            this._sql = _sql;
+            
+            this.Type = type;
+            
+            this.DateTime = datetime;
+            
+            this.Elapsed = elapsed;
+            
+            this.Url = url;
+            
+            this.Params = params;
+            
+            this.IpAddress = ipaddress;
+            
+            this.ProcedureName = procedurename;
+            
+            this.ConnectElapsed = connectelapsed;
+            
+            this.ExecuteElapsed = executeelapsed;
+            
+            this.FetchElapsed = fetchelapsed;
+            
+            this._rowCount = _rowcount;
+            
+            this.Error = error;
+            
+            this.RequestId = requestid;
+            
+            this.ProfileId = profileid;
+            
+            this.LoginUserId = loginuserid;
+        }
+        /// <summary>Sql日志 从视图（多表）内获取本表</summary>
+        public static SqlLog FromIView(IView view)
+        {
+            return (SqlLog)IView.GetITable(view, "SqlLog");
+        }
+        /// <summary>Sql日志 获得一个实例</summary>
+        public static SqlLog GetOneInstance()
+        {
+            SqlLog value = new SqlLog();
+            return value;
+        }
+        /// <summary>Sql日志 获取单一实例==BLLTable.GetRowData();</summary>
+        public SqlLog Retrieve()
+        {
+            BLLTable<SqlLog>.Factory(conn).GetRowData(this);
+            return this;
+        }
+        #endregion
+		
+        #region 2.2 新增的列属性操作方法
+
+        /// <summary>通过属性 获得字段值</summary>
+        public override object GetValue(AttributeItem AttributeName)
+        {	
+            switch(AttributeName.FieldName)
+			{				
+			    case "Id":
+			        return Id;
+			    			
+			    case "_sql":
+			        return _sql;
+			    			
+			    case "Type":
+			        return Type;
+			    			
+			    case "DateTime":
+			        return DateTime;
+			    			
+			    case "Elapsed":
+			        return Elapsed;
+			    			
+			    case "Url":
+			        return Url;
+			    			
+			    case "Params":
+			        return Params;
+			    			
+			    case "IpAddress":
+			        return IpAddress;
+			    			
+			    case "ProcedureName":
+			        return ProcedureName;
+			    			
+			    case "ConnectElapsed":
+			        return ConnectElapsed;
+			    			
+			    case "ExecuteElapsed":
+			        return ExecuteElapsed;
+			    			
+			    case "FetchElapsed":
+			        return FetchElapsed;
+			    			
+			    case "_rowCount":
+			        return _rowCount;
+			    			
+			    case "Error":
+			        return Error;
+			    			
+			    case "RequestId":
+			        return RequestId;
+			    			
+			    case "ProfileId":
+			        return ProfileId;
+			    			
+			    case "LoginUserId":
+			        return LoginUserId;
+			
+                default:
+                    return base.GetValue(AttributeName);
+			}
+        }
+        /// <summary>通过属性 设置字段值</summary>
+        public override bool SetValue(AttributeItem AttributeName,object AttributeValue)
+        {
+			switch(AttributeName.FieldName)
+			{				
+			    case "Id":
+			        this.Id = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "_sql":
+			        this._sql = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "Type":
+			        this.Type = Convert.ToByte(AttributeValue);
+                    return true;
+			    			
+			    case "DateTime":
+			        this.DateTime = Convert.ToDateTime(AttributeValue);
+                    return true;
+			    			
+			    case "Elapsed":
+			        this.Elapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "Url":
+			        this.Url = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "Params":
+			        this.Params = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "IpAddress":
+			        this.IpAddress = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "ProcedureName":
+			        this.ProcedureName = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "ConnectElapsed":
+			        this.ConnectElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "ExecuteElapsed":
+			        this.ExecuteElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "FetchElapsed":
+			        this.FetchElapsed = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "_rowCount":
+			        this._rowCount = Convert.ToInt32(AttributeValue);
+                    return true;
+			    			
+			    case "Error":
+			        this.Error = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "RequestId":
+			        this.RequestId = Convert.ToInt64(AttributeValue);
+                    return true;
+			    			
+			    case "ProfileId":
+			        this.ProfileId = Convert.ToString(AttributeValue);
+                    return true;
+			    			
+			    case "LoginUserId":
+			        this.LoginUserId = Convert.ToString(AttributeValue);
+                    return true;
+			
+                default:
+                    return base.SetValue(AttributeName, AttributeValue);
+			}
+        }
+        
+        /// <summary>通过属性 获取该字段是否已被初始化</summary>
+        public override bool GetInitialized(AttributeItem AttributeName)
+        {
+			switch(AttributeName.FieldName)
+			{	
+				case "Id":
+					return id_initialized;
+				
+				case "_sql":
+					return _sql_initialized;
+				
+				case "Type":
+					return type_initialized;
+				
+				case "DateTime":
+					return datetime_initialized;
+				
+				case "Elapsed":
+					return elapsed_initialized;
+				
+				case "Url":
+					return url_initialized;
+				
+				case "Params":
+					return params_initialized;
+				
+				case "IpAddress":
+					return ipaddress_initialized;
+				
+				case "ProcedureName":
+					return procedurename_initialized;
+				
+				case "ConnectElapsed":
+					return connectelapsed_initialized;
+				
+				case "ExecuteElapsed":
+					return executeelapsed_initialized;
+				
+				case "FetchElapsed":
+					return fetchelapsed_initialized;
+				
+				case "_rowCount":
+					return _rowcount_initialized;
+				
+				case "Error":
+					return error_initialized;
+				
+				case "RequestId":
+					return requestid_initialized;
+				
+				case "ProfileId":
+					return profileid_initialized;
+				
+				case "LoginUserId":
+					return loginuserid_initialized;
+				
+                default:
+                    return base.GetInitialized(AttributeName);
+			}
+        }
+
+        /// <summary>通过属性 设置属性的初始化布尔值</summary>
+        public override bool SetInitialized(AttributeItem AttributeName, Boolean ret)
+        {
+			switch(AttributeName.FieldName)
+			{	
+				case "Id":
+					id_initialized = ret;
+					return true;
+				
+				case "_sql":
+					_sql_initialized = ret;
+					return true;
+				
+				case "Type":
+					type_initialized = ret;
+					return true;
+				
+				case "DateTime":
+					datetime_initialized = ret;
+					return true;
+				
+				case "Elapsed":
+					elapsed_initialized = ret;
+					return true;
+				
+				case "Url":
+					url_initialized = ret;
+					return true;
+				
+				case "Params":
+					params_initialized = ret;
+					return true;
+				
+				case "IpAddress":
+					ipaddress_initialized = ret;
+					return true;
+				
+				case "ProcedureName":
+					procedurename_initialized = ret;
+					return true;
+				
+				case "ConnectElapsed":
+					connectelapsed_initialized = ret;
+					return true;
+				
+				case "ExecuteElapsed":
+					executeelapsed_initialized = ret;
+					return true;
+				
+				case "FetchElapsed":
+					fetchelapsed_initialized = ret;
+					return true;
+				
+				case "_rowCount":
+					_rowcount_initialized = ret;
+					return true;
+				
+				case "Error":
+					error_initialized = ret;
+					return true;
+				
+				case "RequestId":
+					requestid_initialized = ret;
+					return true;
+				
+				case "ProfileId":
+					profileid_initialized = ret;
+					return true;
+				
+				case "LoginUserId":
+					loginuserid_initialized = ret;
+					return true;
+				
+                default:
+                    return base.SetInitialized(AttributeName, ret);
+			}
+        }
+        #endregion
+
+
+        #region 获取DataParameter PropertyInfo
+
+        /// <summary>
+        /// 获取所有被初始化过的值，获取AttributeItem
+        /// 目的为获取 System.Windows.Forms.DataGridViewTextBoxColumn[] 在中间数据层采用了 自定义的 MyDataGridViewTextBoxColumn (空类继承自 DataGridViewTextBoxColumn)
+        /// 这里采用了两次遍历的方法，是为了避免拆装过程，使用源代码模式的时候，不会依赖于windows.form.dll。
+        /// </summary>
+        /// <returns></returns>
+        public override AttributeItem[] af_GetAvailableAttributeItem(ref List<object> values)
+        {
+            List<AttributeItem> parametersList = new List<AttributeItem>();
+
+			
+			if (id_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Id;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Id);
+                }
+			}
+			
+			if (_sql_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute._sql;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(_sql);
+                }
+			}
+			
+			if (type_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Type;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Type);
+                }
+			}
+			
+			if (datetime_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.DateTime;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(DateTime);
+                }
+			}
+			
+			if (elapsed_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Elapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Elapsed);
+                }
+			}
+			
+			if (url_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Url;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Url);
+                }
+			}
+			
+			if (params_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Params;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Params);
+                }
+			}
+			
+			if (ipaddress_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.IpAddress;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(IpAddress);
+                }
+			}
+			
+			if (procedurename_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.ProcedureName;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ProcedureName);
+                }
+			}
+			
+			if (connectelapsed_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.ConnectElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ConnectElapsed);
+                }
+			}
+			
+			if (executeelapsed_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.ExecuteElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ExecuteElapsed);
+                }
+			}
+			
+			if (fetchelapsed_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.FetchElapsed;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(FetchElapsed);
+                }
+			}
+			
+			if (_rowcount_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute._rowCount;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(_rowCount);
+                }
+			}
+			
+			if (error_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.Error;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(Error);
+                }
+			}
+			
+			if (requestid_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.RequestId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(RequestId);
+                }
+			}
+			
+			if (profileid_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.ProfileId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(ProfileId);
+                }
+			}
+			
+			if (loginuserid_initialized)
+			{
+                AttributeItem attr = SqlLog.Attribute.LoginUserId;
+                if(!af_IsCondition || !Runtime_PersistenceLayer.IsInTbColumnCannotConditions(attr))
+                {
+                    parametersList.Add(attr);
+                    if(values != null)
+                        values.Add(LoginUserId);
+                }
+			}
+			
+            
+			parametersList.AddRange(base.af_GetAvailableAttributeItem(ref values));
+            return parametersList.ToArray();
+        }
+        #endregion                
+    }
+}

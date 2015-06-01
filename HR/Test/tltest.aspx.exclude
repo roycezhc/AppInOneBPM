@@ -1,0 +1,77 @@
+﻿<%@ Page Language="C#" StylesheetTheme="" AutoEventWireup="true" CodeFile="tltest.aspx.cs" Inherits="HR_CheckWork_tltest" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link href="../../Lib/dgrid/tl-grid/dhtmlxgrid.css" rel="stylesheet" type="text/css" />
+    <link href="../../Lib/dgrid/skins/dhtmlxgrid_dhx_skyblue.css" rel="stylesheet"
+        type="text/css" />
+    <script src="../../Lib/dgrid/tl-grid/trainquerycommon.js" type="text/javascript"></script>
+    <script src="../../Lib/dgrid/tl-grid/dhtmlxgrid_fast.js" type="text/javascript"></script>
+    <script src="../../Lib/dgrid/tl-grid/dhtmlxgrid_splt.js" type="text/javascript"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="gridbox" width="100%" height="350px" align="left" style="background-color: white; overflow: hidden"></div>
+<script>
+    Date.prototype.getWeekName = function () {
+        var d = this.getDay();
+        var arr = ["日", "一", "二", "三", "四", "五", "六"];
+        return arr[d];
+    }
+    window.onload = function () {
+        createGird();
+    }
+    function createGird() {
+        mygrid = new dhtmlXGridObject('gridbox');
+        mygrid.setImagePath("../../Lib/dgrid/grid_imgs/");
+
+//        var head1 = ",#cspan,#cspan,日期";
+//        var head2 = "序号,姓名,全勤,实际出勤";
+//        var widths = "40,40,40,70";
+//        for (var i = 1; i <= 7; i++) {
+//            head1 += "," + i;
+//            var d = new Date(2012, 8, i);
+//            head2 += "," + d.getWeekName();
+//            widths += ",70";
+//        }
+//        head1 += ",出勤情况,#cspan,#cspan";
+//        head2 += ",aaa,ccc,bbb";
+//        widths += ",70,70,70";
+
+//        mygrid.setHeader(head1);
+//        mygrid.attachHeader(head2);
+//        
+//        mygrid.setInitWidths(widths);
+//        //mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+//        mygrid.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+//        //mygrid.setColSorting("int,str,str,str,str,str,str,int,int,int,int,int,int,int,int,str,str,str");
+//        mygrid.init();
+//        mygrid.enableAlterCss("even", "uneven");
+//        mygrid.setSkin("dhx_blue");
+//        mygrid.splitAt(4);
+//        mygrid.loadXML("wdsback.aspx");
+
+        mygrid.setHeader("序号,车次,查询区间,#cspan,区间运行时刻,#cspan,#cspan,余票信息,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,#cspan,列车信息");
+        mygrid.attachHeader("#rspan,#rspan,发站,到站,发时,到时,历时,商务座,特等座,一等座,二等座,高级软卧,软卧,硬卧,软座,硬座,无座,等级");
+        mygrid.setInitWidths("30,145,55,55,43,43,43,60,50,60,60,60,40,40,40,40,40,70");
+        mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+        mygrid.setColTypes("ro,link,link,link,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+        mygrid.setColSorting("int,str,str,str,str,str,str,int,int,int,int,int,int,int,int,str,str,str");
+        mygrid.init();
+        mygrid.enableAlterCss("even", "uneven");
+        mygrid.setSkin("light");
+        //mygrid.splitAt(2);
+        //mygrid.enableSmartRendering(true, 50);
+        mygrid.loadXML("wdsback.aspx");
+    }
+</script>
+
+    </form>
+</body>
+</html>
